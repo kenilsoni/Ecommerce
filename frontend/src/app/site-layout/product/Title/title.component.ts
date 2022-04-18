@@ -8,10 +8,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TitleComponent implements OnInit {
   title!:string;
+  subtitle!:string
   constructor(private route:ActivatedRoute) { }
 
   ngOnInit(): void {
-   this.route.params.subscribe(data=>{ this.title=data['name']})}
+   this.route.params.subscribe(data=>{ this.title=data['cname'];
+   this.subtitle=data['sname'];
+  })}
   
 
 }

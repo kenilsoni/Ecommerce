@@ -5,7 +5,9 @@ import { TitleComponent } from './product/Title/title.component';
 
 
 const routes: Routes = [
-    {path:'product/:name/:id',component:MainComponent}
+    {path:'product/:cname/:cid',component:MainComponent},
+    
+    {path:'product/:cname/:cid/:sname/:sid',component:MainComponent}
 ];
 
 @NgModule({

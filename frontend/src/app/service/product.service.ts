@@ -4,6 +4,7 @@ import { Category } from '../site-layout/interface/category';
 import {environment} from '../../environments/environment'
 import { color } from '../site-layout/interface/color';
 import { size } from '../site-layout/interface/size';
+import { product } from '../site-layout/interface/product';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class ProductService {
     return this.httpclient.get<Category>(`${environment.API_URL}/subcategory/read.php`)
   }
   getcategory_id(id:number){
-    return this.httpclient.get<Category>(`${environment.API_URL}/subcategory/read_single.php/?id=`+id)
+    return this.httpclient.get<Category>(`${environment.API_URL}/subcategory/read_single.php/?cid=`+id)
   }
   getcolor(){
     return this.httpclient.get<color>(`${environment.API_URL}/color/read.php`)
@@ -29,5 +30,15 @@ export class ProductService {
   getprice(){
     return this.httpclient.get<size>(`${environment.API_URL}/product/getprice.php`)
   }
+  getproductbycat_id(cat_id:number){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/read.php?cat_id=`+cat_id)
+  }
+  getproductbysubcat_id(subcat_id:number,cat_id:number){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/read.php?cat_id=`+cat_id+'&subcat_id='+subcat_id)
+  }
+  // gettotal_count(subcat_id:number,cat_id:number){
+  //   return this.httpclient.get<any>(`${environment.API_URL}/subcategory/getcount.php?cat_id=`+cat_id+'&subcat_id='+subcat_id)
+
+  // }
 
 }

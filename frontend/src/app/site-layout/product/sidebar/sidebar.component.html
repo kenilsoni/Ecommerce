@@ -10,7 +10,7 @@
             <li class="custom-check" *ngFor="let cat of data">
                 <label>
                     <input type="checkbox" class="icheck">
-                    {{cat.Subcategory_Name}} <span>(25275)</span>
+                    {{cat.Subcategory_Name |titlecase}} <span *ngFor="let data of data">{{data.total_item}}</span>
                 </label>
             </li>
             <!-- <li class="custom-check">
@@ -49,7 +49,7 @@
             <li *ngFor="let data of color">
                 <a href="#" title={{data.Product_Color}}> <span
                         [style.background-color]=data.Color_Code></span>
-                    {{data.Product_Color}} <i>(1250)</i></a>
+                    {{data.Product_Color|titlecase}} <i>(1250)</i></a>
             </li>
             <!-- <li class="disabled"><a href="#" title="Pink"><span class="pink-color"></span> Pink <i>(150)</i></a></li>
                                 <li>

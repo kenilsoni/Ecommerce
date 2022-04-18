@@ -4,5 +4,6 @@ export interface Category {
     Category_ID:number
     Category_Name:string
     Subcategory_Name:string
+    [x: string]: any
 }
 

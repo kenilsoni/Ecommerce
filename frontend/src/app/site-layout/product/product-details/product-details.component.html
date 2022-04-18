@@ -1,5 +1,5 @@
 <div class="col-sm-9">
-    <h3>Men T-shirts</h3>
+    <h3>{{cat_name|titlecase}}</h3>
     <div class="toolbar clearfix">
 
         <div class="pager_right">
@@ -17,19 +17,19 @@
     </div>
     <div class="grid-content">
         <div class="grid row">
-            <div class="col-sm-4 col-xs-6">
+            <div class="col-sm-4 col-xs-6" *ngFor="let product of data">
                 <figure class="effect-goliath">
                     <div class="thumb-outer">
                         <a href="#" title="thumb" class="thumb-image"><img src="assets/images/new-thumb-01.jpg" alt="thumb"></a>
                         <a href="cart.html" title="Add to Cart" class="cart-button">Add to Cart</a>
                     </div>
                     <figcaption>
-                        <a href="product-detail.html" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="heading">U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men</a>
-                        <span>$120.00</span>
+                        <a href="product-detail.html" title={{product.Product_Name}} class="heading">{{product.Product_Name}}</a>
+                        <span>{{product.Product_Price | currency:'INR'}}</span>
                     </figcaption>
                 </figure>
             </div>
-            <div class="col-sm-4 col-xs-6">
+            <!-- <div class="col-sm-4 col-xs-6">
                 <figure class="effect-goliath">
                     <div class="thumb-outer">
                         <a href="#" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="thumb-image"><img src="assets/images/new-thumb-02.jpg" alt="Thumb"></a>
@@ -163,7 +163,7 @@
                     </figcaption>
                 </figure>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div class="col-sm-12 col-xs-12">

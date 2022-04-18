@@ -7,11 +7,13 @@ import { SiteLayoutModule } from './site-layout/site-layout.module';
 import { ProductModule } from './site-layout/product/product.module';
 import { HomeComponent } from './site-layout/home/home.component';
 import { HeaderComponent } from './site-layout/header/header.component';
+import { TitlecasePipe } from './pipes/titlecase.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    TitlecasePipe
   ],
   imports: [
     BrowserModule,

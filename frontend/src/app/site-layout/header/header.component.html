@@ -12,7 +12,7 @@
                     </button>
                 </div>
                 <div class="col-sm-1">
-                    <a href="index.html" title="eShopper" class="logo"><img src="/assets/images/logo.svg" alt="eShopper"></a>
+                    <a routerLink="/home" title="eShopper" class="logo"><img src="/assets/images/logo.svg" alt="eShopper"></a>
                 </div>
                 <div class="col-sm-5 col-xs-12">
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -20,10 +20,10 @@
                             <div class="nav-container clearfix">
                                 <ul class="nav-menu menu clearfix">
                                     <li class="menu-item"><a routerLink="home" class="menu-link" title="Home">Home</a></li>
-                                    <li class="menu-item" *ngFor="let cat of categorylist"> <a routerLink="product/{{cat.Category_Name}}/{{cat.ID}}" class="menu-link" title="{{cat.Category_Name}}">{{cat.Category_Name}}</a>
+                                    <li class="menu-item" *ngFor="let cat of categorylist"> <a routerLink="product/{{cat.Category_Name}}/{{cat.ID}}" class="menu-link" title="{{cat.Category_Name}}">{{cat.Category_Name|titlecase}}</a>
                                         
                                         <ul class="sub-menu" >
-                                            <li *ngFor="let scat of subcategorylist"><a title="{{scat.Subcategory_Name}}" *ngIf="cat.ID==scat.Category_ID">{{scat.Subcategory_Name}}</a></li>
+                                            <li *ngFor="let scat of subcategorylist"><a routerLink="product/{{cat.Category_Name}}/{{cat.ID}}/{{scat.Subcategory_Name}}/{{scat.ID}}" title="{{scat.Subcategory_Name}}" *ngIf="cat.ID==scat.Category_ID">{{scat.Subcategory_Name|titlecase}}</a></li>
                                         </ul>
                                     </li>
                                     <!-- <li class="menu-item">

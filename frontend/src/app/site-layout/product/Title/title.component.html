@@ -2,14 +2,15 @@
 <div class="title-block-outer">
     <img src="/assets/images/inner-banner.jpg" alt="Banner-image" class="img-responsive">
     <div class="container title-block-container">
-        <h2>{{title}}</h2>
+        <h2>{{title|titlecase}}</h2>
     </div>
 </div>
 <div class="breadcrumb-panel">
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="index.html" title="Home">Home</a></li>
-            <li><a href="product.html" title="{{title}}">{{title}}</a></li>
+            <li><a href="product.html" title="{{title}}">{{title|titlecase}}</a></li>
+            <li><a href="product.html" title="{{subtitle}}" >{{subtitle|titlecase}}</a></li>
             <!-- <li class="active">U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men</li> -->
         </ol>
     </div>

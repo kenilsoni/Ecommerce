@@ -10,19 +10,27 @@ import { ProductService } from 'src/app/service/product.service';
 export class SidebarComponent implements OnInit {
 
   constructor(private route: ActivatedRoute , private service:ProductService) { }
-  id!: number
+  cid!: number
+  sid!:number
   data!:any
   color!:any
   size!:any
   price!:any
+  count!:number
   ngOnInit(): void {
-    this.route.params.subscribe(data => { this.id=data['id']
+    this.route.params.subscribe(data => { this.cid=data['cid']
   
-    this.service.getcategory_id(this.id).subscribe(data=>{
+    this.service.getcategory_id(this.cid).subscribe(data=>{
       this.data=data['data']
-      // console.log(data['data'])
-      // console.log(this.id)
+      // this.count=data['count']
+      // console.log(data['count'])
+      // this.service.gettotal_count(this.cid,this.sid).subscribe(data=>{
+      //   this.price=data['data']
+      //     //  console.log(this.price.min);
+      // })
     })
+
+    
   })
   this.service.getcolor().subscribe(data=>{
     this.color=data['data']
@@ -38,6 +46,8 @@ export class SidebarComponent implements OnInit {
     this.price=data['data']
       //  console.log(this.price.min);
   })
+
+ 
 
   }
 }
