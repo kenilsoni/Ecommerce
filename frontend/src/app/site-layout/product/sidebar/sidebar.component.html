@@ -1,21 +1,19 @@
-<section class="product_listing content">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3 ">
-                <div class="left-panel">
-                    <h3>Filter By</h3>
-                    <div class="filter-option">
-                        <div class="title" data-toggle="collapse" href="#collapse1" aria-expanded="false">
-                            Categories
-                        </div>
-                        <div class="filter-option-inner collapse in" id="collapse1">
-                            <ul>
-                                <li class="custom-check">
-                                    <label>
-                                        <input type="checkbox" class="icheck"> Tshirts <span>(25275)</span>
-                                    </label>
-                                </li>
-                                <li class="custom-check">
+
+<h3>Filter By</h3>
+<div class="filter-option">
+    <div class="title" data-toggle="collapse" href="#collapse1"
+        aria-expanded="false">
+        Categories
+    </div>
+    <div class="filter-option-inner collapse in" id="collapse1">
+        <ul>
+            <li class="custom-check" *ngFor="let cat of data">
+                <label>
+                    <input type="checkbox" class="icheck">
+                    {{cat.Subcategory_Name}} <span>(25275)</span>
+                </label>
+            </li>
+            <!-- <li class="custom-check">
                                     <label>
                                         <input type="checkbox" class="icheck"> Shirts <span>(24866)</span>
                                     </label>
@@ -39,18 +37,21 @@
                                     <label>
                                         <input type="checkbox" class="icheck"> Kurtas <span>(1566)</span>
                                     </label>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="filter-option">
-                        <div class="title" data-toggle="collapse" href="#collapse2" aria-expanded="false">Colour</div>
-                        <div class="filter-option-inner collapse in" id="collapse2">
-                            <ul class="colour_family_list clearfix">
-                                <li>
-                                    <a href="#" title="Magenta"> <span class="magenta-color"></span> Magenta <i>(1250)</i></a>
-                                </li>
-                                <li class="disabled"><a href="#" title="Pink"><span class="pink-color"></span> Pink <i>(150)</i></a></li>
+                                </li> -->
+        </ul>
+    </div>
+</div>
+<div class="filter-option">
+    <div class="title" data-toggle="collapse" href="#collapse2"
+        aria-expanded="false">Colour</div>
+    <div class="filter-option-inner collapse in" id="collapse2">
+        <ul class="colour_family_list clearfix">
+            <li *ngFor="let data of color">
+                <a href="#" title={{data.Product_Color}}> <span
+                        [style.background-color]=data.Color_Code></span>
+                    {{data.Product_Color}} <i>(1250)</i></a>
+            </li>
+            <!-- <li class="disabled"><a href="#" title="Pink"><span class="pink-color"></span> Pink <i>(150)</i></a></li>
                                 <li>
                                     <a href="#" title="Red"> <span class="red-color"></span> Red <i>(100)</i></a>
                                 </li>
@@ -75,28 +76,32 @@
                                 <li>
                                     <a href="#" title="Orange"> <span class="orange-color"></span> Orange <i>(10)</i></a>
                                 </li>
-                                <li><a href="#" title="Reset" class="reset-link">Reset</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="filter-option">
-                        <div class="title" data-toggle="collapse" href="#collapse3" aria-expanded="false">Price</div>
-                        <div class="filter-option-inner collapse in" id="collapse3">
-                            <div class="info">31 items</div>
-                            <div class="slider"><img src="assets/images/price.jpg" alt=""></div>
-                            <div class="price-range clearfix"><span class="min"> Rs. 174</span><span class="max"> Rs. 8,999</span></div>
-                        </div>
-                    </div>
-                    <div class="filter-option">
-                        <div class="title" data-toggle="collapse" href="#collapse4" aria-expanded="false">Size</div>
-                        <div class="filter-option-inner size-filter collapse in" id="collapse4">
-                            <ul>
-                                <li class="custom-check">
-                                    <label>
-                                        <input type="checkbox" class="icheck"> XXS <span>(81)</span>
-                                    </label>
-                                </li>
-                                <li class="custom-check">
+                                <li><a href="#" title="Reset" class="reset-link">Reset</a></li> -->
+        </ul>
+    </div>
+</div>
+<div class="filter-option">
+    <div class="title" data-toggle="collapse" href="#collapse3"
+        aria-expanded="false">Price</div>
+    <div class="filter-option-inner collapse in" id="collapse3">
+        <div class="info">31 items</div>
+        <div class="slider"><img src="assets/images/price.jpg" alt=""></div>
+        <div class="price-range clearfix" *ngFor="let data of price"><span
+                class="min">{{data.min}}</span><span class="max"> {{data.max}}</span></div>
+    </div>
+</div>
+<div class="filter-option">
+    <div class="title" data-toggle="collapse" href="#collapse4"
+        aria-expanded="false">Size</div>
+    <div class="filter-option-inner size-filter collapse in" id="collapse4">
+        <ul>
+            <li class="custom-check" *ngFor="let data of size">
+                <label>
+                    <input type="checkbox" class="icheck"> {{data.Product_Size}}
+                    <span>(81)</span>
+                </label>
+            </li>
+            <!-- <li class="custom-check">
                                     <label>
                                         <input type="checkbox" class="icheck"> XS <span>(1446)</span></label>
                                     </li>
@@ -128,189 +133,12 @@
                                                 <label>
                                                     <input type="checkbox" class="icheck"> XXXL <span>(43)</span>
                                                 </label>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="add-block">
-                                <a href="product.html" title="Promotion"><img src="assets/images/promo2.jpg" alt="" class="img-responsive"></a>
-                            </div>
-                        </div>
-                        <!-- <div class="col-sm-9">
-                            <h3>Men T-shirts</h3>
-                            <div class="toolbar clearfix">
+                                            </li> -->
+        </ul>
+    </div>
+</div>
 
-                                <div class="pager_right">
-                                    <div class="sort-by">
-                                        <label>Sort By</label>
-                                        <div class="form-group">
-                                            <select class="custom-dropdown">
-                                                <option>Position</option>
-                                                <option>Name</option>
-                                                <option>Price</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid-content">
-                                <div class="grid row">
-                                    <div class="col-sm-4 col-xs-6">
-                                        <figure class="effect-goliath">
-                                            <div class="thumb-outer">
-                                                <a href="#" title="thumb" class="thumb-image"><img src="assets/images/new-thumb-01.jpg" alt="thumb"></a>
-                                                <a href="cart.html" title="Add to Cart" class="cart-button">Add to Cart</a>
-                                            </div>
-                                            <figcaption>
-                                                <a href="product-detail.html" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="heading">U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men</a>
-                                                <span>$120.00</span>
-                                            </figcaption>
-                                        </figure>
-                                    </div>
-                                    <div class="col-sm-4 col-xs-6">
-                                        <figure class="effect-goliath">
-                                            <div class="thumb-outer">
-                                                <a href="#" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="thumb-image"><img src="assets/images/new-thumb-02.jpg" alt="Thumb"></a>
-                                                <a href="cart.html" title="Add to Cart" class="cart-button">Add to Cart</a>
-                                            </div>
-                                            <figcaption>
-                                                <a href="product-detail.html" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="heading">U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men</a>
-                                                <span>$120.00</span>
-                                            </figcaption>
-                                        </figure>
-                                    </div>
-                                    <div class="col-sm-4 col-xs-6">
-                                        <figure class="effect-goliath">
-                                            <div class="thumb-outer">
-                                                <a href="#" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="thumb-image"><img src="assets/images/new-thumb-01.jpg" alt="Thumb"></a>
-                                                <a href="cart.html" title="Add to Cart" class="cart-button">Add to Cart</a>
-                                            </div>
-                                            <figcaption>
-                                                <a href="product-detail.html" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="heading">U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men</a>
-                                                <span>$120.00</span>
-                                            </figcaption>
-                                        </figure>
-                                    </div>
-                                    <div class="col-sm-4 col-xs-6">
-                                        <figure class="effect-goliath">
-                                            <div class="thumb-outer">
-                                                <a href="#" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="thumb-image"><img src="assets/images/new-thumb-04.jpg" alt="Thumb"></a>
-                                                <a href="cart.html" title="Add to Cart" class="cart-button">Add to Cart</a>
-                                            </div>
-                                            <a href="#" title=""></a>
-                                            <figcaption>
-                                                <a href="product-detail.html" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="heading">U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men</a>
-                                                <span>$120.00</span>
-                                            </figcaption>
-                                        </figure>
-                                    </div>
-                                    <div class="col-sm-4 col-xs-6">
-                                        <figure class="effect-goliath">
-                                            <div class="thumb-outer">
-                                                <a href="#" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="thumb-image"><img src="assets/images/new-thumb-05.jpg" alt="Thumb"></a>
-                                                <a href="cart.html" title="Add to Cart" class="cart-button">Add to Cart</a>
-                                            </div>
-                                            <figcaption>
-                                                <a href="product-detail.html" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="heading">U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men</a>
-                                                <span>$120.00</span>
-                                            </figcaption>
-                                        </figure>
-                                    </div>
-                                    <div class="col-sm-4 col-xs-6">
-                                        <figure class="effect-goliath">
-                                            <div class="thumb-outer">
-                                                <a href="#" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="thumb-image"><img src="assets/images/new-thumb-06.jpg" alt="Thumb"></a>
-                                                <a href="cart.html" title="Add to Cart" class="cart-button">Add to Cart</a>
-                                            </div>
-                                            <figcaption>
-                                                <a href="product-detail.html" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="heading">U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men</a>
-                                                <span>$120.00</span>
-                                            </figcaption>
-                                        </figure>
-                                    </div>
-                                    <div class="col-sm-4 col-xs-6">
-                                        <figure class="effect-goliath">
-                                            <div class="thumb-outer">
-                                                <a href="#" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="thumb-image"><img src="assets/images/new-thumb-07.jpg" alt="Thumb"></a>
-                                                <a href="cart.html" title="Add to Cart" class="cart-button">Add to Cart</a>
-                                            </div>
-                                            <figcaption>
-                                                <a href="product-detail.html" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="heading">U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men</a>
-                                                <span>$120.00</span>
-                                            </figcaption>
-                                        </figure>
-                                    </div>
-                                    <div class="col-sm-4 col-xs-6">
-                                        <figure class="effect-goliath">
-                                            <div class="thumb-outer">
-                                                <a href="#" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="thumb-image"><img src="assets/images/new-thumb-01.jpg" alt="Thumb"></a>
-                                                <a href="cart.html" title="Add to Cart" class="cart-button">Add to Cart</a>
-                                            </div>
-                                            <figcaption>
-                                                <a href="product-detail.html" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="heading">U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men</a>
-                                                <span>$120.00</span>
-                                            </figcaption>
-                                        </figure>
-                                    </div>
-                                    <div class="col-sm-4 col-xs-6">
-                                        <figure class="effect-goliath">
-                                            <div class="thumb-outer">
-                                                <a href="#" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="thumb-image"><img src="assets/images/new-thumb-01.jpg" alt="thumb"></a>
-                                                <a href="cart.html" title="Add to Cart" class="cart-button">Add to Cart</a>
-                                            </div>
-                                            <figcaption>
-                                                <a href="product-detail.html" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="heading">U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men</a>
-                                                <span>$120.00</span>
-                                            </figcaption>
-                                        </figure>
-                                    </div>
-                                    <div class="col-sm-4 col-xs-6">
-                                        <figure class="effect-goliath">
-                                            <div class="thumb-outer">
-                                                <a href="#" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="thumb-image"><img src="assets/images/new-thumb-02.jpg" alt="Thumb"></a>
-                                                <a href="cart.html" title="Add to Cart" class="cart-button">Add to Cart</a>
-                                            </div>
-                                            <figcaption>
-                                                <a href="product-detail.html" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="heading">U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men</a>
-                                                <span>$120.00</span>
-                                            </figcaption>
-                                        </figure>
-                                    </div>
-                                    <div class="col-sm-4 col-xs-6">
-                                        <figure class="effect-goliath">
-                                            <div class="thumb-outer">
-                                                <a href="#" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="thumb-image"><img src="assets/images/new-thumb-01.jpg" alt="Thumb"></a>
-                                                <a href="cart.html" title="Add to Cart" class="cart-button">Add to Cart</a>
-                                            </div>
-                                            <figcaption>
-                                                <a href="product-detail.html" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="heading">U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men</a>
-                                                <span>$120.00</span>
-                                            </figcaption>
-                                        </figure>
-                                    </div>
-                                    <div class="col-sm-4 col-xs-6">
-                                        <figure class="effect-goliath">
-                                            <div class="thumb-outer">
-                                                <a href="#" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="thumb-image"><img src="assets/images/new-thumb-04.jpg" alt="Thumb"></a>
-                                                <a href="cart.html" title="Add to Cart" class="cart-button">Add to Cart</a>
-                                            </div>
-                                            <a href="#" title=""></a>
-                                            <figcaption>
-                                                <a href="product-detail.html" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men" class="heading">U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men</a>
-                                                <span>$120.00</span>
-                                            </figcaption>
-                                        </figure>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12 col-xs-12">
-                                <span class="button-outer text-center">
-                                    <a class="btn-tertiary" href="product.html" title="More Products">More Products</a>
-                                </span>
-                            </div>
-                        </div> -->
-                    </div>
-                </div>
-            </section>
+<div class="add-block">
+    <a href="product.html" title="Promotion"><img src="assets/images/promo2.jpg"
+            alt="" class="img-responsive"></a>
+</div>
