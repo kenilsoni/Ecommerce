@@ -1,0 +1,47 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "cname": "MEN",
+      "sname":["JEANS","SHIRT","T-SHIRT"]
+    },
+    {
+      "id": 2,
+      "cname": "WOMEN",
+      "sname":["JEANS","SHIRT","T-SHIRT"]
+      
+    },
+    {
+      "id": 3,
+      "cname": "KIDS",
+      "sname":["JEANS","SHIRT","T-SHIRT"]  
+    },
+    {
+      "id": 4,
+      "cname": "ACCESSORIES",
+      "sname": ["WATCH","WALLET"]
+      
+    }
+    
+  ],
+  
+  "product": [
+    {
+      "id": 1,
+      "name": "shirt",
+      "desc":"abcd",
+      "price":"11",
+      "image":""
+
+      
+    },
+    {
+      "id": 2,
+      "name": "shirt",
+      "desc":"abcd",
+      "price":"11",
+      "image":""
+      
+    }
+  ] 
+}
