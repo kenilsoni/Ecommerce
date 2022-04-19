@@ -13,14 +13,8 @@
   // Instantiate product object
   $product = new Product($db);
 
-  // Get ID
-  $product->cat_id = isset($_GET['cat_id']) ? $_GET['cat_id'] : die();
-  if(isset($_GET['subcat_id'])){
-    $product->subcat_id = isset($_GET['subcat_id']) ? $_GET['subcat_id'] : die();
-  }
-
   // product read query
-  $result = $product->read();
+  $result = $product->get_price();
   
   // Get row count
   $num = $result->rowCount();
@@ -35,17 +29,9 @@
           extract($row);
 
           $product_item = array(
-            'ID' => $ID,
-            'Product_Name' => $Product_Name,
-            'Product_Description'=>$Product_Description,
-            'Product_Quantity'=>$Product_Quantity,
-            'IsTrending'=>$IsTrending,
-            'Subcategory_ID'=>$Subcategory_ID,
-            'Category_ID'=>$Category_ID,
-            'Product_Quantity'=>$Product_Quantity,
-            'Product_Color_ID'=>$Product_Color_ID,
-            'Product_Size'=>$Product_Size,
-            'Product_Price'=>$Product_Price
+              'min'=>$MIN,
+              'max'=>$MAX
+            
           );
 
           // Push to "data"
