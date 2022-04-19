@@ -8,20 +8,27 @@ import { ProductService } from '../../service/product.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  categorylist:any;
-  subcategorylist:any;
-  constructor(private product:ProductService) { }
+  categorylist: any;
+  subcategorylist: any;
+  constructor(private product: ProductService) { }
 
   ngOnInit(): void {
-    this.product.getcategory().subscribe(response=>{
-      this.categorylist=response.data;
-      console.log(response.data);
-    })
-    this.product.get_subcategory().subscribe(response=>{
-      this.subcategorylist=response.data;
-      console.log(response.data);
+    this.getcategory();
+    this.getsubcategory();
+
+  }
+  getcategory() {
+    this.product.getcategory().subscribe(response => {
+      this.categorylist = response.data;
+      // console.log(response.data);
     })
   }
-  
+  getsubcategory() {
+    this.product.get_subcategory().subscribe(response => {
+      this.subcategorylist = response.data;
+      // console.log(response.data);
+    })
+  }
+
 
 }

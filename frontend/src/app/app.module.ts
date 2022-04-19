@@ -8,19 +8,29 @@ import { ProductModule } from './site-layout/product/product.module';
 import { HomeComponent } from './site-layout/home/home.component';
 import { HeaderComponent } from './site-layout/header/header.component';
 import { TitlecasePipe } from './pipes/titlecase.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSliderModule } from '@angular/material/slider';
+import { PricePipe } from './pipes/price.pipe';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    TitlecasePipe
+    TitlecasePipe,
+    PricePipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SiteLayoutModule,
     HttpClientModule,
-    ProductModule
+    ProductModule,
+    BrowserAnimationsModule,
+    NgxSliderModule,
+    MatSliderModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

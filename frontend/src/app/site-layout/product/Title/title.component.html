@@ -8,9 +8,9 @@
 <div class="breadcrumb-panel">
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="index.html" title="Home">Home</a></li>
-            <li><a href="product.html" title="{{title}}">{{title|titlecase}}</a></li>
-            <li><a href="product.html" title="{{subtitle}}" >{{subtitle|titlecase}}</a></li>
+            <li><a routerLink='/home'  title="Home">Home</a></li>
+            <li><a routerLink='/product/{{title}}/{{cid}}' title="{{title}}">{{title|titlecase}}</a></li>
+            <li><a routerLink='/product/{{title}}/{{cid}}/{{subtitle}}/{{sid}}' title="{{subtitle}}" >{{subtitle|titlecase}}</a></li>
             <!-- <li class="active">U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men</li> -->
         </ol>
     </div>

@@ -1,5 +1,97 @@
+<div class="col-sm-3">
+    <div class="left-panel">
+        <h3>Filter By</h3>
+        <div class="filter-option">
+            <div class="title" data-toggle="collapse" href="#collapse1"
+                aria-expanded="false">
+                Categories
+            </div>
+            <div class="filter-option-inner collapse in" id="collapse1">
+                <ul>
+                    <li class="custom-check" *ngFor="let cat of cat_data">
+                        <label>
+                            <input type="checkbox" class="icheck"
+                                (change)="category_filter($event)"
+                                value="{{cat.ID}}">
+                            {{cat.Subcategory_Name |titlecase}} <span>({{cat.total_item}})</span>
+                        </label>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="filter-option">
+            <div class="title" data-toggle="collapse" href="#collapse2"
+                aria-expanded="false">Colour</div>
+            <div class="filter-option-inner collapse in" id="collapse2">
+                <ul class="colour_family_list clearfix">
+                    <li *ngFor="let data of color">
+                        <a title={{data.Product_Color}}> <span
+                                [style.background-color]=data.Color_Code></span>
+                            <input type="radio" [(ngModel)]="color_radio"
+                                name="color_radio" class="color_btn"
+                                (click)="getproductby_color($event)"
+                                id="{{data.ID}}" value="{{data.ID}}">
+                            {{data.Product_Color|titlecase}} <i>(1250)</i></a>
+                    </li>
+                    <li><button title="Reset" class="btn reset"
+                            (click)="reset_radiobtn()">Reset</button></li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="filter-option">
+            <div class="title" data-toggle="collapse" href="#collapse3"
+                aria-expanded="false">Price</div>
+
+
+
+            <!-- <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ngx-slider> -->
+            <div class="price-range clearfix" *ngFor="let data of price">
+                <span>{{mymodel}}</span>
+                <mat-slider [(ngModel)]="mymodel" min="{{data.min}}"
+                    max="{{data.max}}" value={{data.min}} step="100"
+                    style="width:218px" (change)="updateSetting($event)"></mat-slider><span
+                    class="min">Rs. {{data.min}}</span><span class="max">Rs.
+                    {{data.max}}</span>
+            </div>
+            <!-- <div class="filter-option-inner collapse in" id="collapse3">
+                <div class="info">31 items</div>
+                <div class="slider"><img src="assets/images/price.jpg" alt=""></div>
+                <div class="price-range clearfix" *ngFor="let data of price"><span
+                        class="min">{{data.min}}</span><span class="max">
+                        {{data.max}}</span></div>
+            </div> -->
+        </div>
+        <div class="filter-option">
+            <div class="title" data-toggle="collapse" href="#collapse4"
+                aria-expanded="false">Size</div>
+            <div class="filter-option-inner size-filter collapse in"
+                id="collapse4">
+                <ul>
+                    <li class="custom-check" *ngFor="let data of size">
+                        <label>
+                            <input type="checkbox" class="icheck"
+                                (change)="size_filter($event)"
+                                value="{{data.ID}}">
+                            {{data.Product_Size}}
+                            <span>(81)</span>
+                        </label>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="add-block">
+            <a href="product.html" title="Promotion"><img
+                    src="assets/images/promo2.jpg"
+                    alt="" class="img-responsive"></a>
+        </div>
+    </div>
+</div>
 <div class="col-sm-9">
-    <h3>{{cat_name|titlecase}}</h3>
+    <h3>{{cat_name|titlecase}} {{subcat_name|titlecase}}</h3>
     <div class="toolbar clearfix">
 
         <div class="pager_right">
@@ -17,14 +109,18 @@
     </div>
     <div class="grid-content">
         <div class="grid row">
-            <div class="col-sm-4 col-xs-6" *ngFor="let product of data">
+            <div class="col-sm-4 col-xs-6" *ngFor="let product of productdata">
                 <figure class="effect-goliath">
                     <div class="thumb-outer">
-                        <a href="#" title="thumb" class="thumb-image"><img src="assets/images/new-thumb-01.jpg" alt="thumb"></a>
-                        <a href="cart.html" title="Add to Cart" class="cart-button">Add to Cart</a>
+                        <a href="#" title="thumb" class="thumb-image"><img
+                                src="assets/images/new-thumb-01.jpg"
+                                alt="thumb"></a>
+                        <a href="cart.html" title="Add to Cart"
+                            class="cart-button">Add to Cart</a>
                     </div>
                     <figcaption>
-                        <a href="product-detail.html" title={{product.Product_Name}} class="heading">{{product.Product_Name}}</a>
+                        <a href="product-detail.html"
+                            title={{product.Product_Name}} class="heading">{{product.Product_Name}}</a>
                         <span>{{product.Product_Price | currency:'INR'}}</span>
                     </figcaption>
                 </figure>
@@ -162,13 +258,14 @@
                         <span>$120.00</span>
                     </figcaption>
                 </figure>
-            </div>
-        </div> -->
+            </div> -->
+        </div>
     </div>
 
     <div class="col-sm-12 col-xs-12">
         <span class="button-outer text-center">
-            <a class="btn-tertiary" href="product.html" title="More Products">More Products</a>
+            <a class="btn-tertiary" href="product.html" title="More
+                Products">More Products</a>
         </span>
     </div>
 </div>

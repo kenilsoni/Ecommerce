@@ -1,0 +1,7 @@
+.reset{
+    background: none;
+    outline: none;
+}
+.reset:hover{
+    color: red;
+}

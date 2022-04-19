@@ -5,6 +5,8 @@ import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductService } from '../service/product.service';
 import { SitelayoutRoutingModule } from './site-layout-routing.module';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { MatSliderModule } from '@angular/material/slider';
 
 
 
@@ -16,7 +18,9 @@ import { SitelayoutRoutingModule } from './site-layout-routing.module';
   imports: [
     CommonModule,
     HttpClientModule,
-    SitelayoutRoutingModule
+    SitelayoutRoutingModule,
+    NgxSliderModule,
+    MatSliderModule
     
   ],
   exports: [
