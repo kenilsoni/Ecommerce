@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/service/product.service';
 import { Options, LabelType } from "@angular-slider/ngx-slider";
 import { SliderComponent } from '@angular-slider/ngx-slider/slider.component';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -20,32 +21,27 @@ export class ProductDetailsComponent implements OnInit {
   constructor(private product: ProductService, public route: ActivatedRoute) { }
   cat_id!: number
   subcat_id!: number
-  productdata: any
+  productdata: any=[]
   cat_name!: string
   cat_data!: any
   subcat_name!: string
   color!: any
   size!: any
   price!: any
-  // count!: any
   product_id!: any
-  mymodel = 0
+  color_radio: any
+  // min!:number
+  // mymodel = 0
+  load_product=environment.load_product
 
-  minValue: number = 100;
-  maxValue: number = 400;
+
+
+  minValue: number =0;
+  maxValue: number= 0;
   options: Options = {
     floor: 0,
-    ceil: 500,
-    translate: (value: number, label: LabelType): string => {
-      switch (label) {
-        case LabelType.Low:
-          return "<b>Min price:</b> $" + value;
-        case LabelType.High:
-          return "<b>Max price:</b> $" + value;
-        default:
-          return "$" + value;
-      }
-    }
+    ceil: 0,
+    
   };
 
   ngOnInit(): void {
@@ -54,82 +50,68 @@ export class ProductDetailsComponent implements OnInit {
       this.subcat_id = data['sid']
       this.cat_name = data['cname'];
       this.subcat_name = data['sname'];
-      this.product.getproductbycat_id(this.cat_id).subscribe(data => {
-        this.productdata = data['data']
-        if (this.subcat_id !== undefined) {
-          this.getproductbysubcat_id();
-        }
-      })
+      this.getproductby_cat();
+      this.getsubcategory();
+      this.getcolor();
+      this.getsize();
+      this.getcount();
     })
-    this.getsubcategory();
-    this.getcolor();
-    this.getsize();
-    this.getcount();
+ 
+  }
+  getproductby_cat(){
+    this.product.getproductbycat_id(this.cat_id,this.load_product).subscribe(data => {
+      this.productdata = data['data']
+      if (this.subcat_id !== undefined) {
+        this.getproductbysubcat_id();
+      }
+    })  
   }
   getproductbysubcat_id() {
-    this.product.getproductbysubcat_id(this.subcat_id, this.cat_id).subscribe(data => {
+    this.product.getproductbysubcat_id(this.subcat_id, this.cat_id,this.load_product).subscribe(data => {
       this.productdata = data['data']
-      // console.log(data['data'])
-
     })
   }
   getcount() {
     this.product.getprice().subscribe(data => {
-      this.price = data['data']
-      //  console.log(this.price.min);
+      // this.price = data['data']
+      for(let val of data['data']){
+        this.options={
+          floor:val.min,
+          ceil:val.max
+        }
+        
+      }
+      
     })
+    
   }
   getsubcategory() {
     this.product.getcategory_id(this.cat_id).subscribe(data => {
       this.cat_data = data['main']
-      // console.log(data)
-      // this.product.gettotal_count(this.cid,this.sid).subscribe(data=>{
-      //   this.price=data['data']
-      //     //  console.log(this.price.min);
-      // })
     })
   }
   getsize() {
-    this.product.getsize().subscribe(data => {
-      this.size = data['data']
-      // console.log(data['data']);
+    this.product.getsize(this.cat_id).subscribe(data => {
+      this.size = data['main']
     })
   }
   getcolor() {
-
-    this.product.getcolor().subscribe(data => {
-      this.color = data['data']
-      // console.log(data['data'])
+    this.product.getcolor(this.cat_id).subscribe(data => {
+      this.color = data['main']
     })
   }
+
   // newdata:any=[]
   category_filter(e: any) {
     if (e.target.checked) {
-      this.product.getproductbysubcat_id(e.target.value, this.cat_id).subscribe(data => {
+     
+      // console.log(this.productdata)
+      this.product.getproductbysubcat_id(e.target.value, this.cat_id,this.load_product).subscribe(data => {
         this.productdata = data['data']
-
-        // console.log(data['data'])
-
       })
-      // console.log(e.target.value.split('/'));
-      // const arr=e.target.value.split('/');
-
-      // this.router.navigate(['/product/'+this.cname+'/'+this.cid+'/'+arr[1]+'/'+arr[0]]);
-      // console.log(arr[1]);
     } else {
-      this.product.getproductbycat_id(this.cat_id).subscribe(data => {
-        this.productdata = data['data']
-
-        if (this.subcat_id !== undefined) {
-          this.product.getproductbysubcat_id(this.subcat_id, this.cat_id).subscribe(data => {
-            this.productdata = data['data']
-            // console.log(data['data'])
-
-          })
-        }
-      })
+      this.getproductby_cat()
     }
-
   }
   getproductby_color(e: any) {
     // console.log(e.target.value)
@@ -140,9 +122,14 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
   size_filter(e: any) {
+    if (e.target.checked) {
     this.product.getproductbysize_id(e.target.value, this.cat_id).subscribe(data => {
       this.productdata = data['data']
-    })
+    })}
+    else{
+      this.getproductby_cat()
+    
+    }
   }
 
   updateSetting(e: any) {
@@ -150,22 +137,29 @@ export class ProductDetailsComponent implements OnInit {
     var el = this['element'].nativeElement;
     console.log(el)
   }
-  color_radio: any
+
+
   reset_radiobtn() {
     this.color_radio = null
-
-    this.product.getproductbycat_id(this.cat_id).subscribe(data => {
-      this.productdata = data['data']
-
-      if (this.subcat_id !== undefined) {
-        this.product.getproductbysubcat_id(this.subcat_id, this.cat_id).subscribe(data => {
-          this.productdata = data['data']
-          // console.log(data['data'])
-
-        })
-      }
-    })
-
+    this.getproductby_cat()
   }
 
+  loadmore_product(e:number){
+    this.load_product=e+3;
+    this.getproductby_cat()
+  }
+  sortby(e:any){
+    if(e.target.value !== ''){
+      this.product.getorderby(e.target.value,this.cat_id).subscribe(data=>{
+        this.productdata=data['data']
+      })
+    }
+  }
+
+  sliderEvent(e:any){
+    this.product.price_filter(e.value,e.highValue,this.load_product).subscribe(data=>{
+      this.productdata=data['data']
+    })
+     
+  }
 }

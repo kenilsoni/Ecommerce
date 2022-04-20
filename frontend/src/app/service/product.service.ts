@@ -24,25 +24,25 @@ export class ProductService {
   getcategory_id(id:number){
     return this.httpclient.get<Category>(`${environment.API_URL}/subcategory/read.php/?cid=`+id)
   }
-  // get color
-  getcolor(){
-    return this.httpclient.get<color>(`${environment.API_URL}/color/read.php`)
+  // get color & totalcount
+  getcolor(id:number){
+    return this.httpclient.get<color>(`${environment.API_URL}/color/read.php?cid=`+id)
   }
-  // get size
-  getsize(){
-    return this.httpclient.get<size>(`${environment.API_URL}/size/read.php`)
+  // get size & totalcount
+  getsize(id:number){
+    return this.httpclient.get<size>(`${environment.API_URL}/size/read.php?cid=`+id)
   }
   // get price count
   getprice(){
     return this.httpclient.get<size>(`${environment.API_URL}/product/getprice.php`)
   }
   //get product by category id
-  getproductbycat_id(cat_id:number){
-    return this.httpclient.get<product>(`${environment.API_URL}/product/read.php?cat_id=`+cat_id)
+  getproductbycat_id(cat_id:number,load_product:number,order:string=''){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/read.php?cat_id=`+cat_id+'&limit='+load_product+'&order'+order)
   }
   //get product by subcategory id
-  getproductbysubcat_id(subcat_id:number,cat_id:number){
-    return this.httpclient.get<product>(`${environment.API_URL}/product/read.php?cat_id=`+cat_id+'&subcat_id='+subcat_id)
+  getproductbysubcat_id(subcat_id:number,cat_id:number,load_product:number){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/read.php?cat_id=`+cat_id+'&subcat_id='+subcat_id+'&limit='+load_product)
   }
   //get product by color id
   getproductbyclr_id(id:number,cid:number){
@@ -51,6 +51,18 @@ export class ProductService {
    //get product by size id
   getproductbysize_id(id:number,cid:number){
     return this.httpclient.get<product>(`${environment.API_URL}/product/getsize.php?size_id=`+id+'&cid='+cid)
+  }
+  //get order by
+  getorderby(order:string,cid:number){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/orderby.php?order=`+order+'&cid='+cid)
+  }
+  // get single product
+  getproduct_single(id:number){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/getproduct.php?id=`+id)
+  }
+  //price filter
+  price_filter(from:number,to:number,load:number){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/pricefilter.php?from=`+from+'&to='+to+'&load='+load)
   }
   
 

@@ -27,9 +27,9 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     SiteLayoutModule,
     HttpClientModule,
     ProductModule,
-    BrowserAnimationsModule,
+    // BrowserAnimationsModule,
     NgxSliderModule,
-    MatSliderModule
+    // MatSliderModule
 
   ],
   providers: [],

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  API_URL:"http://localhost/ecommerce/php_api/api/"
+  API_URL:"http://localhost/ecommerce/php_api/api/",
+  load_product:9
 };
 
 /*

@@ -5,3 +5,22 @@
 .reset:hover{
     color: red;
 }
+.colour_family_list label{
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-weight: 400;
+    position: relative;
+    display: inline-block;
+    /* padding-left: 22px; */
+}
+.colour_family_list  li a{
+    padding-left:18px ;
+}
+.color_btn{
+    opacity:0 ;
+}
+.colour_family_list input[type=radio]:checked + label{
+    color:red
+}

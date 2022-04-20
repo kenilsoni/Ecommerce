@@ -7,6 +7,7 @@ import { SitelayoutRoutingModule } from '../site-layout-routing.module';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { ProductDataComponent } from './product-data/product-data.component';
 
 
 
@@ -14,7 +15,8 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
   declarations: [
     TitleComponent,
     MainComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    ProductDataComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
   ],
   exports:[
     MainComponent,
-    TitleComponent
+    TitleComponent,
+    ProductDataComponent
 
   ]
 })
