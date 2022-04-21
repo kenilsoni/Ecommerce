@@ -53,9 +53,12 @@
                             <li class="cart-outer">
                                 <a href="#" title="Add to Cart"
                                     class="add-to-cart"></a>
-                                <div class="cart-wrap">
-                                    <p>Recently added item(s)</p>
-                                    <ul>
+                                <div class="cart-wrap" >
+                                   
+                                   
+                                    <div *ngIf="products.length > 0;else nodata">
+                                        <p>Recently added item(s)</p>
+                                    <ul *ngFor="let item of products; let i = index">
                                         <li>
                                             <a class="cart-product"
                                                 title="consectetur adipiscing
@@ -66,7 +69,7 @@
                                             <div class="cart-details">
                                                 <a class="btn-remove"
                                                     title="Remove item"
-                                                    href="#"><img
+                                                    (click)="removeItem(item)"><img
                                                         src="/assets/images/cross.svg"
                                                         alt=""></a>
                                                 <a class="btn-edit" title="Edit
@@ -76,10 +79,8 @@
                                                         alt="">
                                                 </a>
                                                 <p class="product-name"><a
-                                                        href="product-detail.html">U.S.
-                                                        Polo Assn. Full Sleeve
-                                                        Plain T-Shirts...</a></p>
-                                                <p class="price">$120.00 </p>
+                                                        href="product-detail.html">{{item.Product_Name}}</a></p>
+                                                <p class="price">{{item.Product_Price|currency:'INR'}} </p>
                                                 <p class="qty-wrapper">
                                                     <span>Qty : </span>
                                                     <span>1</span>
@@ -88,13 +89,13 @@
                                                     <dl class="item-options">
                                                         <dt>Size :</dt>
                                                         <dd>
-                                                            Medium/Large
+                                                            {{item.Size_Name}}
                                                         </dd>
                                                     </dl>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
+                                        <!-- <li>
                                             <a class="cart-product"
                                                 title="consectetur adipiscing
                                                 elit"
@@ -134,18 +135,22 @@
                                                     </dl>
                                                 </div>
                                             </div>
-                                        </li>
+                                        </li> -->
                                     </ul>
+                                   
                                     <div class="summary">
                                         <p class="subtotal">
                                             <span>Cart Subtotal:</span> <span
-                                                class="price">$168.00</span>
+                                                class="price">{{grandTotal|currency:'INR'}}</span>
                                         </p>
                                     </div>
                                     <div class="cart-action">
-                                        <a href="cart.html" title="View Cart"
+                                        <a routerLink="/cart"title="View Cart"
                                             class="btn-secondary">View Cart</a>
-                                    </div>
+                                    </div></div>
+                                    <ng-template #nodata>
+                                        <p>Your Cart Is Empty</p>
+                                    </ng-template>
                                 </div>
                             </li>
                             <li class="search-link-wrap">

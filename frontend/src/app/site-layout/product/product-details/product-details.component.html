@@ -10,13 +10,14 @@
                 <ul>
                     <li class="custom-check" *ngFor="let cat of cat_data">
                         <label>
-                            <input type="checkbox" class="icheck"
+                            <input type="checkbox" #checkboxes class="icheck" 
                                 (change)="category_filter($event)"
                                 value="{{cat.ID}}">
                             {{cat.Subcategory_Name |titlecase}} <span>({{cat.total_item}})</span>
                         </label>
                     </li>
-
+                    <li><button title="Reset" class="btn reset"
+                        (click)="reset_catbtn()">Reset</button></li>
                 </ul>
             </div>
         </div>
@@ -71,13 +72,15 @@
                 <ul>
                     <li class="custom-check" *ngFor="let data of size">
                         <label>
-                            <input type="checkbox" class="icheck"
+                            <input type="checkbox" class="icheck" #checkboxes2
                                 (change)="size_filter($event)"
                                 value="{{data.ID}}">
                             {{data.Product_Size}}
                             <span>({{data.total_item}})</span>
                         </label>
                     </li>
+                    <li><button title="Reset" class="btn reset"
+                        (click)="reset_sizebtn()">Reset</button></li>
 
                 </ul>
             </div>
@@ -113,10 +116,10 @@
             <div class="col-sm-4 col-xs-6" *ngFor="let product of productdata">
                 <figure class="effect-goliath">
                     <div class="thumb-outer">
-                        <a href="#" title="thumb" class="thumb-image"><img
+                        <a routerLink="/product/{{product.ID}}" title="{{product.Product_Name}}" class="thumb-image"><img
                                 src="assets/images/new-thumb-01.jpg"
                                 alt="thumb"></a>
-                        <a href="cart.html" title="Add to Cart"
+                        <a routerLink="/cart" (click)="addtocart(product)" title="Add to Cart"
                             class="cart-button">Add to Cart</a>
                     </div>
                     <figcaption>
@@ -134,7 +137,7 @@
             </div>
           </ng-template>
     </div>
-    <div class="col-sm-12 col-xs-12" *ngIf="productdata.length > 0;">
+    <div class="col-sm-12 col-xs-12" *ngIf="productdata.length >=9;">
         <span class="button-outer text-center">
           <a
             class="btn-tertiary"

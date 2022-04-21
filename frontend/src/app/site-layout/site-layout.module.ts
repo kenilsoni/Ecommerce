@@ -7,20 +7,30 @@ import { ProductService } from '../service/product.service';
 import { SitelayoutRoutingModule } from './site-layout-routing.module';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { MatSliderModule } from '@angular/material/slider';
+import { AboutComponent } from './about/about.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { UserRegisterComponent } from './user-register/user-register.component';
+import { CartComponent } from './product/cart/cart.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    AboutComponent,
+    ContactUsComponent,
+    UserRegisterComponent
   ],
   imports: [
     CommonModule,
     HttpClientModule,
     SitelayoutRoutingModule,
     NgxSliderModule,
-    MatSliderModule
+    MatSliderModule,
+    FormsModule,
+    ReactiveFormsModule
     
   ],
   exports: [

@@ -16,10 +16,14 @@
     </div>
 </div>
 
-<section class="product_listing content">
+<section class="product_detail content">
 <div class="container" >
    
     <div class="row" >
+        <div class="alert alert-dismissible alert-success" role="alert" *ngIf=addtocart_alert>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <i> <img src="assets/images/success.svg" height="15px" alt="success"></i> <span> {{data.Product_Name}}</span> was added to your shopping cart
+        </div>
         <div class="col-sm-5">
             <ul class="sync1">
                 <li>
@@ -71,32 +75,34 @@
             </div>
             <!-- <p class="availability">Availability:<span class="in-stock">In stock</span><span class="not-in-stock">Not Available</span></p> -->
             <div class="price-box">{{data.Product_Price|currency:'INR'}}</div>
+            <!-- <form [formGroup]="registerval"> -->
             <div class="product-options">
                 <label class="required"><em>*</em> size</label>
                 <p class="required">* Required Fields</p>
                 <div class="form-group">
                     <select>
                         <option>-- Please Select --</option>
-                        <option>Medium/Large </option>
+                        <option value="{{data.Product_Size}}">{{data.Size_Name}}</option>
                       
                     </select>
                 </div>
             </div>
             <div class="add-to-cart-btn clearfix">
                 <label>Qty:</label>
-                <select>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
+                <select >
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
                 </select>
-                <button type="button" onclick="" title="Add to Cart" class="button btn-cart"><span><span>Add to Cart</span></span>
+                <button type="button" (click)="addtocart(data)" title="Add to Cart" class="button btn-cart"><span><span>Add to Cart</span></span>
                 </button>
             </div>
             <div class="email-addto-box clearfix">
                 <ul class="add-to-links">
-                    <li><a href="#" class="link-wishlist">Add to Wishlist</a></li>
+                    <li><a  class="link-wishlist">Add to Wishlist</a></li>
                 </ul>
             </div>
+        <!-- </form> -->
             <div class="tablist-nav">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs clearfix" role="tablist">

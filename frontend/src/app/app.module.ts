@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { PricePipe } from './pipes/price.pipe';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { CartComponent } from './site-layout/product/cart/cart.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     SiteLayoutModule,
     HttpClientModule,
     ProductModule,
+    // CartComponent,
     // BrowserAnimationsModule,
     NgxSliderModule,
     // MatSliderModule

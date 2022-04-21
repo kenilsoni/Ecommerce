@@ -61,8 +61,12 @@ export class ProductService {
     return this.httpclient.get<product>(`${environment.API_URL}/product/getproduct.php?id=`+id)
   }
   //price filter
-  price_filter(from:number,to:number,load:number){
-    return this.httpclient.get<product>(`${environment.API_URL}/product/pricefilter.php?from=`+from+'&to='+to+'&load='+load)
+  price_filter(from:number,to:number,load:number,cid:number){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/pricefilter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cid)
+  }
+  //get trending product
+  gettrend_product(load:number,trend:number){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/trending.php?load=`+load+'&trend='+trend)
   }
   
 

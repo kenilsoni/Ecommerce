@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/service/product.service';
 import { Options, LabelType } from "@angular-slider/ngx-slider";
 import { SliderComponent } from '@angular-slider/ngx-slider/slider.component';
 import { environment } from 'src/environments/environment';
+import { CartService } from 'src/app/service/cart.service';
 
 
 
@@ -18,7 +19,7 @@ export class ProductDetailsComponent implements OnInit {
   [x: string]: any;
   sorted_data: any;
 
-  constructor(private product: ProductService, public route: ActivatedRoute) { }
+  constructor(private product: ProductService, public route: ActivatedRoute,private cartService : CartService) { }
   cat_id!: number
   subcat_id!: number
   productdata: any=[]
@@ -30,11 +31,12 @@ export class ProductDetailsComponent implements OnInit {
   price!: any
   product_id!: any
   color_radio: any
-  // min!:number
-  // mymodel = 0
   load_product=environment.load_product
 
-
+  @ViewChildren("checkboxes")
+  checkboxes!: QueryList<ElementRef>;
+  @ViewChildren("checkboxes2")
+  checkboxes2!: QueryList<ElementRef>;
 
   minValue: number =0;
   maxValue: number= 0;
@@ -143,7 +145,18 @@ export class ProductDetailsComponent implements OnInit {
     this.color_radio = null
     this.getproductby_cat()
   }
-
+  reset_catbtn(){
+    this.checkboxes.forEach((element) => {
+      element.nativeElement.checked = false;
+    });
+    this.getproductby_cat()
+  }
+  reset_sizebtn(){
+    this.checkboxes2.forEach((element) => {
+      element.nativeElement.checked = false;
+    });
+    this.getproductby_cat()
+  }
   loadmore_product(e:number){
     this.load_product=e+3;
     this.getproductby_cat()
@@ -157,9 +170,17 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   sliderEvent(e:any){
-    this.product.price_filter(e.value,e.highValue,this.load_product).subscribe(data=>{
+    this.product.price_filter(e.value,e.highValue,this.load_product,this.cat_id).subscribe(data=>{
       this.productdata=data['data']
     })
      
+  }
+  addtocart(e:any){
+    this.cartService.addtoCart(e);
+    // this.addtocart_alert=true
+    // setTimeout(() => {
+    //   this.addtocart_alert=false
+    // }, 4000);
+    // console.log(qty)
   }
 }
