@@ -13,6 +13,8 @@
   // Instantiate size object
   $size = new Size($db);
 
+  
+  $size->Category_ID=isset($_GET['cid'])?$_GET['cid']:die();
   // size read query
   $result = $size->read();
   
@@ -23,7 +25,7 @@
   if($num > 0) {
         // size array
         $size_arr = array();
-        $size_arr['data'] = array();
+        $size_arr['main'] = array();
 
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
           extract($row);
@@ -33,9 +35,21 @@
             'Product_Size' => $Product_Size
             
           );
+          $result2 = $size->total_item($ID);
+          while ($row = $result2->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+    
+            $product_item = array(
+              'total_item' => $total_item
+            );
+    
+            // Push to "data"
+            $new_data = array_merge($size_item, $product_item);
+            array_push($size_arr['main'], $new_data);
+          }
 
           // Push to "data"
-          array_push($size_arr['data'], $size_item);
+          // array_push($size_arr['data'], $size_item);
         }
 
         // Turn to JSON & output

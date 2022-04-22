@@ -24,7 +24,8 @@ class Product
   public $Color_ID;
   public $from;
   public $to;
-
+  public $load;
+  public $order;
 
   // Constructor with DB
   public function __construct($db)
@@ -37,26 +38,26 @@ class Product
   {
     // Create query
     if (isset($this->subcat_id)) {
-      $query = 'SELECT * FROM ' . $this->table . ' WHERE Category_ID=? AND SubCategory_ID=?';
+      $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID WHERE pdt.Category_ID=? AND pdt.Subcategory_ID=? LIMIT '.$this->load;
       // Prepare statement
       $stmt = $this->conn->prepare($query);
 
       // Bind ID
       $stmt->bindParam(1, $this->cat_id);
       $stmt->bindParam(2, $this->subcat_id);
+      // $stmt->bindParam(3, $this->load);
 
       // Execute query
       $stmt->execute();
 
       return $stmt;
     } else {
-      $query = 'SELECT * FROM ' . $this->table . ' WHERE Category_ID=?';
+      $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID WHERE pdt.Category_ID=? LIMIT '.$this->load;
       // Prepare statement
       $stmt = $this->conn->prepare($query);
 
       // Bind ID
       $stmt->bindParam(1, $this->cat_id);
-      // $stmt->bindParam(2, $this->subcat_id);
 
       // Execute query
       $stmt->execute();
@@ -68,29 +69,49 @@ class Product
   // Get  product
   public function read_single()
   {
+    if(isset($this->IsTrending)){
+ // Create query
+ $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID WHERE pdt.IsTrending=1 LIMIT '.$this->load;
+
+ //Prepare statement
+ $stmt = $this->conn->prepare($query);
+
+ // Execute query
+ $stmt->execute();
+
+ return $stmt;
+    }else{
+ // Create query
+ $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID WHERE pdt.ID=?';
+
+ //Prepare statement
+ $stmt = $this->conn->prepare($query);
+
+ // Bind ID
+ $stmt->bindParam(1, $this->ID);
+
+ // Execute query
+ $stmt->execute();
+
+ return $stmt;
+    }
+   
+  }
+  public function get_order()
+  {
     // Create query
-    $query = 'SELECT * FROM  ' . $this->table . ' WHERE ID=?';
+    $query = 'SELECT * FROM  ' . $this->table . ' WHERE Category_ID=? ORDER BY '.$this->order;
 
     //Prepare statement
     $stmt = $this->conn->prepare($query);
-
-    // Bind ID
-    $stmt->bindParam(1, $this->id);
-
+    $stmt->bindParam(1, $this->Category_ID);
     // Execute query
     $stmt->execute();
 
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $stmt;
 
     // set properties
-    $this->ID = $row['ID'];
-    $this->Product_Name = $row['Product_Name'];
-    $this->Product_Description = $row['Product_Description'];
-    $this->Product_Price = $row['Product_Price'];
-    $this->Product_Quantity = $row['Product_Quantity'];
-    $this->IsTrending = $row['IsTrending'];
-    $this->Subcategory_ID = $row['Subcategory_ID'];
-    $this->Category_ID = $row['Category_ID'];
+    
   }
   public function get_price()
   {
@@ -142,14 +163,15 @@ class Product
   public function price_filter()
   {
     // Create query
-    $query = 'SELECT * FROM product WHERE Product_Price BETWEEN ? AND ?';
+    $query = 'SELECT * FROM product WHERE Category_ID= ? AND Product_Price BETWEEN ? AND ? LIMIT '.$this->load;
 
     //Prepare statement
     $stmt = $this->conn->prepare($query);
 
      // Bind ID
-     $stmt->bindParam(1, $this->from);
-     $stmt->bindParam(2, $this->to);
+     $stmt->bindParam(1, $this->Category_ID);
+     $stmt->bindParam(2, $this->from);
+     $stmt->bindParam(3, $this->to);
 
     // Execute query
     $stmt->execute();

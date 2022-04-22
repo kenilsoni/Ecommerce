@@ -7,6 +7,7 @@
     // Properties
     public $ID;
     public $Product_Size;
+    public $Category_ID;
 
 
     // Constructor with DB
@@ -48,6 +49,22 @@
       $this->ID = $row['ID'];
       $this->Product_Size = $row['Product_Size'];
       
+  }
+  public function total_item($id)
+  {
+    // Create query
+    $query = 'SELECT COUNT(*) AS total_item FROM product WHERE Category_ID=? AND Product_Size =' . $id;
+
+    //Prepare statement
+    $stmt = $this->conn->prepare($query);
+
+    // Bind ID
+    $stmt->bindParam(1, $this->Category_ID);
+    // $stmt->bindParam(2, $this->ID);
+
+    // Execute query
+    $stmt->execute();
+    return $stmt;
   }
 
 }

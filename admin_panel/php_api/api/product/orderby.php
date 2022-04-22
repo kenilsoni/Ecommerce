@@ -13,12 +13,10 @@
   // Instantiate product object
   $product = new Product($db);
 
-  $product->from = isset($_GET['from']) ? $_GET['from'] : die();
-  $product->to = isset($_GET['to']) ? $_GET['to'] : die();
-  $product->load = isset($_GET['load']) ? $_GET['load'] : die();
+  $product->order = isset($_GET['order']) ? $_GET['order'] : die();
   $product->Category_ID = isset($_GET['cid']) ? $_GET['cid'] : die();
   // product read query
-  $result = $product->price_filter();
+  $result = $product->get_order();
   
   // Get row count
   $num = $result->rowCount();

@@ -49,5 +49,21 @@
       $this->Product_Color = $row['Product_Color'];
       $this->Color_Code = $row['Color_Code'];
   }
+  public function total_item($id)
+  {
+    // Create query
+    $query = 'SELECT COUNT(*) AS total_item FROM product WHERE Category_ID=? AND Product_Color_ID=' . $id;
+
+    //Prepare statement
+    $stmt = $this->conn->prepare($query);
+
+    // Bind ID
+    $stmt->bindParam(1, $this->Category_ID);
+    // $stmt->bindParam(2, $this->ID);
+
+    // Execute query
+    $stmt->execute();
+    return $stmt;
+  }
 
 }

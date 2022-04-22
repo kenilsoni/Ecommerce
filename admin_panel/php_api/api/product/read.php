@@ -15,9 +15,11 @@
 
   // Get ID
   $product->cat_id = isset($_GET['cat_id']) ? $_GET['cat_id'] : die();
+  $product->load = isset($_GET['limit']) ? $_GET['limit'] : die();
   if(isset($_GET['subcat_id'])){
     $product->subcat_id = isset($_GET['subcat_id']) ? $_GET['subcat_id'] : die();
   }
+
 
   // product read query
   $result = $product->read();
@@ -45,7 +47,9 @@
             'Product_Quantity'=>$Product_Quantity,
             'Product_Color_ID'=>$Product_Color_ID,
             'Product_Size'=>$Product_Size,
-            'Product_Price'=>$Product_Price
+            'Product_Price'=>$Product_Price,
+            'Category_name'=>$Category_Name,
+            'Subcategory_name'=>$Subcategory_Name,
           );
 
           // Push to "data"

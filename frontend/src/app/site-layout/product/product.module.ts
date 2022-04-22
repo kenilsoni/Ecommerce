@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { ProductDataComponent } from './product-data/product-data.component';
 import { CartComponent } from './cart/cart.component';
-
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 
 @NgModule({
@@ -26,7 +26,8 @@ import { CartComponent } from './cart/cart.component';
     FormsModule,
     ReactiveFormsModule,
     NgxSliderModule,
-    MatSliderModule
+    MatSliderModule,
+    CarouselModule
   ],
   exports:[
     MainComponent,
