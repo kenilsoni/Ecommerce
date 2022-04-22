@@ -8,12 +8,6 @@ import { CartService } from 'src/app/service/cart.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
-// import { runInThisContext } from 'vm';
-
-
-
-
-
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -23,7 +17,7 @@ export class ProductDetailsComponent implements OnInit {
   [x: string]: any;
   sorted_data: any;
 
-  
+
   constructor(private product: ProductService, public route: ActivatedRoute, private cartService: CartService, private formbuilder: FormBuilder) { }
   cat_id!: number
   subcat_id!: number
@@ -69,21 +63,9 @@ export class ProductDetailsComponent implements OnInit {
       this.getcolor();
       this.getsize();
       this.getcount();
-      // if(this.cat_id==this.checkboxes.value)
-     
-
     })
-    
-    
-    this.checkval = this.formbuilder.group({
-      checkbox_val: ['']
-      // email: [''],
-      // phone: [''],
-      // password:[''],
-      // lastname:['']
-    })
-
   }
+
   getproductby_cat() {
     this.product.getproductbycat_id(this.cat_id, this.load_product).subscribe(data => {
       this.productdata = data['data']
@@ -92,23 +74,22 @@ export class ProductDetailsComponent implements OnInit {
       }
     })
     // console.log(this.checkBoxValue.ID)
-
   }
   getproductbysubcat_id() {
     this.product.getproductbysubcat_id(this.subcat_id, this.cat_id, this.load_product).subscribe(data => {
       this.productdata = data['data']
       this.checkboxes.forEach((element) => {
-        if(this.subcat_id  ==  element.nativeElement.id) {
-          element.nativeElement.checked=true
+        if (this.subcat_id == element.nativeElement.id) {
+          element.nativeElement.checked = true
         }
-        else{
-          element.nativeElement.checked=false
+        else {
+          element.nativeElement.checked = false
         }
       });
     })
-   
+
     // this.checkboxes.nativeElement.id
-    
+
   }
   getcount() {
     this.product.getprice().subscribe(data => {
@@ -135,8 +116,6 @@ export class ProductDetailsComponent implements OnInit {
 
 
   }
-
-
   getsize() {
     this.product.getsize(this.cat_id).subscribe(data => {
       this.size = data['main']
@@ -147,25 +126,18 @@ export class ProductDetailsComponent implements OnInit {
       this.color = data['main']
     })
   }
-
-  // newdata:any=[]
   category_filter(e: any) {
     if (e.target.checked) {
       this.subcat_arr.push(e.target.value)
-
       this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
         this.productdata = data['data']
-        console.log(data['data'])
       })
     } else {
       let index = this.subcat_arr.indexOf(e.target.value);
       this.subcat_arr.splice(index, 1);
-         console.log(this.subcat_arr)
-          console.log(index)
       if (this.subcat_arr.length != 0) {
         this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
           this.productdata = data['data']
-          
         })
       }
       else {
@@ -173,154 +145,108 @@ export class ProductDetailsComponent implements OnInit {
       }
 
     }
-    // console.log(e.target.checked)
-    // console.log(this.subcat_arr)
   }
-  clr_array:any=[]
+  clr_array: any = []
   getproductby_color(e: any) {
-    // console.log(e.target.value)
+    this.clr_array = []
     if (e.target.value === 'on') {
       this.checkboxes.forEach((element) => {
-        if(element.nativeElement.checked){
+        if (element.nativeElement.checked) {
           this.clr_array.push(element.nativeElement.id)
-          // console.log(element.nativeElement.id)
-          
-        }else{
-            let index = this.snew_arr.indexOf(element.nativeElement.id);
-            this.snew_arr.splice(index, 1);
-            // this.snew_arr.push(element.nativeElement.id)
-          }
-        
+        } else {
+          let index = this.snew_arr.indexOf(element.nativeElement.id);
+          this.snew_arr.splice(index, 1);
+        }
       });
-      console.log(this.clr_array)
-      if(this.clr_array.length !== 0){
-        this.product.all_product2(this.clr_array,e.target.id,this.cat_id,this.load_product).subscribe(data => {
-          if(data['data']!==undefined){
+      if (this.clr_array.length !== 0) {
+        this.product.all_product2(this.clr_array, e.target.id, this.cat_id, this.load_product).subscribe(data => {
+          if (data['data'] !== undefined) {
             this.productdata = data['data']
           }
-          else{
-            this.productdata=[]
+          else {
+            this.productdata = []
           }
-          
-          
         })
-      }else{
+      } else {
         this.product.getproductbyclr_id(e.target.id, this.cat_id).subscribe(data => {
           this.productdata = data['data']
         })
       }
     }
-
   }
-  snew_arr:any=[] //subcat temp arr
+  snew_arr: any = [] //subcat temp arr
   size_filter(e: any) {
-    // console.log(this.color_radio.value)
-   
+    this.snew_arr = []
     if (e.target.checked) {
       this.checkboxes.forEach((element) => {
-        if(element.nativeElement.checked){
+        if (element.nativeElement.checked) {
           this.snew_arr.push(element.nativeElement.id)
-          // console.log(element.nativeElement.id)
-          
         }
-        // else{
-        //   let index = this.snew_arr.indexOf(element.nativeElement.id);
-        //   this.snew_arr.splice(index, 1);
-        //   // this.snew_arr.push(element.nativeElement.id)
-        // }
-        
       });
       this.size_arr.push(e.target.value)
-     
-      if(this.snew_arr.length !== 0){
-        this.product.all_product(this.snew_arr,this.size_arr,this.cat_id,this.load_product).subscribe(data => {
-          if(data['data']!==undefined){
-          this.productdata = data['data']
+      if (this.snew_arr.length !== 0) {
+        this.product.all_product(this.snew_arr, this.size_arr, this.cat_id, this.load_product).subscribe(data => {
+          if (data['data'] !== undefined) {
+            this.productdata = data['data']
           }
-          else{
-            this.productdata=[]
+          else {
+            this.productdata = []
           }
-          // console.log(data['data']);
         })
       }
-      else{
-      this.product.getproductbysize_id(this.size_arr, this.cat_id, this.load_product).subscribe(data => {
-        this.productdata = data['data']
-        // console.log(data['data']);
-       
-      })
-      } 
+      else {
+        this.product.getproductbysize_id(this.size_arr, this.cat_id, this.load_product).subscribe(data => {
+          this.productdata = data['data']
+        })
+      }
     }
     else {
       let index = this.size_arr.indexOf(e.target.value);
       this.size_arr.splice(index, 1);
       this.checkboxes.forEach((element) => {
-        if(element.nativeElement.checked){
+        if (element.nativeElement.checked) {
           this.snew_arr.push(element.nativeElement.id)
-          // console.log(element.nativeElement.id)
-          
         }
-        // else{
-        //   let index = this.snew_arr.indexOf(element.nativeElement.id);
-        //   this.snew_arr.splice(index, 1);
-        //   // this.snew_arr.push(element.nativeElement.id)
-        // }
-      }); 
-        if(this.snew_arr.length !== 0){
-          if(this.size_arr.length == 0){
-            this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
-              this.productdata = data['data']
-              console.log(data['data'])
-            })
-          }
-          else{
-            this.product.all_product(this.snew_arr,this.size_arr,this.cat_id,this.load_product).subscribe(data => {
-              if(data['data']!==undefined){
-                this.productdata = data['data']
-                }
-                else{
-                  this.productdata=[]
-                }
-            })
-          }
-         
-        }else if(this.size_arr.length !== 0){
-          this.product.getproductbysize_id(this.size_arr, this.cat_id, this.load_product).subscribe(data => {
+      });
+      if (this.snew_arr.length !== 0) {
+        if (this.size_arr.length == 0) {
+          this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
             this.productdata = data['data']
-            // console.log(data['data'])
+            console.log(data['data'])
           })
         }
-        else{
-
-      this.getproductby_cat()
+        else {
+          this.product.all_product(this.snew_arr, this.size_arr, this.cat_id, this.load_product).subscribe(data => {
+            if (data['data'] !== undefined) {
+              this.productdata = data['data']
+            }
+            else {
+              this.productdata = []
+            }
+          })
         }
-     
 
+      } else if (this.size_arr.length !== 0) {
+        this.product.getproductbysize_id(this.size_arr, this.cat_id, this.load_product).subscribe(data => {
+          this.productdata = data['data']
+        })
+      }
+      else {
+        this.getproductby_cat()
+      }
     }
   }
-
-  updateSetting(e: any) {
-    // console.log(e.min)
-    var el = this['element'].nativeElement;
-    // console.log(el)
-  }
-
-
   reset_radiobtn() {
     this.color_radio = null
-  
-   
-    if(this.clr_array.length !== 0){
+    if (this.clr_array.length !== 0) {
       this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
         this.productdata = data['data']
         console.log(data['data'])
       })
-    }else{
-      this.clr_array=[]
+    } else {
+      this.clr_array = []
       this.getproductby_cat()
     }
-  
-  
   }
   reset_catbtn() {
     this.checkboxes.forEach((element) => {
@@ -329,27 +255,20 @@ export class ProductDetailsComponent implements OnInit {
     this.subcat_arr = [];
     this.getproductby_cat()
   }
-
   reset_sizebtn() {
     this.checkboxes2.forEach((element) => {
       element.nativeElement.checked = false;
     });
-    // this.size_arr = []
-    // this.snew_arr=[]
-    if(this.snew_arr.length !== 0){
+    if (this.snew_arr.length !== 0) {
       this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
         this.productdata = data['data']
-        // console.log(data['data'])
       })
     }
-    else{
-    this.product.getproductbysize_id(this.size_arr, this.cat_id, this.load_product).subscribe(data => {
-      this.productdata = data['data']
-      // console.log(data['data']);
-     
-    })
-    } 
-    // this.getproductby_cat()
+    else {
+      this.product.getproductbysize_id(this.size_arr, this.cat_id, this.load_product).subscribe(data => {
+        this.productdata = data['data']
+      })
+    }
   }
   loadmore_product(e: number) {
     this.load_product = e + 3;
@@ -362,7 +281,6 @@ export class ProductDetailsComponent implements OnInit {
       })
     }
   }
-
   sliderEvent(e: any) {
     this.product.price_filter(e.value, e.highValue, this.load_product, this.cat_id).subscribe(data => {
       this.productdata = data['data']

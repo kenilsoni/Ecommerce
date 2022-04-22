@@ -38,13 +38,14 @@ class Product
   {
     // Create query
     if (isset($this->subcat_id)) {
-      $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID WHERE pdt.Category_ID=? AND pdt.Subcategory_ID=? LIMIT '.$this->load;
+      // echo $this->subcat_id;
+      $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color,pimg.Image_Path FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID LEFT JOIN product_image as pimg ON pdt.ID=pimg.Product_ID WHERE pdt.Category_ID=? AND pdt.Subcategory_ID IN ('.$this->subcat_id.') LIMIT '.$this->load;
       // Prepare statement
       $stmt = $this->conn->prepare($query);
 
       // Bind ID
       $stmt->bindParam(1, $this->cat_id);
-      $stmt->bindParam(2, $this->subcat_id);
+      // $stmt->bindParam(2, $this->subcat_id);
       // $stmt->bindParam(3, $this->load);
 
       // Execute query
@@ -52,7 +53,7 @@ class Product
 
       return $stmt;
     } else {
-      $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID WHERE pdt.Category_ID=? LIMIT '.$this->load;
+      $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color,pimg.Image_Path FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID LEFT JOIN product_image as pimg ON pdt.ID=pimg.Product_ID WHERE pdt.Category_ID=? LIMIT '.$this->load;
       // Prepare statement
       $stmt = $this->conn->prepare($query);
 
@@ -146,14 +147,52 @@ class Product
   public function get_size()
   {
     // Create query
-    $query = 'SELECT * FROM product WHERE Product_Size=? AND Category_ID=?';
+
+    $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color,pimg.Image_Path FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID LEFT JOIN product_image as pimg ON pdt.ID=pimg.Product_ID WHERE pdt.Category_ID=? AND pdt.Product_Size IN ('.$this->Product_Size.') LIMIT '.$this->load;
 
     //Prepare statement
     $stmt = $this->conn->prepare($query);
 
      // Bind ID
-     $stmt->bindParam(1, $this->Product_Size);
-     $stmt->bindParam(2, $this->Category_ID);
+    //  $stmt->bindParam(1, $this->Product_Size);
+     $stmt->bindParam(1, $this->Category_ID);
+
+    // Execute query
+    $stmt->execute();
+
+    return $stmt;
+  }
+  public function get_size2()
+  {
+    // Create query
+
+    $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color,pimg.Image_Path FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID LEFT JOIN product_image as pimg ON pdt.ID=pimg.Product_ID WHERE pdt.Category_ID=? AND pdt.Product_Size IN ('.$this->Product_Size.') AND pdt.Subcategory_ID IN ('.$this->Subcategory_ID.') LIMIT '.$this->load;
+
+    //Prepare statement
+    $stmt = $this->conn->prepare($query);
+
+     // Bind ID
+    //  $stmt->bindParam(1, $this->Product_Size);
+     $stmt->bindParam(1, $this->Category_ID);
+
+    // Execute query
+    $stmt->execute();
+
+    return $stmt;
+  }
+  public function get_clrdta()
+  {
+    // Create query
+
+    $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color,pimg.Image_Path FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID LEFT JOIN product_image as pimg ON pdt.ID=pimg.Product_ID WHERE pdt.Category_ID=? AND pdt.Product_Color_ID = ? AND pdt.Subcategory_ID IN ('.$this->Subcategory_ID.') LIMIT '.$this->load;
+
+    //Prepare statement
+    $stmt = $this->conn->prepare($query);
+
+     // Bind ID
+    //  $stmt->bindParam(1, $this->Product_Size);
+     $stmt->bindParam(1, $this->Category_ID);
+     $stmt->bindParam(2, $this->Product_Color_ID);
 
     // Execute query
     $stmt->execute();

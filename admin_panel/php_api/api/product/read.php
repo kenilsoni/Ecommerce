@@ -50,14 +50,16 @@
             'Product_Price'=>$Product_Price,
             'Category_name'=>$Category_Name,
             'Subcategory_name'=>$Subcategory_Name,
+            'Image_path'=>$Image_Path
           );
 
           // Push to "data"
           array_push($product_arr['data'], $product_item);
         }
-
+        // echo "<pre>";
+        // print_r($product_arr);
         // Turn to JSON & output
-        echo json_encode($product_arr);
+        echo json_encode($product_arr); 
 
   } else {
         // No product

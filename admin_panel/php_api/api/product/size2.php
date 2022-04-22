@@ -13,11 +13,23 @@
   // Instantiate product object
   $product = new Product($db);
 
-  $product->Product_Size = isset($_GET['size_id']) ? $_GET['size_id'] : die();
   $product->Category_ID = isset($_GET['cid']) ? $_GET['cid'] : die();
   $product->load = isset($_GET['limit']) ? $_GET['limit'] : die();
+ 
+
+  if(isset($_GET['clr_id'])){
+    $product->Product_Color_ID = isset($_GET['clr_id']) ? $_GET['clr_id'] : die();
+    $product->Subcategory_ID = isset($_GET['sid_arr']) ? $_GET['sid_arr'] : die();
+    $result = $product->get_clrdta();
+  }
+  else{
+    
+  $product->Product_Size = isset($_GET['size_id']) ? $_GET['size_id'] : die();
+    $product->Subcategory_ID = isset($_GET['sid']) ? $_GET['sid'] : die();
+    $result = $product->get_size2();
+  }
   // product read query
-  $result = $product->get_size();
+
   
   // Get row count
   $num = $result->rowCount();
