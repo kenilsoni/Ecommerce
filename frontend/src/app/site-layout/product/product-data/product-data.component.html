@@ -25,42 +25,9 @@
             <i> <img src="assets/images/success.svg" height="15px" alt="success"></i> <span> {{data.Product_Name}}</span> was added to your shopping cart
         </div>
         <div class="col-sm-5">
-            <ul class="sync1">
-                <li>
-                    <a class="fancybox" href="assets/images/new-thumb-01-big.jpg" data-fancybox-group="gallery" title=""><img src="ssets/images/new-thumb-01.jpg" alt="" /></a>
-                </li>
-                <li>
-                    <a class="fancybox" href="ssets/images/new-thumb-02-big.jpg" data-fancybox-group="gallery" title=""><img src="ssets/images/new-thumb-02.jpg" alt="" /></a>
-                </li>
-                <li>
-                    <a class="fancybox" href="ssets/images/new-thumb-03-big.jpg" data-fancybox-group="gallery" title=""><img src="ssets/images/new-thumb-03.jpg" alt="" /></a>
-                </li>
-                <li>
-                    <a class="fancybox" href="ssets/images/new-thumb-04-big.jpg" data-fancybox-group="gallery" title=""><img src="ssets/images/new-thumb-04.jpg" alt="" /></a>
-                </li>
-                <li>
-                    <a class="fancybox" href="ssets/images/new-thumb-05-big.jpg" data-fancybox-group="gallery" title=""><img src="ssets/images/new-thumb-05.jpg" alt="" /></a>
-                </li>
-                <li>
-                    <a class="fancybox" href="ssets/images/new-thumb-06-big.jpg" data-fancybox-group="gallery" title=""><img src="ssets/images/new-thumb-06.jpg" alt="" /></a>
-                </li>
-                <li>
-                    <a class="fancybox" href="ssets/images/new-thumb-07-big.jpg" data-fancybox-group="gallery" title=""><img src="ssets/images/new-thumb-07.jpg" alt="" /></a>
-                </li>
-                <li>
-                    <a class="fancybox" href="ssets/images/new-thumb-08-big.jpg" data-fancybox-group="gallery" title=""><img src="ssets/images/new-thumb-08.jpg" alt="" /></a>
-                </li>
-            </ul>
-            <ul class="sync2">
-                <li><img src="ssets/images/new-thumb-01.jpg" alt=""> </li>
-                <li><img src="ssets/images/new-thumb-02.jpg" alt=""></li>
-                <li><img src="ssets/images/new-thumb-03.jpg" alt=""></li>
-                <li><img src="ssets/images/new-thumb-04.jpg" alt=""></li>
-                <li><img src="ssets/images/new-thumb-05.jpg" alt=""></li>
-                <li><img src="ssets/images/new-thumb-06.jpg" alt=""></li>
-                <li><img src="ssets/images/new-thumb-07.jpg" alt=""></li>
-                <li><img src="ssets/images/new-thumb-08.jpg" alt=""></li>
-            </ul>
+            <div style="margin-bottom:10px"><img width="100%" src="{{Image_path}}/{{data.Image_path}}" alt=""></div>
+           <div><ng-image-slider [images]="imgCollection" ></ng-image-slider></div> 
+          
         </div>
         <div class="col-sm-7">
            

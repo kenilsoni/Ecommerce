@@ -30,7 +30,7 @@
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
           extract($row);
 
-          $product_item = array(
+          $product_item1 = array(
             'ID' => $ID,
             'Product_Name' => $Product_Name,
             'Product_Description'=>$Product_Description,
@@ -41,12 +41,25 @@
             'Product_Quantity'=>$Product_Quantity,
             'Product_Color_ID'=>$Product_Color_ID,
             'Product_Size'=>$Product_Size,
-            'Product_Price'=>$Product_Price
+            'Product_Price'=>$Product_Price,
+            'Category_name'=>$Category_Name,
+            'Subcategory_name'=>$Subcategory_Name
             
           );
-
+          $result2 = $product->getsingle_image($ID);
+          while($row = $result2->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+  
+            $product_item2 = array(
+              'Image_path'=>$Image_Path
+            );
+  
+            // Push to "data"
+            $newdata=array_merge($product_item1, $product_item2);
+          }
           // Push to "data"
-          array_push($product_arr['data'], $product_item);
+          array_push($product_arr['data'], $newdata);
+         
         }
 
         // Turn to JSON & output

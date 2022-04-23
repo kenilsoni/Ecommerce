@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  API_URL:"http://localhost/ecommerce/php_api/api/",
+  API_URL:"http://localhost/ecommerce/admin_panel/php_api/api",
+  IMAGE_URL:"http://localhost/ecommerce/admin_panel/assets/uploads",
   load_product:9
 };
 

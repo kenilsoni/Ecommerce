@@ -17,17 +17,23 @@
   $product->load = isset($_GET['limit']) ? $_GET['limit'] : die();
  
 
-  if(isset($_GET['clr_id'])){
+  if(isset($_GET['clr_id']) && $_GET['size_arr']=='' ){
     $product->Product_Color_ID = isset($_GET['clr_id']) ? $_GET['clr_id'] : die();
     $product->Subcategory_ID = isset($_GET['sid_arr']) ? $_GET['sid_arr'] : die();
-    $result = $product->get_clrdta();
+      $result = $product->get_clrdta();
   }
-  else{
+  else if(isset($_GET['size_arr'])){
+    $product->Product_Color_ID = isset($_GET['clr_id']) ? $_GET['clr_id'] : die();
+    $product->Subcategory_ID = isset($_GET['sid_arr']) ? $_GET['sid_arr'] : die();
+    $product->Product_Size = isset($_GET['size_arr']) ? $_GET['size_arr'] : die();
+    $result = $product->get_allpdt();
+  }
+  // else{
+  // $product->Product_Size = isset($_GET['size_id']) ? $_GET['size_id'] : die();
+  //   $product->Subcategory_ID = isset($_GET['sid']) ? $_GET['sid'] : die();
     
-  $product->Product_Size = isset($_GET['size_id']) ? $_GET['size_id'] : die();
-    $product->Subcategory_ID = isset($_GET['sid']) ? $_GET['sid'] : die();
-    $result = $product->get_size2();
-  }
+  //   $result = $product->get_size2();
+  // }
   // product read query
 
   
@@ -43,7 +49,7 @@
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
           extract($row);
 
-          $product_item = array(
+          $product_item1 = array(
             'ID' => $ID,
             'Product_Name' => $Product_Name,
             'Product_Description'=>$Product_Description,
@@ -54,13 +60,27 @@
             'Product_Quantity'=>$Product_Quantity,
             'Product_Color_ID'=>$Product_Color_ID,
             'Product_Size'=>$Product_Size,
-            'Product_Price'=>$Product_Price
+            'Product_Price'=>$Product_Price,
+            'Category_name'=>$Category_Name,
+            'Subcategory_name'=>$Subcategory_Name
             
           );
-
+          $result2 = $product->getsingle_image($ID);
+          while($row = $result2->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+  
+            $product_item2 = array(
+              'Image_path'=>$Image_Path
+            );
+  
+            // Push to "data"
+            $newdata=array_merge($product_item1, $product_item2);
+          }
           // Push to "data"
-          array_push($product_arr['data'], $product_item);
+          array_push($product_arr['data'], $newdata);
+         
         }
+       
 
         // Turn to JSON & output
         echo json_encode($product_arr);

@@ -8,6 +8,7 @@ import { CartService } from 'src/app/service/cart.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
+
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -16,6 +17,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 export class ProductDetailsComponent implements OnInit {
   [x: string]: any;
   sorted_data: any;
+  image_url: string = environment.IMAGE_URL
 
 
   constructor(private product: ProductService, public route: ActivatedRoute, private cartService: CartService, private formbuilder: FormBuilder) { }
@@ -41,6 +43,9 @@ export class ProductDetailsComponent implements OnInit {
   checkboxes!: QueryList<ElementRef>;
   @ViewChildren("checkboxes2")
   checkboxes2!: QueryList<ElementRef>;
+  @ViewChildren("getcolorval")
+  getcolorval!: QueryList<ElementRef>;
+
   // @ViewChildren("cval")
   // cval!: QueryList<ElementRef>;
 
@@ -63,6 +68,7 @@ export class ProductDetailsComponent implements OnInit {
       this.getcolor();
       this.getsize();
       this.getcount();
+
     })
   }
 
@@ -83,7 +89,7 @@ export class ProductDetailsComponent implements OnInit {
           element.nativeElement.checked = true
         }
         else {
-          element.nativeElement.checked = false
+          element.nativeElement.disabled =true
         }
       });
     })
@@ -159,7 +165,7 @@ export class ProductDetailsComponent implements OnInit {
         }
       });
       if (this.clr_array.length !== 0) {
-        this.product.all_product2(this.clr_array, e.target.id, this.cat_id, this.load_product).subscribe(data => {
+        this.product.all_product2(this.clr_array, e.target.id, this.cat_id, this.size_arr, this.load_product).subscribe(data => {
           if (data['data'] !== undefined) {
             this.productdata = data['data']
           }
@@ -175,7 +181,15 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
   snew_arr: any = [] //subcat temp arr
+  clr_temp: any = []
   size_filter(e: any) {
+    this.clr_temp = []
+    this.getcolorval.forEach((element) => {
+      if (element.nativeElement.checked) {
+        this.clr_temp.push(element.nativeElement.id)
+      }
+    });
+    // console.log(this.clr_temp)
     this.snew_arr = []
     if (e.target.checked) {
       this.checkboxes.forEach((element) => {
@@ -185,14 +199,28 @@ export class ProductDetailsComponent implements OnInit {
       });
       this.size_arr.push(e.target.value)
       if (this.snew_arr.length !== 0) {
-        this.product.all_product(this.snew_arr, this.size_arr, this.cat_id, this.load_product).subscribe(data => {
-          if (data['data'] !== undefined) {
-            this.productdata = data['data']
-          }
-          else {
-            this.productdata = []
-          }
-        })
+        if (this.clr_temp.length !== 0) {
+          this.product.all_product2(this.snew_arr, this.clr_temp, this.cat_id, this.size_arr, this.load_product).subscribe(data => {
+            if (data['data'] !== undefined) {
+              this.productdata = data['data']
+              // console.log(data['data'])
+              // console.log(this.size_arr)
+            }
+            else {
+              this.productdata = []
+            }
+          })
+        } else {
+          this.product.all_product(this.snew_arr, this.size_arr, this.cat_id, this.load_product).subscribe(data => {
+            if (data['data'] !== undefined) {
+              this.productdata = data['data']
+            }
+            else {
+              this.productdata = []
+            }
+          })
+        }
+
       }
       else {
         this.product.getproductbysize_id(this.size_arr, this.cat_id, this.load_product).subscribe(data => {
@@ -210,9 +238,30 @@ export class ProductDetailsComponent implements OnInit {
       });
       if (this.snew_arr.length !== 0) {
         if (this.size_arr.length == 0) {
-          this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
-            this.productdata = data['data']
-            console.log(data['data'])
+          if (this.clr_temp.length !== 0) {
+            this.product.all_product2(this.snew_arr, this.clr_temp, this.cat_id, this.size_arr, this.load_product).subscribe(data => {
+              if (data['data'] !== undefined) {
+                this.productdata = data['data']
+              }
+              else {
+                this.productdata = []
+              }
+            })
+          } else {
+            this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
+              this.productdata = data['data']
+              // console.log(data['data'])
+            })
+          }
+
+        } else if (this.clr_temp.length !== 0) {
+          this.product.all_product2(this.snew_arr, this.clr_temp, this.cat_id, this.size_arr, this.load_product).subscribe(data => {
+            if (data['data'] !== undefined) {
+              this.productdata = data['data']
+            }
+            else {
+              this.productdata = []
+            }
           })
         }
         else {
@@ -238,10 +287,31 @@ export class ProductDetailsComponent implements OnInit {
   }
   reset_radiobtn() {
     this.color_radio = null
+    if (this.snew_arr.length !== 0) {
+      if (this.size_arr.length !== 0) {
+        this.product.all_product(this.snew_arr, this.size_arr, this.cat_id, this.load_product).subscribe(data => {
+          if (data['data'] !== undefined) {
+            this.productdata = data['data']
+          }
+          else {
+            this.productdata = []
+          }
+        })
+      } else {
+        this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
+          this.productdata = data['data']
+        })
+      }
+
+    }
+    else {
+      this.getproductby_cat()
+    }
+    //hh
     if (this.clr_array.length !== 0) {
       this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
         this.productdata = data['data']
-        console.log(data['data'])
+        // console.log(data['data'])
       })
     } else {
       this.clr_array = []
@@ -260,14 +330,24 @@ export class ProductDetailsComponent implements OnInit {
       element.nativeElement.checked = false;
     });
     if (this.snew_arr.length !== 0) {
-      this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
-        this.productdata = data['data']
-      })
+      if (this.clr_temp.length !== 0) {
+        this.product.all_product2(this.snew_arr, this.clr_temp, this.cat_id, this.size_arr, this.load_product).subscribe(data => {
+          if (data['data'] !== undefined) {
+            this.productdata = data['data']
+          }
+          else {
+            this.productdata = []
+          }
+        })
+      } else {
+        this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
+          this.productdata = data['data']
+        })
+      }
+
     }
     else {
-      this.product.getproductbysize_id(this.size_arr, this.cat_id, this.load_product).subscribe(data => {
-        this.productdata = data['data']
-      })
+      this.getproductby_cat()
     }
   }
   loadmore_product(e: number) {

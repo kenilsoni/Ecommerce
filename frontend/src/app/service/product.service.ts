@@ -73,9 +73,9 @@ export class ProductService {
     console.log(`${environment.API_URL}/product/size2.php?limit=`+load+'&cid='+cid+'&sizeid='+sizeid+'&sid='+sid)
     return this.httpclient.get<product>(`${environment.API_URL}/product/size2.php?limit=`+load+'&cid='+cid+'&size_id='+sizeid+'&sid='+sid)
   }
-  all_product2(sidarr:any,clrid:any,cid:number,load:number){
-    console.log(`${environment.API_URL}/product/size2.php?limit=`+load+'&cid='+cid+'&clr_id='+clrid+'&sid_arr='+sidarr)
-    return this.httpclient.get<product>(`${environment.API_URL}/product/size2.php?limit=`+load+'&cid='+cid+'&clr_id='+clrid+'&sid_arr='+sidarr)
+  all_product2(sidarr:any,clrid:any,cid:number,size_arr:any,load:number){
+    console.log(`${environment.API_URL}/product/size2.php?limit=`+load+'&cid='+cid+'&clr_id='+clrid+'&sid_arr='+sidarr+'&size_arr='+size_arr)
+    return this.httpclient.get<product>(`${environment.API_URL}/product/size2.php?limit=`+load+'&cid='+cid+'&clr_id='+clrid+'&sid_arr='+sidarr+'&size_arr='+size_arr)
   }
   
 

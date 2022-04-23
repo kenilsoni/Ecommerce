@@ -14,13 +14,16 @@ import { PricePipe } from './pipes/price.pipe';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { CartComponent } from './site-layout/product/cart/cart.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { NgImageSliderModule } from 'ng-image-slider';
+// import { ProductDataComponent } from './site-layout/product/product-data/product-data.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     TitlecasePipe,
-    PricePipe
+    PricePipe,
+    // ProductDataComponent
 
   ],
   imports: [
@@ -29,10 +32,11 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     SiteLayoutModule,
     HttpClientModule,
     ProductModule,
-    CarouselModule,
+    NgImageSliderModule
+    // CarouselModule,
     // CartComponent,
     // BrowserAnimationsModule,
-    NgxSliderModule,
+    // NgImageSliderModule
     // MatSliderModule
 
   ],

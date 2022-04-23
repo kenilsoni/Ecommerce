@@ -10,6 +10,8 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { ProductDataComponent } from './product-data/product-data.component';
 import { CartComponent } from './cart/cart.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { NgImageSliderModule } from 'ng-image-slider';
+// import { NgImageSliderModule } from 'ng-image-slider';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     ReactiveFormsModule,
     NgxSliderModule,
     MatSliderModule,
-    CarouselModule
+    NgImageSliderModule
+    
+    // CarouselModule
   ],
   exports:[
     MainComponent,
