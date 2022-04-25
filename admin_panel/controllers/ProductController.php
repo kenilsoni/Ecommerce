@@ -366,15 +366,48 @@ class ProductController
     public function delete_image()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $pid = $_POST['pid'];
             $id = $_POST['id'];
-            $image_name = $this->model->fetch_image_table($id);
-            foreach ($image_name as $val) {
-                unlink("./assets/uploads/" . $val['Image_Path']);
+
+            $data = $this->model->fetch_image_count($pid);
+            foreach ($data as $res) {
+                $count = $res['images'];
+                // echo $count; die();
             }
-            $success = $this->model->image_delete($id);
-            if ($success) {
-                echo $success;
+            if ($count == 1) {
+                // $add = $this->model->add_imagedb("NULL", $pid);
+                // if ($add) {
+                    echo 3;
+                // }
+            }else{
+                $image_name = $this->model->fetch_image_table($id);
+                foreach ($image_name as $val) {
+                    unlink("./assets/uploads/" . $val['Image_Path']);
+                }
+    
+                $success = $this->model->image_delete($id);
+                if($success){
+                    echo $success;
+                }
             }
+
+          
+            // if ($success) {
+            //     $data = $this->model->fetch_image_count($pid);
+            //     foreach ($data as $res) {
+            //         $count = $res['images'];
+            //         // echo $count; die();
+            //     }
+            //     if ($count == 1) {
+            //         $add = $this->model->add_imagedb("NULL", $pid);
+            //         if ($add) {
+            //             echo 3;
+            //         }
+            //     } else {
+            //          echo $success;
+            //     }
+               
+            // }
         }
     }
     public function delete_product()

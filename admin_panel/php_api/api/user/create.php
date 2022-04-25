@@ -17,25 +17,33 @@
   // Get raw posted data
   $data = json_decode(file_get_contents("php://input"));
 
-
-  $user->UserName = $data->UserName;
-  $user->FirstName = $data->FirstName;
-  $user->LastName = $data->LastName;
-  $user->Email = $data->Email;
-  $user->Password = $data->Password;
-  $user->Mobile = $data->Mobile;
-  $user->Phone = $data->Phone;
-  $user->Gender = $data->Gender;
-  $user->Intrest = $data-> Intrest;
-
-
-  // Create user
+  if($data){
+    $user->UserName = $data->username;
+    $user->FirstName = $data->firstname;
+    $user->LastName = $data->lastname;
+    $user->Email = $data->email;
+    $user->Password = $data->password;
+    $user->Mobile = $data->mobile;
+    $user->Phone = $data->phone;
+    $user->Gender = $data->gender;
+    if($data-> intrest !== ''){
+      $user->Intrest = $data-> intrest;
+    }else{
+      $user->Intrest = 'NULL';
+    }
+    // Create user
   if($user->create()) {
     echo json_encode(
-      array('message' => 'user Created')
+      array('message' => 'user Created','success'=>true)
     );
   } else {
     echo json_encode(
-      array('message' => 'user Not Created')
+      array('message' => 'user Not Created','success'=>false)
     );
   }
+  }
+  
+
+
+
+  

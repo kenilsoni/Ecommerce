@@ -17,7 +17,18 @@
 </div>
 <section class="content register">
     <div class="container">
-
+      
+        <div class="alert alert-dismissible alert-success" role="alert" *ngIf="register">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <i> <img src="assets/images/success.svg" height="15px" alt="success"></i>&nbsp; Account Created Successfully 
+        </div>
+        <ng-template>
+            <div class="alert alert-dismissible alert-danger" role="alert" >
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <i> <img src="assets/images/error.svg" height="15px" alt="danger"></i>&nbsp; Account is not created 
+            </div>
+        </ng-template>
+       
         <h2>New Customers</h2>
         <p>
             By creating an account with our store, you will be able
@@ -34,11 +45,24 @@
                             <div class="form-group">
                                 <label class="form-label">Username</label>
                                 <input type="text"
-                                    class="form-control" formControlName="username" 
+                                    class="form-control" formControlName="username" (keyup)="check_username($event)"
                                     placeholder="Please enter your username">
-                            </div>
-                        </div>
+                                    <div *ngIf="username_exist">
+                                        <span class="text-danger">Username is already exist</span>
+                                    </div>
+                                    <div *ngIf="username?.invalid ">
 
+                                        <span *ngIf="username?.errors?.['required']  && (username?.touched || ngForm.submitted) "  class="text-danger">
+                                            Username is required
+                                        </span>
+                                        <!-- <span *ngIf="username?.errors?.['pattern']  && (username?.touched || ngForm.submitted) "  class="text-danger">
+                                            Please enter valid username
+                                        </span> -->
+                                    </div>
+                            </div>
+                            
+                        </div>
+                        
                         <div class="col-sm-6">
                             <div class="form-group gender-list">
                                 <label class="form-label">Gender</label>
@@ -52,6 +76,7 @@
                                                         type="radio"
                                                         class="icheck"
                                                         formControlName="gender" 
+                                                        value="m"
                                                         name="gender">
                                                     Male</label>
                                             </li>&nbsp;
@@ -61,10 +86,19 @@
                                                         type="radio"
                                                         class="icheck"
                                                         formControlName="gender" 
+                                                        value="f"
                                                         name="gender">
                                                     Female</label>
                                             </li>
                                         </ul>
+                                    </div>
+                                    <div *ngIf="gender?.invalid ">
+
+                                        <span *ngIf="gender?.errors?.['required'] && (gender?.touched || ngForm.submitted) "  class="text-danger">
+                                            Gender is required
+                                        </span>
+                                       
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -74,22 +108,45 @@
 
                         <div class="col-sm-6">
                             <div class="form-group
-                                validation-error">
+                              ">
                                 <label class="form-label">Password</label>
                                 <input type="text"
                                     class="form-control"
                                     formControlName="password" 
                                     placeholder="Please enter your Password" 
                                     >
+                                    <div *ngIf="password?.invalid ">
+
+                                        <span *ngIf="password?.errors?.['required'] && (password?.touched || ngForm.submitted) "  class="text-danger">
+                                            Password is required
+                                        </span>
+                                        <span *ngIf="password?.errors?.['minlength'] && (password?.touched || ngForm.submitted) "  class="text-danger">
+                                            Password must be 6 character long
+                                        </span>
+                                       
+                                        
+                                    </div>
                             </div>
+                          
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="form-label">Email</label>
                                 <input type="email"
                                     class="form-control"
-                                    formControlName="email" 
+                                    formControlName="email" (keyup)="check_email($event)"
                                     placeholder="Please enter valid email">
+                                    <div *ngIf="email?.invalid ">
+                                        <div *ngIf="email_exist">
+                                            <span class="text-danger">Email is already exist</span>
+                                        </div>
+                                        <span *ngIf="email?.errors?.['required'] && (email?.touched || ngForm.submitted) "  class="text-danger">
+                                            Email is required
+                                        </span>
+                                        <span class="text-danger" *ngIf="
+                                        email?.errors?.['email']">Email is invalid</span>
+                                        
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -103,7 +160,18 @@
                                     class="form-control"
                                     formControlName="firstname" 
                                     placeholder="Please enter your first name">
+                                    <div *ngIf="firstname?.invalid ">
+                                        <span *ngIf="firstname?.errors?.['pattern']  && (firstname?.touched || ngForm.submitted) "  class="text-danger">
+                                            Please enter valid firstname
+                                        </span>
+                                        <span *ngIf="firstname?.errors?.['required'] && (firstname?.touched || ngForm.submitted) "  class="text-danger">
+                                            Firstname is required
+                                        </span>
+                                       
+                                        
+                                    </div>
                             </div>
+                            
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -112,6 +180,17 @@
                                     class="form-control"
                                     formControlName="mobile" 
                                     placeholder="Please enter your mobile no.">
+                                    <div *ngIf="mobile?.invalid ">
+
+                                        <span *ngIf="mobile?.errors?.['required'] && (mobile?.touched || ngForm.submitted) "  class="text-danger">
+                                            Mobile is required
+                                        </span>
+                                        <span *ngIf="(mobile?.errors?.['maxlength'] || mobile?.errors?.['minlength'] || mobile?.errors?.['pattern']) && (mobile?.touched || ngForm.submitted) "  class="text-danger">
+                                            Mobile is Invalid
+                                        </span>
+                                       
+                                        
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -124,6 +203,16 @@
                                     class="form-control"
                                     formControlName="lastname" 
                                     placeholder="Please enter your last name">
+                                    <div *ngIf="lastname?.invalid ">
+                                        <span *ngIf="lastname?.errors?.['pattern']  && (lastname?.touched || ngForm.submitted) "  class="text-danger">
+                                            Please enter valid lastname
+                                        </span>
+                                        <span *ngIf="lastname?.errors?.['required'] && (lastname?.touched || ngForm.submitted) "  class="text-danger">
+                                            Lastname is required
+                                        </span>
+                                       
+                                        
+                                    </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -133,13 +222,23 @@
                                     class="form-control"
                                     formControlName="phone" 
                                     placeholder="Please enter your phone">
+                                    <div *ngIf="phone?.invalid ">
+
+                                        <span *ngIf="phone?.errors?.['required'] && (phone?.touched || ngForm.submitted) "  class="text-danger">
+                                            Phone is required
+                                        </span>
+                                        <span *ngIf="(phone?.errors?.['maxlength'] || phone?.errors?.['minlength'] || phone?.errors?.['pattern']) && (phone?.touched || ngForm.submitted) "  class="text-danger">
+                                            Phone is Invalid
+                                        </span>
+                                        
+                                    </div>
                             </div>
                         </div>
 
 
                     </div>
 
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="form-label">Interests</label>
@@ -157,6 +256,8 @@
                                             <li
                                                 class="custom-check">
                                                 <label> <input
+                                                    formControlName="intrest"
+                                                    value="option1"
                                                         type="checkbox"
                                                         class="icheck">
                                                     Option 1
@@ -165,14 +266,18 @@
                                             <li
                                                 class="custom-check">
                                                 <label> <input
+                                                    formControlName="intrest"
                                                         type="checkbox"
+                                                        value="option2"
                                                         class="icheck">Option
                                                     2 </label>
                                             </li>
                                             <li
                                                 class="custom-check">
                                                 <label> <input
+                                                    formControlName="intrest"
                                                         type="checkbox"
+                                                        value="option3"
                                                         class="icheck">
                                                     Option 3</label>
                                             </li>
@@ -180,6 +285,7 @@
                                                 class="custom-check">
                                                 <label> <input
                                                         type="checkbox"
+                                                        formControlName="intrest"
                                                         class="icheck">Other</label>
                                                 <input type="text"
                                                     class="form-control">
@@ -192,7 +298,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> -->
 
 
 
@@ -202,7 +308,7 @@
                                 <div class="checkbox">
                                     <label class="chklbl"><input
                                             type="checkbox"
-                                            formControlName="terms" 
+                                            
                                             value="">&nbsp;&nbsp;I
                                         Agree with <a href="#">Terms
                                             &amp; Conditions.</a></label>
@@ -216,7 +322,7 @@
                                     submit-outer">
                                     <button type="submit"
                                         class="btn-secondary">Submit</button>&nbsp;
-                                    <button type="button"
+                                    <button type="button" (click)="form_reset()"
                                         class="btn-tertiary">Clear</button>
                                 </div>
 

@@ -77,6 +77,19 @@ export class ProductDetailsComponent implements OnInit {
       this.productdata = data['data']
       if (this.subcat_id !== undefined) {
         this.getproductbysubcat_id();
+
+        // this.product.getcategory_id(this.cat_id).subscribe(data => {
+        //   // this.cat_data = data['main']
+        //   for(let val of data['main']){
+        //     // console.log(val['Subcategory_Name'])
+        //     if(this.subcat_name===val['Subcategory_Name']){
+        //       this.cat_data=val.Subcategory_Name
+        //     }
+        //   }
+        //   // console.log(this.cat_data)
+    
+        // })
+    
       }
     })
     // console.log(this.checkBoxValue.ID)
@@ -116,7 +129,7 @@ export class ProductDetailsComponent implements OnInit {
   getsubcategory() {
     this.product.getcategory_id(this.cat_id).subscribe(data => {
       this.cat_data = data['main']
-      // console.log(this.cat_data)
+      console.log(this.cat_data)
 
     })
 
@@ -210,10 +223,11 @@ export class ProductDetailsComponent implements OnInit {
               this.productdata = []
             }
           })
-        } else {
+        } else {       
           this.product.all_product(this.snew_arr, this.size_arr, this.cat_id, this.load_product).subscribe(data => {
             if (data['data'] !== undefined) {
               this.productdata = data['data']
+              // console.log("Ff");/
             }
             else {
               this.productdata = []
@@ -287,11 +301,17 @@ export class ProductDetailsComponent implements OnInit {
   }
   reset_radiobtn() {
     this.color_radio = null
+    this.checkboxes.forEach((element) => {
+      if (element.nativeElement.checked) {
+        this.snew_arr.push(element.nativeElement.id)
+      }
+    });
     if (this.snew_arr.length !== 0) {
       if (this.size_arr.length !== 0) {
         this.product.all_product(this.snew_arr, this.size_arr, this.cat_id, this.load_product).subscribe(data => {
           if (data['data'] !== undefined) {
             this.productdata = data['data']
+            console.log("dds")
           }
           else {
             this.productdata = []
@@ -300,23 +320,25 @@ export class ProductDetailsComponent implements OnInit {
       } else {
         this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
           this.productdata = data['data']
+          console.log("dd")
         })
       }
 
     }
     else {
+
       this.getproductby_cat()
     }
     //hh
-    if (this.clr_array.length !== 0) {
-      this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
-        this.productdata = data['data']
-        // console.log(data['data'])
-      })
-    } else {
-      this.clr_array = []
-      this.getproductby_cat()
-    }
+    // if (this.clr_array.length !== 0) {
+    //   this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
+    //     this.productdata = data['data']
+    //     // console.log(data['data'])
+    //   })
+    // } else {
+    //   this.clr_array = []
+    //   this.getproductby_cat()
+    // }
   }
   reset_catbtn() {
     this.checkboxes.forEach((element) => {

@@ -171,12 +171,23 @@ $(document).ready(function () {
             datatype: "json",
             success: function (data) {
                 obj = JSON.parse(data);
+                // console.log(obj[0].Image_Path)
                 if (typeof obj === "object") {
                     var len = obj.length;
-                    $(".available_image").html('');
-                    for (var i = 0; i < len; i++) {
-                        $(".available_image").append(`<div><input type="hidden" value="${obj[i].ID}" class="image_id"><img src="./assets/uploads/${obj[i].Image_Path}" /><br><button type="button" class="remove_image btn btn-danger">Remove</button></div>`);
-                    }
+                    // if(obj[0].Image_Path !== 'NULL'){
+                        $(".available_image").html('');
+                        for (var i = 0; i < len; i++) {
+                            // if(obj[i].Image_Path !== NULL){
+
+                          
+                            $(".available_image").append(`<div><input type="hidden" value="${obj[i].ID}" class="image_id"><img src="./assets/uploads/${obj[i].Image_Path}" /><br><button type="button" class="remove_image btn btn-danger">Remove</button></div>`);
+                        }
+                    // }
+                    // }
+                    // else{
+                    //     $(".available_image").html('<img src="./assets/uploads/no_product.jpg" />');
+                    // }
+                   
                 }
             }
         })
@@ -189,11 +200,15 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: "?controller=Product&function=delete_image",
-                data: { id: id },
+                data: { id: id,pid:product_id },
                 datatype: "json",
                 success: function (data) {
                     if (data == 1) {
                         alert("image deleted successfully");
+                        getimage(product_id);
+                    }
+                    else if(data==3){
+                        alert("Atleast one image is required")
                         getimage(product_id);
                     }
                     else {

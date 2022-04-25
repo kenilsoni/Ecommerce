@@ -28,12 +28,12 @@
     $product->Product_Size = isset($_GET['size_arr']) ? $_GET['size_arr'] : die();
     $result = $product->get_allpdt();
   }
-  // else{
-  // $product->Product_Size = isset($_GET['size_id']) ? $_GET['size_id'] : die();
-  //   $product->Subcategory_ID = isset($_GET['sid']) ? $_GET['sid'] : die();
+  else if(isset($_GET['size_id'])){
+  $product->Product_Size = isset($_GET['size_id']) ? $_GET['size_id'] : die();
+    $product->Subcategory_ID = isset($_GET['sid']) ? $_GET['sid'] : die();
     
-  //   $result = $product->get_size2();
-  // }
+    $result = $product->get_size2();
+  }
   // product read query
 
   

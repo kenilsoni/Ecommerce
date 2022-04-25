@@ -156,6 +156,14 @@ class ProductModel
         $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $success;
     }
+    public function fetch_image_count($id)
+    {
+        $sql = "SELECT ID,Image_Path,count(*) AS images FROM product_image WHERE Product_ID=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$id]);
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
     public function fetch_image_table($id)
     {
         $sql = "SELECT ID,Image_Path FROM product_image WHERE ID=?";

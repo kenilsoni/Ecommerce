@@ -24,3 +24,10 @@
 .colour_family_list input[type=radio]:checked + label{
     color:red
 }
+.record{
+    margin-top: 100px;
+}
+.msg{
+    font-size: 60px;
+    text-align:center
+}

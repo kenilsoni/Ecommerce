@@ -16,7 +16,7 @@
                                 class="icheck"
                                 (change)="category_filter($event)"
                                 value="{{cat.ID}}">
-                            {{cat.Subcategory_Name |titlecase}} <span>({{cat.total_item}})</span>
+                           {{cat.Subcategory_Name |titlecase}}<span>({{cat.total_item}})</span>
                         </label>
                     </li>
                     <li><button title="Reset" class="btn reset"
@@ -136,8 +136,8 @@
            
         </div>
         <ng-template #nodata>
-            <div class="grid row">
-                <div class="col-sm-4 col-xs-6">Record Not Found!!!</div>
+            <div class="grid row record">
+                <div class="col-12 msg">Record Not Found!!!</div>
             </div>
         </ng-template>
     </div>

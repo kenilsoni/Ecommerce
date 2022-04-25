@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProductService } from '../service/product.service';
 import { SitelayoutRoutingModule } from './site-layout-routing.module';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
-import { MatSliderModule } from '@angular/material/slider';
+// import { MatSliderModule } from '@angular/material/slider';
 import { AboutComponent } from './about/about.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { UserRegisterComponent } from './user-register/user-register.component';
@@ -31,7 +31,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     SitelayoutRoutingModule,
     NgxSliderModule,
-    MatSliderModule,
     FormsModule,
     ReactiveFormsModule
     

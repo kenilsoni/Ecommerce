@@ -219,11 +219,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="inputText4" class="col-form-label">Price (Per Unit)</label><span class="star">*</span>
-                                        <input id="inputText4" type="number" name="product_price" class="form-control product_price" placeholder="Price" min="0" max="99999" required>
+                                        <input id="inputText4" type="number" name="product_price" class="form-control product_price" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" placeholder="Price" min="0" max="99999" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputText6" class="col-form-label">Quantity</label><span class="star">*</span>
-                                        <input id="inputText6" type="number" name="product_quantity" class="form-control product_quantity" placeholder="Quantity" required>
+                                        <input id="inputText6" type="number" name="product_quantity" class="form-control product_quantity" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" placeholder="Quantity" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="Category">Category</label><span class="star">*</span><br>

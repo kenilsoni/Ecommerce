@@ -50,6 +50,70 @@
                             <li class="login-link"><a href="#" title="Login"
                                     data-toggle="modal"
                                     data-target="#Login-popup">Login</a></li>
+                                    <div class="modal fade" id="Login-popup" tabindex="-1"
+                                    role="dialog" aria-hidden="true">
+                                  <!-- Modal -->
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close"
+                                                data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <div class="text-center" style="font-size:23px">eShopper Login</div>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="loginform" [formGroup]="loginval" #ngForm="ngForm"
+                                            (ngSubmit)="login()">
+                                                <div class="form-group">
+                                                    <label class="form-label">Username</label>
+                                                    <input type="text" class="form-control" formControlName="username"
+                                                        placeholder="Enter your Username">
+                                                        <div *ngIf="username?.invalid ">
+
+                                                            <span *ngIf="username?.errors?.['required']  && (username?.touched || ngForm.submitted) "  class="text-danger">
+                                                                Username is required
+                                                            </span>
+                                                            <!-- <span *ngIf="username?.errors?.['pattern']  && (username?.touched || ngForm.submitted) "  class="text-danger">
+                                                                Please enter valid username
+                                                            </span> -->
+                                                        </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label">Password</label>
+                                                    <input type="password"
+                                                        class="form-control" formControlName="password"
+                                                        placeholder="Enter your Password">
+                                                        <div *ngIf="password?.invalid ">
+
+                                                            <span *ngIf="password?.errors?.['required'] && (password?.touched || ngForm.submitted) "  class="text-danger">
+                                                                Password is required
+                                                            </span>
+                                                            <span *ngIf="password?.errors?.['minlength'] && (password?.touched || ngForm.submitted) "  class="text-danger">
+                                                                Password must be 6 character long
+                                                            </span>
+                                                           
+                                                            
+                                                        </div>
+                                                </div>
+                                                <!-- <div class="form-group ">
+                                                    <label class="form-label">Password</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter your Password"
+                                                        value="Incorrect Password">
+                                                </div> -->
+                                                <div class="form-group clearfix
+                                                    login-options">
+                                                    <button type="submit"
+                                                        class="btn-secondary">Login</button>
+                                                    <p>Not a Member? <a href="register.html"
+                                                            title="Register">Register</a></p>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
                             <li class="cart-outer">
                                 <a href="#" title="Add to Cart"
                                     class="add-to-cart"></a>
@@ -165,6 +229,7 @@
                                 </div>
                             </li>
                         </ul>
+                       
                     </form>
                 </div>
 

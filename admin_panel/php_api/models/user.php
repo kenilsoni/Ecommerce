@@ -24,12 +24,12 @@ class User
         $this->conn = $db;
     }
 
-    // Create Category
+    // Create user
     public function create()
     {
         // Create Query
-        $query = 'INSERT INTO ' . $this->table . '(UserName, FirstName, LastName, Email, Password, Gender, Phone, Mobile, Intrest,Created_At,Modified_At)
-     VALUES (:UserName,:FirstName,:LastName,:Email,:Password,:Gender,:Phone,:Mobile,:Intrest,NOW(),NOW())';
+        $query = 'INSERT INTO ' . $this->table . '(UserName, FirstName, LastName, Email, Password, Gender, Phone, Mobile, Intrest,Created_At,Modified_At,Status)
+     VALUES (:UserName,:FirstName,:LastName,:Email,:Password,:Gender,:Phone,:Mobile,:Intrest,NOW(),NOW(),1)';
 
         // Prepare Statement
         $stmt = $this->conn->prepare($query);
@@ -59,5 +59,38 @@ class User
         if ($stmt->execute()) {
             return true;
         }
+    }
+    // Create user
+    public function check()
+    {
+        // Create Query
+        $query = 'SELECT count(*) AS count FROM user WHERE UserName =:UserName';
+        // Prepare Statement
+        $stmt = $this->conn->prepare($query);
+        // Bind data
+        $stmt->bindParam(':UserName', $this->UserName);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function check_login()
+    {
+        // Create Query
+        $query = 'SELECT count(*) AS count,FirstName FROM user WHERE UserName =:UserName AND Password=:Password';
+        // Prepare Statement
+        $stmt = $this->conn->prepare($query);
+        // Bind data
+        $stmt->bindParam(':UserName', $this->UserName);
+        $stmt->bindParam(':Password', $this->Password);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function check_email()
+    {
+        // Create Query
+        $query = 'SELECT count(*) AS count FROM user WHERE Email =:Email';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':Email', $this->Email);
+        $stmt->execute();
+        return $stmt;
     }
 }

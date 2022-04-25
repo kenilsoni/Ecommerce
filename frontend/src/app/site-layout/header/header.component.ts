@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from '../interface/category';
 import { ProductService } from '../../service/product.service';
 import { CartService } from 'src/app/service/cart.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-header',
@@ -13,13 +15,17 @@ export class HeaderComponent implements OnInit {
   subcategorylist: any;
   products:any=[]
   grandTotal:any
-  constructor(private product: ProductService,private cartService:CartService) { }
+  loginval!:FormGroup
+  constructor(private product: ProductService,private cartService:CartService,private formbuilder: FormBuilder,private userservice:UserService) { }
 
   ngOnInit(): void {
     this.getcategory();
     this.getsubcategory();
     this.getcart_data()
-
+    this.loginval = this.formbuilder.group({
+      username: ['',[Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+  })
   }
   getcart_data(){
     this.cartService.getProducts()
@@ -42,6 +48,20 @@ export class HeaderComponent implements OnInit {
   }
   removeItem(item: any){
     this.cartService.removeCartItem(item);
+  }
+  get username(){
+    return this.loginval.get('username')
+  }
+  get password(){
+    return this.loginval.get('password')
+  }
+  login(){
+    this.userservice.check_login(this.loginval.value.username,this.loginval.value.password).subscribe(data=>{
+      if(data['success']){
+        // localStorage.setItem("name",data['name'])
+      }
+    })
+    // console.log(this.loginval.value.password)
   }
 
 
