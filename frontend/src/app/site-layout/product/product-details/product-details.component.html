@@ -14,7 +14,7 @@
                             <input type="hidden" value="{{cat.ID}}">
                             <input type="checkbox" #checkboxes id="{{cat.ID}}"
                                 class="icheck"
-                                (change)="category_filter($event)"
+                                (change)="category_filter($event)" [checked]="ischeck"  [attr.disabled]="ischeck"
                                 value="{{cat.ID}}">
                            {{cat.Subcategory_Name |titlecase}}<span>({{cat.total_item}})</span>
                         </label>
@@ -110,7 +110,7 @@
                 <label>Sort By</label>&nbsp;
                 <div class="form-group">
                     <select class="custom-dropdown" (change)="sortby($event)">
-                        <option value="Created_At" selected>Latest</option>
+                        <option value="Created_At DESC" selected>Latest</option>
                         <option value="Product_Name">Name</option>
                         <option value="Product_Price">Price</option>
                     </select>

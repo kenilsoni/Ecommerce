@@ -50,6 +50,19 @@
         text-align: center;
         cursor: pointer;
     }
+    .select_box{
+        text-align: center;
+    position: absolute;
+    top: 75px;
+    left: 60%;
+    z-index: 11111;
+    }
+    .form-select{
+        padding: 4px;
+    outline: #d2d2e4;
+    color: #71748d;
+    cursor: pointer;
+    }
 </style>
 <div class="dashboard-wrapper">
     <div class="dashboard-ecommerce">
@@ -186,6 +199,7 @@
                                             <th>Image</th>
                                             <th>Quantity</th>
                                             <th>Price</th>
+                                            <th>IsTrending</th>
                                             <th style="width:115px">Created Date</th>
                                             <th style="width:115px">Modify Date</th>
                                             <th style="width:125px">Action</th>
@@ -223,7 +237,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="inputText6" class="col-form-label">Quantity</label><span class="star">*</span>
-                                        <input id="inputText6" type="number" name="product_quantity" class="form-control product_quantity" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" placeholder="Quantity" required>
+                                        <input id="inputText6" type="number" name="product_quantity" class="form-control product_quantity" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" min="0" max="99999"  placeholder="Quantity" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="Category">Category</label><span class="star">*</span><br>

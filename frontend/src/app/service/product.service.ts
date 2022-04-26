@@ -54,8 +54,20 @@ export class ProductService {
     return this.httpclient.get<product>(`${environment.API_URL}/product/getsize.php?size_id=`+id+'&cid='+cid+'&limit='+load_product)
   }
   //get order by
-  getorderby(order:string,cid:number){
-    return this.httpclient.get<product>(`${environment.API_URL}/product/orderby.php?order=`+order+'&cid='+cid)
+  getorderby(order:string,cid:number,load:number){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/orderby.php?order=`+order+'&cid='+cid+'&load='+load)
+  }
+  //get order by
+  order_cat(order:string,load:number,cid:number,subcat_arr:any,size_arr:any){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/orderby.php?order=`+order+'&cid='+cid+'&load='+load+'&subcat_arr='+subcat_arr+'&size_array='+size_arr)
+  }
+  //get order by
+  order_clr(order:string,load:number,cid:number,subcat_arr:any,clr_id:any){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/orderby.php?order=`+order+'&cid='+cid+'&load='+load+'&subcat_arr='+subcat_arr+'&clr_id='+clr_id)
+  }
+  //get order by
+  order_size(order:string,load:number,cid:number,subcat_arr:any,clr_id:any,size_arr:any){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/orderby.php?order=`+order+'&cid='+cid+'&load='+load+'&subcat_arr='+subcat_arr+'&clr_id='+clr_id+'&size_arr='+size_arr)
   }
   // get single product
   getproduct_single(id:number){
@@ -65,6 +77,18 @@ export class ProductService {
   price_filter(from:number,to:number,load:number,cid:number){
     return this.httpclient.get<product>(`${environment.API_URL}/product/pricefilter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cid)
   }
+  //price filter
+  price_filter_clr(from:number,to:number,load:number,cat_id:number,subcat_arr:any,clr_arr:any){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/pricefilter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cat_id+'&clr_arr='+clr_arr+'&subcat_arr='+subcat_arr)
+  }
+  //price filter
+  price_filter_size(from:number,to:number,load:number,cat_id:number,subcat_arr:any,clr_arr:any,size_arr:any){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/pricefilter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cat_id+'&clr_arr='+clr_arr+'&subcat_arr='+subcat_arr+'&size_arr='+size_arr)
+  }
+  //price filter
+  price_filter_cat(from:number,to:number,load:number,cat_id:number,subcat_arr:any,size_arr:any){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/pricefilter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cat_id+'&subcat_arr='+subcat_arr+'&size_array='+size_arr)
+  }
   //get trending product
   gettrend_product(load:number,trend:number){
     return this.httpclient.get<product>(`${environment.API_URL}/product/trending.php?load=`+load+'&trend='+trend)
@@ -73,7 +97,7 @@ export class ProductService {
     console.log(`${environment.API_URL}/product/size2.php?limit=`+load+'&cid='+cid+'&sizeid='+sizeid+'&sid='+sid)
     return this.httpclient.get<product>(`${environment.API_URL}/product/size2.php?limit=`+load+'&cid='+cid+'&size_id='+sizeid+'&sid='+sid)
   }
-  all_product2(sidarr:any,clrid:any,cid:number,size_arr:any,load:number){
+  all_product_getall(sidarr:any,clrid:any,cid:number,size_arr:any,load:number){
     console.log(`${environment.API_URL}/product/size2.php?limit=`+load+'&cid='+cid+'&clr_id='+clrid+'&sid_arr='+sidarr+'&size_arr='+size_arr)
     return this.httpclient.get<product>(`${environment.API_URL}/product/size2.php?limit=`+load+'&cid='+cid+'&clr_id='+clrid+'&sid_arr='+sidarr+'&size_arr='+size_arr)
   }

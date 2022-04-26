@@ -25,8 +25,8 @@
             <i> <img src="assets/images/success.svg" height="15px" alt="success"></i> <span> {{data.Product_Name}}</span> was added to your shopping cart
         </div>
         <div class="col-sm-5">
-            <div style="margin-bottom:10px"><img width="100%" src="{{Image_path}}/{{data.Image_path}}" alt=""></div>
-           <div><ng-image-slider [images]="imgCollection" ></ng-image-slider></div> 
+            <!-- <div style="margin-bottom:10px"><img width="100%" src="{{Image_path}}/{{data.Image_path}}" alt=""></div> -->
+           <div><ng-image-slider [images]="imgCollection" [imageSize]="{width: 500, height: 500}"></ng-image-slider></div> 
           
         </div>
         <div class="col-sm-7">

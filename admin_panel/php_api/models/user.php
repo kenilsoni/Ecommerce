@@ -75,7 +75,7 @@ class User
     public function check_login()
     {
         // Create Query
-        $query = 'SELECT count(*) AS count,FirstName FROM user WHERE UserName =:UserName AND Password=:Password';
+        $query = 'SELECT count(*) AS count,* FROM user WHERE UserName =:UserName AND Password=:Password';
         // Prepare Statement
         $stmt = $this->conn->prepare($query);
         // Bind data

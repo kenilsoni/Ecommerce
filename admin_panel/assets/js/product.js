@@ -27,9 +27,21 @@ $(document).ready(function () {
     }
 
     $(".upload-img").hide();
-
-
-
+    
+    $("<div class='select_box'><select class='form-select' id='product'><option value='AllProduct'>All Product</option><option value='Trending'>Trending</option></select></div>").insertBefore("#product_table");
+    var mytable = $('#product_table').DataTable({
+        "order": [[ 6, "desc" ]]
+    });
+    $('#product').on('change', function() {
+        if ($("#product").val()==="AllProduct") {
+            mytable.search("").draw();
+         
+        } else {
+            mytable.search("YES").draw();
+        }
+        
+      })
+ 
     function onload() {
         $.ajax({
             type: "GET",
@@ -40,6 +52,7 @@ $(document).ready(function () {
                 console.log(obj);
                 if (typeof obj === "object") {
                     var len = obj.length;
+                    console.log(obj)
                     var mytable = $('#product_table').DataTable();
                     mytable.clear().draw();
                     for (var i = 0; i < len; i++) {
@@ -54,6 +67,7 @@ $(document).ready(function () {
                         </td>
                         <td>${obj[i][0].Product_Quantity} </td>
                         <td>${obj[i][0].Product_Price} </td>
+                        <td>${obj[i][0].IsTrending ==1 ?'YES':'NO'} </td>
                         <td>${obj[i][0].Created_At} </td>
                         <td>${obj[i][0].Modified_At} </td>
                         <td><button type="button" class="btn btn-rounded btn-primary edit_product">Edit</button>&nbsp;<button type="button" class="btn btn-rounded btn-danger delete_product">Delete</button> </td>

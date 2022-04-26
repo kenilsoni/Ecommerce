@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
     this.getproduct_trend()
   }
   getproduct_trend(){
-    this.product.gettrend_product(environment.load_product,1).subscribe(data=>{
+    this.product.gettrend_product(8,1).subscribe(data=>{
       this.product_data=data['data']
     })
   }

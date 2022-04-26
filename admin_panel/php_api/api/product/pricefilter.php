@@ -17,11 +17,37 @@
   $product->to = isset($_GET['to']) ? $_GET['to'] : die();
   $product->load = isset($_GET['load']) ? $_GET['load'] : die();
   $product->Category_ID = isset($_GET['cid']) ? $_GET['cid'] : die();
-  // product read query
-  $result = $product->price_filter();
+  if(isset($_GET['clr_arr']) && isset($_GET['subcat_arr'])){
+    $product->Product_Color_ID = isset($_GET['clr_arr']) ? $_GET['clr_arr'] : die();
+    $product->Subcategory_ID = isset($_GET['subcat_arr']) ? $_GET['subcat_arr'] : die();
+    if(isset($_GET['size_arr'])){
+      $product->Product_Size = isset($_GET['size_arr']) ? $_GET['size_arr'] : die();
+      $result = $product->price_filter_size();
+      $num = $result->rowCount();
+    }else{
+
+       // product read query
+   $result = $product->price_filter_clr();
+   $num = $result->rowCount();
+    }
+   
+
+  }else if(isset($_GET['size_array'])){
+    $product->Subcategory_ID = isset($_GET['subcat_arr']) ? $_GET['subcat_arr'] : die();
+    $product->Product_Size = isset($_GET['size_array']) ? $_GET['size_array'] : die();
+    $result = $product->price_filter_cat();
+   $num = $result->rowCount();
+
+  }
+  else{
+
+ // product read query
+ $result = $product->price_filter();
   
-  // Get row count
-  $num = $result->rowCount();
+ // Get row count
+ $num = $result->rowCount();
+  }
+ 
 
   // Check if any product
   if($num > 0) {
@@ -63,6 +89,7 @@
           array_push($product_arr['data'], $newdata);
          
         }
+        // print_r($product_item1);
        
 
         // Turn to JSON & output

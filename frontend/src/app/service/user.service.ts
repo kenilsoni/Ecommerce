@@ -22,5 +22,16 @@ export class UserService {
     return this.httpclient.get<any>(`${environment.API_URL}/user/login.php?username=`+username+`&password=`+password)
 
   }
+  set_user(data:string){
+    localStorage.setItem('data',data)
+
+  }
+  unset_user(data:string){
+    localStorage.removeItem('data')
+
+  }
+  get_user(){
+    return localStorage.getItem('data')
+  }
 
 }

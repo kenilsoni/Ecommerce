@@ -79,7 +79,13 @@ $(document).ready(function () {
                         $(".fullname").text(obj[i][0].Fullname);
                         $(".email").text(obj[i][0].Email);
                         $(".phone").text(obj[i][0].Phone);
-                        $(".saddress").text(obj[i][1].Street + ' ' + obj[i][1].City + ' ' + obj[i][1].State + ' ' + obj[i][1].Country);
+                       
+                        if(obj[i][1] !== undefined){
+                            $(".saddress").text(obj[i][1].Street + ' ' + obj[i][1].City + ' ' + obj[i][1].State + ' ' + obj[i][1].Country);
+                        }else {
+                            $(".saddress").text("NA");
+                        }
+
                         $(".gender").text(obj[i][0].Gender == 'M' ? "MALE" : "FEMALE");
                         $(".created").text(obj[i][0].Created_At);
                         $(".modify").text(obj[i][0].Modified_At);

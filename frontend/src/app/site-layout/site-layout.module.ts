@@ -12,6 +12,7 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { UserRegisterComponent } from './user-register/user-register.component';
 import { CartComponent } from './product/cart/cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 // import { NgImageSliderModule } from 'ng-image-slider';
 // import { ProductDataComponent } from './product/product-data/product-data.component';
 
@@ -24,6 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AboutComponent,
     ContactUsComponent,
     UserRegisterComponent,
+    UserProfileComponent,
     // ProductDataComponent
   ],
   imports: [

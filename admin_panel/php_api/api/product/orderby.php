@@ -15,11 +15,40 @@
 
   $product->order = isset($_GET['order']) ? $_GET['order'] : die();
   $product->Category_ID = isset($_GET['cid']) ? $_GET['cid'] : die();
+  $product->load = isset($_GET['load']) ? $_GET['load'] : die();
+
+  if(isset($_GET['clr_id']) && isset($_GET['subcat_arr'])){
+    $product->Product_Color_ID = isset($_GET['clr_id']) ? $_GET['clr_id'] : die();
+    $product->Subcategory_ID = isset($_GET['subcat_arr']) ? $_GET['subcat_arr'] : die();
+    if(isset($_GET['size_arr'])){
+      $product->Product_Size = isset($_GET['size_arr']) ? $_GET['size_arr'] : die();
+      $result = $product->order_size();
+      $num = $result->rowCount();
+    }else{
+
+       // product read query
+   $result = $product->order_clr();
+   $num = $result->rowCount();
+    }
+   
+
+  }else if(isset($_GET['size_array'])){
+    $product->Subcategory_ID = isset($_GET['subcat_arr']) ? $_GET['subcat_arr'] : die();
+    $product->Product_Size = isset($_GET['size_array']) ? $_GET['size_array'] : die();
+    $result = $product->order_cat();
+   $num = $result->rowCount();
+
+  }
+  else{
+
+// echo $product->load;
   // product read query
   $result = $product->get_order();
   
   // Get row count
   $num = $result->rowCount();
+  }
+  
 
   // Check if any product
   if($num > 0) {
