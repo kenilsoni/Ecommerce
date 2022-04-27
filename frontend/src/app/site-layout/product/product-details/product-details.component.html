@@ -80,7 +80,7 @@
                         <label>
                             <input type="checkbox" class="icheck"
                                 #checkboxes2
-                                (change)="size_filter($event)"
+                                (change)="size_filter($event)" id="{{data.ID}}"
                                 value="{{data.ID}}">
                             {{data.Product_Size}}
                             <span>({{data.total_item}})</span>

@@ -45,8 +45,8 @@ export class ProductService {
     return this.httpclient.get<product>(`${environment.API_URL}/product/read.php?cat_id=`+cat_id+'&subcat_id='+subcat_id+'&limit='+load_product)
   }
   //get product by color id
-  getproductbyclr_id(id:number,cid:number){
-    return this.httpclient.get<product>(`${environment.API_URL}/product/getcolor.php?clr_id=`+id+'&cid='+cid)
+  getproductbyclr_id(id:number,cid:number,load:number){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/getcolor.php?clr_id=`+id+'&cid='+cid+'&load='+load)
   }
    //get product by size id
   getproductbysize_id(id:any,cid:number,load_product:number){
@@ -82,13 +82,28 @@ export class ProductService {
     return this.httpclient.get<product>(`${environment.API_URL}/product/pricefilter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cat_id+'&clr_arr='+clr_arr+'&subcat_arr='+subcat_arr)
   }
   //price filter
+  price_filter_oneclr(from:number,to:number,load:number,cat_id:number,clr_arr:any){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/pricefilter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cat_id+'&clr_array='+clr_arr)
+  }
+  //price filter
   price_filter_size(from:number,to:number,load:number,cat_id:number,subcat_arr:any,clr_arr:any,size_arr:any){
     return this.httpclient.get<product>(`${environment.API_URL}/product/pricefilter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cat_id+'&clr_arr='+clr_arr+'&subcat_arr='+subcat_arr+'&size_arr='+size_arr)
   }
   //price filter
+  price_filter_sizeid(from:number,to:number,load:number,cat_id:number,size_arr:any){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/pricefilter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cat_id+'&size_arr2='+size_arr)
+  }
+  
+  //price filter
   price_filter_cat(from:number,to:number,load:number,cat_id:number,subcat_arr:any,size_arr:any){
     return this.httpclient.get<product>(`${environment.API_URL}/product/pricefilter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cat_id+'&subcat_arr='+subcat_arr+'&size_array='+size_arr)
   }
+  price_filter_subcat(from:number,to:number,load:number,cat_id:number,subcat_arr:any){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/pricefilter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cat_id+'&subcat_arrnew='+subcat_arr)
+  }
+  // price_filter_check(from:number,to:number,load:number,cat_id:number,size_arr:any){
+  //   return this.httpclient.get<product>(`${environment.API_URL}/product/pricefilter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cat_id+'&size_arrnew='+size_arr)
+  // }
   //get trending product
   gettrend_product(load:number,trend:number){
     return this.httpclient.get<product>(`${environment.API_URL}/product/trending.php?load=`+load+'&trend='+trend)

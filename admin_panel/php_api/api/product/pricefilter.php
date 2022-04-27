@@ -38,7 +38,23 @@
     $result = $product->price_filter_cat();
    $num = $result->rowCount();
 
+  }else if(isset($_GET['subcat_arrnew'])){
+    $product->Subcategory_ID = isset($_GET['subcat_arrnew']) ? $_GET['subcat_arrnew'] : die();
+    $result = $product->price_filter_subcat();
+   $num = $result->rowCount();
   }
+  else if(isset($_GET['clr_array'])){
+    $product->Product_Color_ID = isset($_GET['clr_array']) ? $_GET['clr_array'] : die();
+    $result = $product->price_filter_oneclr();
+   $num = $result->rowCount();
+  }
+  else if(isset($_GET['size_arr2'])){
+    $product->Product_Size = isset($_GET['size_arr2']) ? $_GET['size_arr2'] : die();
+    $result = $product->price_filter_size2();
+   $num = $result->rowCount();
+  }
+  
+  
   else{
 
  // product read query
