@@ -36,6 +36,9 @@ export class ProductDetailsComponent implements OnInit {
   check_val: any
   ischeck!: boolean
   load_product = environment.load_product
+  order_arr: any = []
+  clr_arr:any = []
+  slider_arr: any = []
 
   @ViewChildren("checkboxes")
   checkboxes!: QueryList<ElementRef>;
@@ -51,9 +54,7 @@ export class ProductDetailsComponent implements OnInit {
   options: Options = {
     floor: 0,
     ceil: 0,
-
   };
-
   ngOnInit(): void {
     this.route.params.subscribe(data => {
       this.cat_id = data['cid'];
@@ -65,30 +66,13 @@ export class ProductDetailsComponent implements OnInit {
       this.getcolor();
       this.getsize();
       this.getcount();
-
-
     })
   }
-
   getproductby_cat() {
     this.product.getproductbycat_id(this.cat_id, this.load_product).subscribe(data => {
       this.productdata = data['data']
       if (this.subcat_id !== undefined) {
-
         this.getproductbysubcat_id();
-
-        // this.product.getcategory_id(this.cat_id).subscribe(data => {
-        //   // this.cat_data = data['main']
-        //   for(let val of data['main']){
-        //     // console.log(val['Subcategory_Name'])
-        //     if(this.subcat_name===val['Subcategory_Name']){
-        //       this.cat_data=val
-        //     }
-        //   }
-        //   console.log(this.cat_data)
-
-        // })
-
       }
     })
     // console.log(this.checkBoxValue.ID)
@@ -136,989 +120,41 @@ export class ProductDetailsComponent implements OnInit {
       this.color = data['main']
     })
   }
-  category_filter(e: any) {
-    if (e.target.checked) {
-      this.subcat_arr.push(e.target.value)
-      this.clr_temp = []
-      this.getcolorval.forEach((element) => {
-        if (element.nativeElement.checked) {
-          this.clr_temp.push(element.nativeElement.id)
-        }
-      });
-      console.log(this.clr_temp)
-
-      this.size_temp_arr = []
-      this.checkboxes2.forEach((element) => {
-        if (element.nativeElement.checked) {
-          this.size_temp_arr.push(element.nativeElement.id)
-        }
-      });
-
-
-
-      if (this.slider_arr.length !== 0) {
-        if (this.clr_temp.length !== 0) {
-          if (this.size_arr.length !== 0) {
-            //all
-            this.product.price_filter_size(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_temp, this.size_arr).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          } else {
-            //  cat clr price
-            this.product.price_filter_clr(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_temp).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          }
-        } else {
-          // console.log(this.subcat_arr.length !== 0);
-          if (this.size_arr.length == 0) {
-            //cat price
-            // console.log(this.snew_arr.length !== 0);
-            this.product.price_filter_subcat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-
-
-
-          } else {
-            //  size cat price
-            this.product.price_filter_cat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.size_arr).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          }
-
-        }
-
-      }
-      else {
-        //cat
-        this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
-          this.productdata = data['data']
-        })
-
-      }
-      // }
-      // this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
-      //   this.productdata = data['data']
-      // })
-      // } else {
-      //   let index = this.subcat_arr.indexOf(e.target.value);
-      //   this.subcat_arr.splice(index, 1);
-      //   if (this.subcat_arr.length != 0) {
-      //     this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
-      //       this.productdata = data['data']
-      //     })
-      //   }
-      //   else {
-      //     this.getproductby_cat()
-      //   }
-
-
-
-
-
-
-
-      // this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
-      //   this.productdata = data['data']
-      // })
-    } else {
-      let index = this.subcat_arr.indexOf(e.target.value);
-      this.subcat_arr.splice(index, 1);
-
-      this.clr_temp = []
-      this.getcolorval.forEach((element) => {
-        if (element.nativeElement.checked) {
-          this.clr_temp.push(element.nativeElement.id)
-        }
-      });
-      console.log(this.clr_temp)
-
-      this.size_temp_arr = []
-      this.checkboxes2.forEach((element) => {
-        if (element.nativeElement.checked) {
-          this.size_temp_arr.push(element.nativeElement.id)
-        }
-      });
-
-      console.log(this.subcat_arr)
-      console.log(this.slider_arr)
-      console.log(this.size_arr)
-
-      if (this.slider_arr.length !== 0) {
-        if (this.clr_temp.length !== 0) {
-          if (this.size_arr.length !== 0) {
-            //all
-            this.product.price_filter_size(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_temp, this.size_arr).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          } else {
-            //  cat clr price
-            this.product.price_filter_clr(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_temp).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          }
-        } else {
-          // console.log(this.subcat_arr.length !== 0);
-          if (this.size_arr.length == 0) {
-            //cat price
-            // console.log(this.snew_arr.length !== 0);
-            this.product.price_filter_subcat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-
-
-
-          } else {
-            //  size cat price
-            this.product.price_filter_cat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.size_arr).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          }
-
-        }
-
-      }
-      else {
-        //cat
-        //  this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
-        //   this.productdata = data['data']
-        // })
-        if (this.clr_temp.length !== 0) {
-          if (this.size_arr.length !== 0) {
-            //cat clr size
-            this.product.cat_filter_all(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.clr_temp, this.size_arr).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          } else {
-            //  cat clr price
-            this.product.cat_filter_clr(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.clr_temp).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          }
-        } else {
-          // console.log(this.subcat_arr.length !== 0);
-          if (this.size_arr.length == 0) {
-            //cat price
-            // console.log(this.snew_arr.length !== 0);
-            if(this.slider_arr.length!==0){
-              this.product.cat_filter_subcat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id).subscribe(data => {
-                if (data['data'] !== undefined) {
-                  this.productdata = data['data']
-                }
-                else {
-                  this.productdata = []
-                }
-              })
-            }
-            else{
-              this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
-                this.productdata = data['data']
-              })
-            }
-           
-
-
-
-          } else if (this.size_arr.length !== 0) {
-            //  size cat price
-            this.product.cat_filter_id(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.size_arr).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          } else {
-            //cat
-            this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
-              this.productdata = data['data']
-            })
-          }
-
-        }
-
-
-
-
-
-
-      }
-      //    if (this.subcat_arr.length != 0) {
-      // } else {
-      //   this.getproductby_cat()
-      // }
-
-
-
-
-
-      // if (this.subcat_arr.length != 0) {
-      //   this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
-      //     this.productdata = data['data']
-      //   })
-      // }
-      // else {
-      //   this.getproductby_cat()
-      // }
-    }
-  }
-  clr_array: any = []
-  getproductby_color(e: any) {
-    // console.log(this.slider_arr)
-    // this.allid();
-    this.clr_array = []
-    if (e.target.value === 'on') {
-      this.checkboxes.forEach((element) => {
-        if (element.nativeElement.checked) {
-          this.clr_array.push(element.nativeElement.id)
-        } else {
-          let index = this.snew_arr.indexOf(element.nativeElement.id);
-          this.snew_arr.splice(index, 1);
-        }
-      });
-
-      if (this.slider_arr.length !== 0) {
-        this.product.price_filter_oneclr(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, e.target.id).subscribe(data => {
-          if (data['data'] !== undefined) {
-            this.productdata = data['data']
-          }
-          else {
-            this.productdata = []
-          }
-        })
-      }else if(this.clr_array.length !== 0){
-        this.product.all_product_getall(this.clr_array, e.target.id, this.cat_id, this.size_arr, this.load_product).subscribe(data => {
-          if (data['data'] !== undefined) {
-            this.productdata = data['data']
-          }
-          else {
-            this.productdata = []
-          }
-        })
-      }
-
-      // if (this.clr_array.length !== 0) {
-      //   this.product.all_product_getall(this.clr_array, e.target.id, this.cat_id, this.size_arr, this.load_product).subscribe(data => {
-      //     if (data['data'] !== undefined) {
-      //       this.productdata = data['data']
-      //     }
-      //     else {
-      //       this.productdata = []
-      //     }
-      //   })
-      // } else if (this.slider_arr.length !== 0) {
-      //   this.product.price_filter_oneclr(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, e.target.id).subscribe(data => {
-      //     if (data['data'] !== undefined) {
-      //       this.productdata = data['data']
-      //     }
-      //     else {
-      //       this.productdata = []
-      //     }
-      //   })
-      // }
-
-      else {
-        // console.log("ok")
-        this.product.getproductbyclr_id(e.target.id, this.cat_id, this.load_product).subscribe(data => {
-          this.productdata = data['data']
-        })
-      }
-    }
-  }
-  snew_arr: any = [] //subcat temp arr
-  clr_temp: any = []
-  size_filter(e: any) {
-    this.clr_temp = []
-    // console.log(this.slider_arr)
-    this.getcolorval.forEach((element) => {
-      if (element.nativeElement.checked) {
-        this.clr_temp.push(element.nativeElement.id)
-      }
-    });
-    this.snew_arr = []
-    if (e.target.checked) {
-      this.checkboxes.forEach((element) => {
-        if (element.nativeElement.checked) {
-          this.snew_arr.push(element.nativeElement.id)
-        }
-      });
-      this.size_arr.push(e.target.value)
-
-
-
-      if (this.slider_arr.length !== 0) {
-        // console.log("ok")
-
-        // this.product.price_filter_sizeid(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.size_arr).subscribe(data => {
-        //   if (data['data'] !== undefined) {
-        //     this.productdata = data['data']
-        //   }
-        //   else {
-        //     this.productdata = []
-        //   }
-        // })
-        if (this.snew_arr.length !== 0) {
-          if (this.clr_temp.length !== 0) {
-            this.product.price_filter_size(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_temp, this.size_arr).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          } else {
-            this.product.price_filter_cat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.size_arr).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          }
-
-        }
-        else {
-
-          if (this.clr_temp.length == 0) {
-            this.product.price_filter_cat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.size_arr).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          } 
-          // else {
-          //   this.product.price_filter_cat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.size_arr).subscribe(data => {
-          //     if (data['data'] !== undefined) {
-          //       this.productdata = data['data']
-          //     }
-          //     else {
-          //       this.productdata = []
-          //     }
-          //   })
-          // }
-
-          // this.product.getproductbysize_id(this.size_arr, this.cat_id, this.load_product).subscribe(data => {
-          //   this.productdata = data['data']
-          // })
-        }
-      } else {
-        if (this.snew_arr.length !== 0) {
-          if (this.clr_temp.length !== 0) {
-            this.product.all_product_getall(this.snew_arr, this.clr_temp, this.cat_id, this.size_arr, this.load_product).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          } else {
-            this.product.all_product(this.snew_arr, this.size_arr, this.cat_id, this.load_product).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-                // console.log("Ff");/
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          }
-
-        }
-        else {
-          this.product.getproductbysize_id(this.size_arr, this.cat_id, this.load_product).subscribe(data => {
-            this.productdata = data['data']
-          })
-        }
-      }
-    }
-    else {
-      let index = this.size_arr.indexOf(e.target.value);
-      this.size_arr.splice(index, 1);
-      this.checkboxes.forEach((element) => {
-        if (element.nativeElement.checked) {
-          this.snew_arr.push(element.nativeElement.id)
-        }
-      });
-
-      if (this.slider_arr.length !== 0) {
-        // console.log("ok")
-
-        // this.product.price_filter_sizeid(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.size_arr).subscribe(data => {
-        //   if (data['data'] !== undefined) {
-        //     this.productdata = data['data']
-        //   }
-        //   else {
-        //     this.productdata = []
-        //   }
-        // })
-        if (this.snew_arr.length !== 0) {
-          if (this.clr_temp.length !== 0) {
-            this.product.price_filter_size(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_temp, this.size_arr).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          } else {
-            this.product.price_filter_cat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.size_arr).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          }
-
-        }
-        else {
-
-          if (this.clr_temp.length == 0) {
-            this.product.price_filter_cat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.size_arr).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          } 
-          // else {
-          //   this.product.price_filter_cat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.size_arr).subscribe(data => {
-          //     if (data['data'] !== undefined) {
-          //       this.productdata = data['data']
-          //     }
-          //     else {
-          //       this.productdata = []
-          //     }
-          //   })
-          // }
-
-          // this.product.getproductbysize_id(this.size_arr, this.cat_id, this.load_product).subscribe(data => {
-          //   this.productdata = data['data']
-          // })
-        }
-      } else {
-        if (this.snew_arr.length !== 0) {
-          if (this.clr_temp.length !== 0) {
-            this.product.all_product_getall(this.snew_arr, this.clr_temp, this.cat_id, this.size_arr, this.load_product).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          } else {
-            this.product.all_product(this.snew_arr, this.size_arr, this.cat_id, this.load_product).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-                // console.log("Ff");/
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          }
-
-        }
-        else {
-          
-
-        this.getproductby_cat()
-      
-        }
-      }
-    
-    }
-  }
   reset_radiobtn() {
     this.color_radio = null
-    this.clr_array=[]
-    this.checkboxes.forEach((element) => {
+    this.getcolorval.forEach((element) => {
       if (element.nativeElement.checked) {
-        this.snew_arr.push(element.nativeElement.id)
+        element.nativeElement.checked = false;
       }
     });
-    if (this.slider_arr.length !== 0) {
-      if (this.clr_temp.length !== 0) {
-        if (this.size_arr.length !== 0) {
-          //all
-          this.product.price_filter_size(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_temp, this.size_arr).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-        } else {
-          //  cat clr price
-          this.product.price_filter_clr(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_temp).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-        }
-      } else {
-        // console.log(this.subcat_arr.length !== 0);
-        if (this.size_arr.length == 0) {
-          //cat price
-          // console.log(this.snew_arr.length !== 0);
-          this.product.price_filter_subcat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-
-
-
-        } else {
-          //  size cat price
-          this.product.price_filter_cat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.size_arr).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-        }
-
-      }
-
-    }
-    else {
-      //cat
-      this.getproductby_cat()
-    }
-    // if (this.snew_arr.length !== 0) {
-    //   if (this.size_arr.length !== 0) {
-    //     this.product.all_product(this.snew_arr, this.size_arr, this.cat_id, this.load_product).subscribe(data => {
-    //       if (data['data'] !== undefined) {
-    //         this.productdata = data['data']
-    //       }
-    //       else {
-    //         this.productdata = []
-    //       }
-    //     })
-    //   } else {
-    //     this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
-    //       this.productdata = data['data']
-    //     })
-    //   }
-
-    // }
-    // else {
-    //   this.getproductby_cat()
-    // }
+    this.clr_arr=[]
+    this.allproduct_id()
   }
   reset_catbtn() {
-    this.clr_array=[]
     this.checkboxes.forEach((element) => {
       element.nativeElement.checked = false;
     });
-    this.subcat_arr = [];
-    if (this.slider_arr.length !== 0) {
-      if (this.clr_temp.length !== 0) {
-        if (this.size_arr.length !== 0) {
-          //all
-          this.product.price_filter_size(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_temp, this.size_arr).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-        } else {
-          //  cat clr price
-          this.product.price_filter_clr(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_temp).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-        }
-      } else {
-        // console.log(this.subcat_arr.length !== 0);
-        if (this.size_arr.length == 0) {
-          //cat price
-          // console.log(this.snew_arr.length !== 0);
-          this.product.price_filter_subcat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-
-
-
-        } else {
-          //  size cat price
-          if(this.clr_temp.length!==0){
-          this.product.price_filter_cat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.size_arr).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })}
-          else{
-            this.getproductby_cat()
-          }
-        }
-
-      }
-
-    }
-    else {
-      //cat
-      this.getproductby_cat()
-    }
-   
+    this.subcat_arr=[]
+    this.allproduct_id()
   }
   reset_sizebtn() {
-    this.clr_array=[]
     this.checkboxes2.forEach((element) => {
       element.nativeElement.checked = false;
     });
-    if (this.slider_arr.length !== 0) {
-      if (this.clr_temp.length !== 0) {
-        if (this.size_arr.length !== 0) {
-          //all
-          this.product.price_filter_size(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_temp, this.size_arr).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-        } else {
-          //  cat clr price
-          this.product.price_filter_clr(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_temp).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-        }
-      } else {
-        // console.log(this.subcat_arr.length !== 0);
-        if (this.size_arr.length == 0) {
-          //cat price
-          // console.log(this.snew_arr.length !== 0);
-          this.product.price_filter_subcat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-
-
-
-        } else {
-          //  size cat price
-          if(this.clr_temp.length !==0){
-          this.product.price_filter_cat(this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.size_arr).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-        }else{
-          this.getproductby_cat()
-        }
-        }
-
-      }
-
-    }
-    else {
-      //cat
-      this.getproductby_cat()
-    }
-    // if (this.snew_arr.length !== 0) {
-    //   if (this.clr_temp.length !== 0) {
-    //     this.product.all_product_getall(this.snew_arr, this.clr_temp, this.cat_id, this.size_arr, this.load_product).subscribe(data => {
-    //       if (data['data'] !== undefined) {
-    //         this.productdata = data['data']
-    //       }
-    //       else {
-    //         this.productdata = []
-    //       }
-    //     })
-    //   } else {
-    //     this.product.getproductbysubcat_id(this.subcat_arr, this.cat_id, this.load_product).subscribe(data => {
-    //       this.productdata = data['data']
-    //     })
-    //   }
-
-    // }
-    // else {
-    //   this.getproductby_cat()
-    // }
+    this.size_arr=[]
+    this.allproduct_id()
   }
   loadmore_product(e: number) {
     this.load_product = e + 3;
     this.getproductby_cat()
   }
   sortby(e: any) {
-    if (e.target.value !== '') {
-
-      this.getcolorval.forEach((element) => {
-        if (element.nativeElement.checked) {
-          this.clr_temp.push(element.nativeElement.id)
-        }
-      });
-
-      this.checkboxes.forEach((element) => {
-        if (element.nativeElement.checked) {
-          this.snew_arr.push(element.nativeElement.id)
-        }
-      });
-      if (this.snew_arr.length !== 0) {
-        if (this.clr_temp.length !== 0) {
-          if (this.size_arr.length !== 0) {
-            //all
-            this.product.order_size(e.target.value, this.load_product, this.cat_id, this.subcat_arr, this.clr_temp, this.size_arr).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          } else {
-            // //  cat clr
-            console.log("ff")
-            this.product.order_clr(e.target.value, this.load_product, this.cat_id, this.subcat_arr, this.clr_temp).subscribe(data => {
-              if (data['data'] !== undefined) {
-                this.productdata = data['data']
-              }
-              else {
-                this.productdata = []
-              }
-            })
-          }
-        } else {
-
-          //  size cat
-          this.product.order_cat(e.target.value, this.load_product, this.cat_id, this.subcat_arr, this.size_arr).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-        }
-
-      } else {
-        //cat
-        this.product.getorderby(e.target.value, this.cat_id, this.load_product).subscribe(data => {
-          this.productdata = data['data']
-          console.log(data['data'])
-        })
-
-      }
-
-
-
-
-
-    }
+    this.allproduct_id()
   }
-  slider_arr: any = []
-  size_temp_arr: any = []
   sliderEvent(e: any) {
-    this.clr_temp=[]
-    this.slider_arr = []
+    this.slider_arr=[]
     this.slider_arr.push(e.value, e.highValue)
-
-    this.getcolorval.forEach((element) => {
-      if (element.nativeElement.checked) {
-        this.clr_temp.push(element.nativeElement.id)
-      }
-    });
-    // console.log(this.clr_temp)
-    this.checkboxes.forEach((element) => {
-      if (element.nativeElement.checked) {
-        this.snew_arr.push(element.nativeElement.id)
-      }
-    });
-    this.size_temp_arr = []
-    this.checkboxes2.forEach((element) => {
-      if (element.nativeElement.checked) {
-        this.size_temp_arr.push(element.nativeElement.id)
-      }
-    });
-    // console.log(this.size_temp_arr)
-    if (this.size_temp_arr != 0) {
-      this.product.price_filter_sizeid(e.value, e.highValue, this.load_product, this.cat_id, this.size_temp_arr).subscribe(data => {
-        if (data['data'] !== undefined) {
-          this.productdata = data['data']
-        }
-        else {
-          this.productdata = []
-        }
-      })
-
-    }
-    if (this.snew_arr.length == 0 && this.size_temp_arr.length == 0 && this.clr_temp.length != 0) {
-      console.log("ok")
-      this.product.price_filter_oneclr(e.value, e.highValue, this.load_product, this.cat_id, this.clr_temp).subscribe(data => {
-        if (data['data'] !== undefined) {
-          this.productdata = data['data']
-        }
-        else {
-          this.productdata = []
-        }
-      })
-    }
-    if (this.snew_arr.length !== 0) {
-      if (this.clr_temp.length !== 0) {
-        if (this.size_arr.length !== 0) {
-          //all
-          this.product.price_filter_size(e.value, e.highValue, this.load_product, this.cat_id, this.subcat_arr, this.clr_temp, this.size_temp_arr).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-        } else {
-          //  cat clr
-          this.product.price_filter_clr(e.value, e.highValue, this.load_product, this.cat_id, this.subcat_arr, this.clr_temp).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-        }
-      } else {
-        // console.log(this.snew_arr.length !== 0);
-        if (this.size_arr.length == 0) {
-          //cat price
-          // console.log(this.snew_arr.length !== 0);
-          this.product.price_filter_subcat(e.value, e.highValue, this.load_product, this.cat_id, this.subcat_arr).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-
-
-
-        } else {
-          //  size cat
-          this.product.price_filter_cat(e.value, e.highValue, this.load_product, this.cat_id, this.subcat_arr, this.size_temp_arr).subscribe(data => {
-            if (data['data'] !== undefined) {
-              this.productdata = data['data']
-            }
-            else {
-              this.productdata = []
-            }
-          })
-        }
-
-      }
-
-    } else if (this.snew_arr.length == 0 && this.size_temp_arr.length == 0 && this.clr_temp.length == 0) {
-      //cat
-      this.product.price_filter(e.value, e.highValue, this.load_product, this.cat_id).subscribe(data => {
-        if (data['data'] !== undefined) {
-          this.productdata = data['data']
-        }
-        else {
-          this.productdata = []
-        }
-      })
-
-    }
+    this.allproduct_id()
   }
   addtocart(e: any) {
     this.cartService.addtoCart(e);
@@ -1128,35 +164,45 @@ export class ProductDetailsComponent implements OnInit {
     // }, 4000);
     // console.log(qty)
   }
-  order_arr: any = []
-  allid() {
+  allproduct_id() {
     this.size_arr = []
     this.subcat_arr = []
-    this.clr_temp = []
+    this.clr_arr = []
     this.order_arr = []
-
     this.checkboxes.forEach((element) => {
       if (element.nativeElement.checked) {
         this.subcat_arr.push(element.nativeElement.id)
       }
     });
-    console.log(this.subcat_arr)
+    // console.log(this.subcat_arr)
     this.getcolorval.forEach((element) => {
       if (element.nativeElement.checked) {
-        this.clr_temp.push(element.nativeElement.id)
+        this.clr_arr.push(element.nativeElement.id)
       }
     });
-    console.log(this.clr_temp)
-    console.log(this.slider_arr)
+    // console.log(this.clr_arr)
+    // console.log(this.slider_arr)
     this.checkboxes2.forEach((element) => {
       if (element.nativeElement.checked) {
         this.size_arr.push(element.nativeElement.id)
       }
     });
-    console.log(this.size_arr)
+    // console.log(this.size_arr)
     this.order.forEach((element) => {
       this.order_arr.push(element.nativeElement.value)
     });
-    console.log(this.order_arr)
+    // console.log(this.order_arr)
+
+    if(this.slider_arr.length==0){
+      this.slider_arr[0]=this.minValue
+      this.slider_arr[1]=this.maxValue
+     }
+     this.product.all_product_filter(this.order_arr,this.slider_arr[0],this.slider_arr[1],this.load_product,this.cat_id,this.subcat_arr,this.clr_arr,this.size_arr).subscribe(data=>{
+      if(data['data'] !== undefined){
+        this.productdata=data['data']
+      } else{
+        this.productdata=[]
+      }
+     })
   }
 }

@@ -14,7 +14,7 @@
                             <input type="hidden" value="{{cat.ID}}">
                             <input type="checkbox" #checkboxes id="{{cat.ID}}"
                                 class="icheck"
-                                (change)="category_filter($event)" [checked]="ischeck"  [attr.disabled]="ischeck"
+                                (change)="allproduct_id()" [checked]="ischeck"  [attr.disabled]="ischeck"
                                 value="{{cat.ID}}">
                            {{cat.Subcategory_Name |titlecase}}<span>({{cat.total_item}})</span>
                         </label>
@@ -36,7 +36,7 @@
                             <input type="radio"
                                 name="color_radio" class="color_btn"
                                 [(ngModel)]="color_radio" #getcolorval
-                                (click)="getproductby_color($event)"
+                                (click)="allproduct_id()"
                                 id="{{data.ID}}" value="{{data.ID}}">
                             <label for="{{data.ID}}">{{data.Product_Color|titlecase}}</label>&nbsp;<i>({{data.total_item}})</i></a>
                     </li>
@@ -48,27 +48,9 @@
         <div class="filter-option">
             <div class="title" data-toggle="collapse" href="#collapse3"
                 aria-expanded="false">Price</div>
-
-
-
             <ngx-slider [(value)]="minValue"
                 (userChangeEnd)="sliderEvent($event)"
                 [(highValue)]="maxValue" [options]="options"></ngx-slider>
-            <!-- <div class="price-range clearfix" *ngFor="let data of price">
-                <span>{{mymodel}}</span>
-                <mat-slider [(ngModel)]="mymodel" min="{{data.min}}"
-                    max="{{data.max}}" value={{data.min}} step="100"
-                    style="width:218px" (change)="updateSetting($event)"></mat-slider><span
-                    class="min">Rs. {{data.min}}</span><span class="max">Rs.
-                    {{data.max}}</span>
-            </div> -->
-            <!-- <div class="filter-option-inner collapse in" id="collapse3">
-                <div class="info">31 items</div>
-                <div class="slider"><img src="assets/images/price.jpg" alt=""></div>
-                <div class="price-range clearfix" *ngFor="let data of price"><span
-                        class="min">{{data.min}}</span><span class="max">
-                        {{data.max}}</span></div>
-            </div> -->
         </div>
         <div class="filter-option">
             <div class="title" data-toggle="collapse" href="#collapse4"
@@ -80,7 +62,7 @@
                         <label>
                             <input type="checkbox" class="icheck"
                                 #checkboxes2
-                                (change)="size_filter($event)" id="{{data.ID}}"
+                                (change)="allproduct_id()" id="{{data.ID}}"
                                 value="{{data.ID}}">
                             {{data.Product_Size}}
                             <span>({{data.total_item}})</span>
@@ -98,7 +80,6 @@
                     src="assets/images/promo2.jpg"
                     alt="" class="img-responsive"></a>
         </div>
-
     </div>
 </div>
 <div class="col-sm-9">

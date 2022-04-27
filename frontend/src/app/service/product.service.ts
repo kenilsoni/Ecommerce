@@ -128,9 +128,11 @@ export class ProductService {
   cat_filter_id(from:number,to:number,load:number,cat_id:number,size_arr:any){
     return this.httpclient.get<product>(`${environment.API_URL}/product/cat_filter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cat_id+'&size_arr='+size_arr)
   }
-  
-  // getsingle_api(){
 
-  // }
+  all_product_filter(order:any,from:number,to:number,load:number,cat_id:number,subcat_id:any,clr_id:any,size_id:any){
+    console.log(`${environment.API_URL}/product/filter.php?from=`+from+'&to='+to+'&load='+load+'&order='+order+'&cat_id='+cat_id+'&clr_id='+clr_id+'&subcat_id='+subcat_id+'&size_id='+size_id)
+    return this.httpclient.get<product>(`${environment.API_URL}/product/filter.php?from=`+from+'&to='+to+'&load='+load+'&order='+order+'&cat_id='+cat_id+'&clr_id='+clr_id+'&subcat_id='+subcat_id+'&size_id='+size_id)
+  }
+  
 
 }
