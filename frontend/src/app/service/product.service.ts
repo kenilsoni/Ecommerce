@@ -116,6 +116,21 @@ export class ProductService {
     console.log(`${environment.API_URL}/product/size2.php?limit=`+load+'&cid='+cid+'&clr_id='+clrid+'&sid_arr='+sidarr+'&size_arr='+size_arr)
     return this.httpclient.get<product>(`${environment.API_URL}/product/size2.php?limit=`+load+'&cid='+cid+'&clr_id='+clrid+'&sid_arr='+sidarr+'&size_arr='+size_arr)
   }
+  cat_filter_all(from:number,to:number,load:number,cat_id:number,clr_arr:any,size_arr:any){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/cat_filter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cat_id+'&clr_arr='+clr_arr+'&size_arr='+size_arr)
+  }
+  cat_filter_clr(from:number,to:number,load:number,cat_id:number,clr_arr:any){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/cat_filter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cat_id+'&clr_arr='+clr_arr)
+  }
+  cat_filter_subcat(from:number,to:number,load:number,cat_id:number){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/cat_filter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cat_id)
+  }
+  cat_filter_id(from:number,to:number,load:number,cat_id:number,size_arr:any){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/cat_filter.php?from=`+from+'&to='+to+'&load='+load+'&cid='+cat_id+'&size_arr='+size_arr)
+  }
   
+  // getsingle_api(){
+
+  // }
 
 }

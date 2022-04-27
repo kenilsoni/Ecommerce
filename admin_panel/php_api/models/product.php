@@ -53,12 +53,12 @@ class Product
 
       return $stmt;
     } else {
-      $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID  WHERE pdt.Category_ID=?  ORDER BY pdt.Created_At DESC LIMIT '.$this->load;
+      $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID  WHERE pdt.Category_ID IN ('.$this->cat_id.')  ORDER BY pdt.Created_At DESC LIMIT '.$this->load;
       // Prepare statement
       $stmt = $this->conn->prepare($query);
 
       // Bind ID
-      $stmt->bindParam(1, $this->cat_id);
+      // $stmt->bindParam(1, );
 
       // Execute query
       $stmt->execute();
@@ -250,15 +250,15 @@ class Product
   {
     // Create query
 
-    $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID  WHERE pdt.Category_ID=? AND Product_Price BETWEEN ? AND ? LIMIT '.$this->load;
+    $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID  WHERE pdt.Category_ID IN ('.$this->Category_ID.') AND Product_Price BETWEEN ? AND ? LIMIT '.$this->load;
 
     //Prepare statement
     $stmt = $this->conn->prepare($query);
 
      // Bind ID
-     $stmt->bindParam(1, $this->Category_ID);
-     $stmt->bindParam(2, $this->from);
-     $stmt->bindParam(3, $this->to);
+    //  $stmt->bindParam(1, $this->Category_ID);
+     $stmt->bindParam(1, $this->from);
+     $stmt->bindParam(2, $this->to);
 
     // Execute query
     $stmt->execute();
@@ -269,7 +269,43 @@ class Product
   {
     // Create query
 
-    $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID  WHERE pdt.Category_ID IN ('.$this->Category_ID.') AND pdt.Product_Color_ID IN ('.$this->Product_Color_ID.') AND pdt.Product_Size IN ('.$this->Product_Size.') AND Product_Price BETWEEN ? AND ? LIMIT '.$this->load;
+    $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID  WHERE pdt.Category_ID IN ('.$this->Category_ID.') AND pdt.Product_Color_ID IN ('.$this->Product_Color_ID.') AND pdt.Product_Size IN ('.$this->Product_Size.') Product_Price BETWEEN ? AND ? LIMIT '.$this->load;
+    //Prepare statement
+    $stmt = $this->conn->prepare($query);
+
+     // Bind ID
+
+     $stmt->bindParam(1, $this->from);
+     $stmt->bindParam(2, $this->to);
+
+    // Execute query
+    $stmt->execute();
+
+    return $stmt;
+  }
+  public function all_clr_filter()
+  {
+    // Create query
+
+    $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID  WHERE pdt.Category_ID IN ('.$this->Category_ID.') AND pdt.Product_Color_ID IN ('.$this->Product_Color_ID.') Product_Price BETWEEN ? AND ? LIMIT '.$this->load;
+    //Prepare statement
+    $stmt = $this->conn->prepare($query);
+
+     // Bind ID
+
+     $stmt->bindParam(1, $this->from);
+     $stmt->bindParam(2, $this->to);
+
+    // Execute query
+    $stmt->execute();
+
+    return $stmt;
+  }
+  public function all_cid_filter()
+  {
+    // Create query
+
+    $query = 'SELECT pdt.*,ps.Subcategory_Name,pc.Category_Name,psize.Product_Size,pclr.Product_Color FROM  product as pdt LEFT JOIN product_category as pc ON pdt.Category_ID=pc.ID LEFT JOIN product_subcategory as ps ON pdt.Subcategory_ID=ps.ID LEFT JOIN product_size as psize ON pdt.Product_Size=psize.ID LEFT JOIN product_color as pclr ON pdt.Product_Color_ID=pclr.ID  WHERE pdt.Category_ID IN ('.$this->Category_ID.') Product_Price BETWEEN ? AND ? LIMIT '.$this->load;
     //Prepare statement
     $stmt = $this->conn->prepare($query);
 

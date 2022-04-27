@@ -26,7 +26,7 @@
  // Get row count
  $num = $result->rowCount();
       }else{
-        $result = $product->price_filter();
+        $result = $product->all_cid_filter();
   
         // Get row count
         $num = $result->rowCount();
