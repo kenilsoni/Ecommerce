@@ -31,3 +31,6 @@
     font-size: 60px;
     text-align:center
 }
+.btn-tertiary{
+    cursor: pointer;
+}

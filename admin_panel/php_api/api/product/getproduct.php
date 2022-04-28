@@ -2,7 +2,7 @@
 // Headers
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 include_once '../../config/Database.php';
 include_once '../../models/product.php';
 
@@ -74,11 +74,7 @@ if ($num > 0) {
         
       }
       // Push to "data"
-    
-    // array_push($product_arr['data'], $product_item);
-   
   }
- 
  
   // Turn to JSON & output
 

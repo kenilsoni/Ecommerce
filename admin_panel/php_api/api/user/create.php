@@ -22,7 +22,7 @@
     $user->FirstName = $data->firstname;
     $user->LastName = $data->lastname;
     $user->Email = $data->email;
-    $user->Password = $data->password;
+    $user->Password=password_hash($data->password,PASSWORD_DEFAULT);
     $user->Mobile = $data->mobile;
     $user->Phone = $data->phone;
     $user->Gender = $data->gender;

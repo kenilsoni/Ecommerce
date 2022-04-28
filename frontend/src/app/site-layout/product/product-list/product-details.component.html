@@ -12,7 +12,7 @@
                     <li class="custom-check" *ngFor="let cat of cat_data">
                         <label>
                             <input type="hidden" value="{{cat.ID}}">
-                            <input type="checkbox" #checkboxes id="{{cat.ID}}"
+                            <input type="checkbox" #subcat_checkbox id="{{cat.ID}}"
                                 class="icheck"
                                 (change)="allproduct_id()" [checked]="ischeck"  [attr.disabled]="ischeck"
                                 value="{{cat.ID}}">
@@ -61,7 +61,7 @@
                     <li class="custom-check" *ngFor="let data of size">
                         <label>
                             <input type="checkbox" class="icheck"
-                                #checkboxes2
+                                #size_checkbox
                                 (change)="allproduct_id()" id="{{data.ID}}"
                                 value="{{data.ID}}">
                             {{data.Product_Size}}
@@ -91,7 +91,7 @@
                 <label>Sort By</label>&nbsp;
                 <div class="form-group">
                     <select class="custom-dropdown" #order (change)="sortby($event)">
-                        <option value="Created_At DESC" selected>Latest</option>
+                        <option value="1" selected>Latest</option>
                         <option value="Product_Name">Name</option>
                         <option value="Product_Price">Price</option>
                     </select>
@@ -122,7 +122,7 @@
             </div>
         </ng-template>
     </div>
-    <div class="col-sm-12 col-xs-12" *ngIf="productdata.length >=9;">
+    <div class="col-sm-12 col-xs-12" *ngIf="productdata.length >=9 && product_count;">
         <span class="button-outer text-center">
             <a
                 class="btn-tertiary"

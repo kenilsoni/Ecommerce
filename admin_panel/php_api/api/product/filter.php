@@ -2,7 +2,7 @@
 // Headers
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 include_once '../../config/Database.php';
 include_once '../../models/product.php';
 
@@ -12,13 +12,12 @@ $db = $database->connect();
 
 // Instantiate product object
 $product = new Product($db);
-
-
-
-
 $product->from = isset($_GET['from']) ? $_GET['from'] : '';
 $product->to = isset($_GET['to']) ? $_GET['to'] : '';
 $product->order = isset($_GET['order']) ? $_GET['order'] : '';
+if ($product->order == 1) {
+    $product->order = "Created_At DESC";
+}
 $product->Category_ID = isset($_GET['cat_id']) ? $_GET['cat_id'] : '';
 $product->load = isset($_GET['load']) ? $_GET['load'] : '';
 
@@ -29,11 +28,15 @@ $product->Product_Size = isset($_GET['size_id']) ? $_GET['size_id'] : '';
 if (!empty($product->Product_Color_ID)) {
     if (!empty($product->Subcategory_ID) && empty($product->Product_Size)) {
         //clr subcat
-        $result = $product->order_color1();
+        $result = $product->order_color_filter();
         $num = $result->rowCount();
     } else if (!empty($product->Product_Size) && !empty($product->Subcategory_ID)) {
         //clr subcat size
-        $result = $product->order_color2();
+        $result = $product->order_size_filter();
+        $num = $result->rowCount();
+    } else if (empty($product->Subcategory_ID) && !empty($product->Product_Size)) {
+        //clr size
+        $result = $product->order_color_cs();
         $num = $result->rowCount();
     } else {
         //clr
@@ -48,97 +51,18 @@ if (!empty($product->Product_Color_ID)) {
         $num = $result->rowCount();
     } else if (!empty($product->Product_Size)) {
         //size
-        $result = $product->order_sizee();
+        $result = $product->order_size();
         $num = $result->rowCount();
-    }else if(!empty($product->Subcategory_ID)){
+    } else if (!empty($product->Subcategory_ID)) {
         // subcat
-    $result = $product->order_subcat();
-    $num = $result->rowCount();
-    }else{
-            //   default
-    $result = $product->default();
-    $num = $result->rowCount();
+        $result = $product->order_subcat();
+        $num = $result->rowCount();
+    } else {
+        //   default
+        $result = $product->default();
+        $num = $result->rowCount();
     }
 }
-
-// if (!empty($product->Subcategory_ID)) {
-//     if (!empty($product->Subcategory_ID) && empty($product->Product_Size)) {
-//         //clr subcat
-//         $result = $product->order_color1();
-//         $num = $result->rowCount();
-//     } else if (!empty($product->Product_Size) && !empty($product->Subcategory_ID)) {
-//         //clr subcat size
-//         $result = $product->order_color2();
-//         $num = $result->rowCount();
-//     } else {
-//         //clr
-//         $result = $product->order_color();
-//         $num = $result->rowCount();
-//     }
-// } else {
-//     if (!empty($product->Subcategory_ID) && !empty($product->Product_Size)) {
-//         //subcat  size 
-
-//         $result = $product->order_color3();
-//         $num = $result->rowCount();
-//     }
-// }
-
-// else if(!empty($product->Subcategory_ID)){
-//     // subcat
-//     $result = $product->order_subcat();
-//     $num = $result->rowCount();
-//   }else if(!empty($product->Product_Size)){
-//     //size
-//     echo "ff";
-//     $result = $product->order_sizee();
-//     $num = $result->rowCount();
-//   }else{
-//       //default
-//     $result = $product->default();
-//     $num = $result->rowCount();
-//   }
-
-
-
-
-
-
-
-
-
-//   if(isset($_GET['clr_id']) && isset($_GET['subcat_id'])){
-//     $product->Product_Color_ID = $_GET['clr_id'];
-//     $product->Subcategory_ID = $_GET['subcat_id'];
-//     if(isset($_GET['size_id'])){
-//       $product->Product_Size = $_GET['size_id'];
-//       $result = $product->order_size();
-//       $num = $result->rowCount();
-//     }else{
-
-//        // product read query
-//    $result = $product->order_clr();
-//    $num = $result->rowCount();
-//     }
-
-
-//   }else if(isset($_GET['size_iday'])){
-//     $product->Subcategory_ID =$_GET['subcat_id'];
-//     $product->Product_Size =$_GET['size_iday'];
-//     $result = $product->order_cat();
-//    $num = $result->rowCount();
-
-//   }
-//   else{
-
-// // echo $product->load;
-//   // product read query
-//   $result = $product->get_order();
-
-//   // Get row count
-//   $num = $result->rowCount();
-//   }
-
 
 // Check if any product
 if ($num > 0) {

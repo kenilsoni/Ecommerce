@@ -6,8 +6,6 @@ import { SliderComponent } from '@angular-slider/ngx-slider/slider.component';
 import { environment } from 'src/environments/environment';
 import { CartService } from 'src/app/service/cart.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { OwlOptions } from 'ngx-owl-carousel-o';
-
 
 @Component({
   selector: 'app-product-details',
@@ -37,15 +35,18 @@ export class ProductDetailsComponent implements OnInit {
   ischeck!: boolean
   load_product = environment.load_product
   order_arr: any = []
-  clr_arr:any = []
+  clr_arr: any = []
   slider_arr: any = []
+  initial!: number
+  end!: number
+  product_count: boolean = true
 
-  @ViewChildren("checkboxes")
-  checkboxes!: QueryList<ElementRef>;
+  @ViewChildren("subcat_checkbox")
+  subcat_checkbox!: QueryList<ElementRef>;
   @ViewChildren("order")
   order!: QueryList<ElementRef>;
-  @ViewChildren("checkboxes2")
-  checkboxes2!: QueryList<ElementRef>;
+  @ViewChildren("size_checkbox")
+  size_checkbox!: QueryList<ElementRef>;
   @ViewChildren("getcolorval")
   getcolorval!: QueryList<ElementRef>;
 
@@ -127,32 +128,33 @@ export class ProductDetailsComponent implements OnInit {
         element.nativeElement.checked = false;
       }
     });
-    this.clr_arr=[]
+    this.clr_arr = []
     this.allproduct_id()
   }
   reset_catbtn() {
-    this.checkboxes.forEach((element) => {
+    this.subcat_checkbox.forEach((element) => {
       element.nativeElement.checked = false;
     });
-    this.subcat_arr=[]
+    this.subcat_arr = []
     this.allproduct_id()
   }
   reset_sizebtn() {
-    this.checkboxes2.forEach((element) => {
+    this.size_checkbox.forEach((element) => {
       element.nativeElement.checked = false;
     });
-    this.size_arr=[]
+    this.size_arr = []
     this.allproduct_id()
   }
   loadmore_product(e: number) {
     this.load_product = e + 3;
-    this.getproductby_cat()
+    this.initial = this.productdata.length
+    this.allproduct_id()
   }
   sortby(e: any) {
     this.allproduct_id()
   }
   sliderEvent(e: any) {
-    this.slider_arr=[]
+    this.slider_arr = []
     this.slider_arr.push(e.value, e.highValue)
     this.allproduct_id()
   }
@@ -169,40 +171,40 @@ export class ProductDetailsComponent implements OnInit {
     this.subcat_arr = []
     this.clr_arr = []
     this.order_arr = []
-    this.checkboxes.forEach((element) => {
+    this.subcat_checkbox.forEach((element) => {
       if (element.nativeElement.checked) {
         this.subcat_arr.push(element.nativeElement.id)
       }
     });
-    // console.log(this.subcat_arr)
     this.getcolorval.forEach((element) => {
       if (element.nativeElement.checked) {
         this.clr_arr.push(element.nativeElement.id)
       }
     });
-    // console.log(this.clr_arr)
-    // console.log(this.slider_arr)
-    this.checkboxes2.forEach((element) => {
+    this.size_checkbox.forEach((element) => {
       if (element.nativeElement.checked) {
         this.size_arr.push(element.nativeElement.id)
       }
     });
-    // console.log(this.size_arr)
     this.order.forEach((element) => {
       this.order_arr.push(element.nativeElement.value)
     });
-    // console.log(this.order_arr)
-
-    if(this.slider_arr.length==0){
-      this.slider_arr[0]=this.minValue
-      this.slider_arr[1]=this.maxValue
-     }
-     this.product.all_product_filter(this.order_arr,this.slider_arr[0],this.slider_arr[1],this.load_product,this.cat_id,this.subcat_arr,this.clr_arr,this.size_arr).subscribe(data=>{
-      if(data['data'] !== undefined){
-        this.productdata=data['data']
-      } else{
-        this.productdata=[]
+    if (this.slider_arr.length == 0) {
+      this.slider_arr[0] = this.minValue
+      this.slider_arr[1] = this.maxValue
+    }
+    this.product.all_product_filter(this.order_arr, this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_arr, this.size_arr).subscribe(data => {
+      if (data['data'] !== undefined) {
+        this.productdata = data['data']
+        if (this.initial) {
+          this.end = this.productdata.length
+          if (this.end - this.initial < 9) {
+            this.product_count = false
+          }
+        }
+      } else {
+        this.productdata = []
       }
-     })
+    })
   }
 }

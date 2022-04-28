@@ -39,7 +39,6 @@ class User
         $this->FirstName = htmlspecialchars(strip_tags($this->FirstName));
         $this->LastName = htmlspecialchars(strip_tags($this->LastName));
         $this->Email = htmlspecialchars(strip_tags($this->Email));
-        $this->Password = htmlspecialchars(strip_tags($this->Password));
         $this->Gender = htmlspecialchars(strip_tags($this->Gender));
         $this->Mobile = htmlspecialchars(strip_tags($this->Mobile));
         $this->Phone = htmlspecialchars(strip_tags($this->Phone));
@@ -75,12 +74,12 @@ class User
     public function check_login()
     {
         // Create Query
-        $query = 'SELECT count(*) AS count,* FROM user WHERE UserName =:UserName AND Password=:Password';
+        $query = 'SELECT * FROM user WHERE UserName =:UserName';
         // Prepare Statement
         $stmt = $this->conn->prepare($query);
         // Bind data
         $stmt->bindParam(':UserName', $this->UserName);
-        $stmt->bindParam(':Password', $this->Password);
+
         $stmt->execute();
         return $stmt;
     }
