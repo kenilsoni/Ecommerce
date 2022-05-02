@@ -66,7 +66,7 @@ if (isset($_GET['username']) && isset($_GET['password'])) {
                 "aud" => $audience_claim,
                 "iat" => $issuedat_claim,
                 "nbf" => $notbefore_claim,
-                "exp" => 600,
+                "exp" => $issuedat_claim + 300,
                 "data" => array(
                     "id" => $ID,
                     "firstName" => $firstname

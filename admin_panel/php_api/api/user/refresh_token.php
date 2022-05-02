@@ -21,7 +21,7 @@ if (isset($getdata)) {
             $audience_claim = "user_auth";
             $issuedat_claim = time(); // time issued 
             $notbefore_claim = $issuedat_claim + 10;
-            $expire_claim = $issuedat_claim + 20;
+            $expire_claim = $issuedat_claim + 600;
 
             $token = array(
                 "iss" => $issuer_claim,
