@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 include_once '../../config/Database.php';
 include_once '../../models/subcategory.php';
-
+include_once '../user/auth.php';
 // Instantiate DB & connect
 $database = new Database();
 $db = $database->connect();

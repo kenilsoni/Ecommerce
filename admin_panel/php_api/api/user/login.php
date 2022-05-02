@@ -4,14 +4,15 @@ header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 header("Access-Control-Max-Age: 3600");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Headers:* ");
 
 
-require "../../JWT/vendor/autoload.php";
+// require "../../JWT/vendor/autoload.php";
 
-use \Firebase\JWT\JWT;
+// use \Firebase\JWT\JWT;
 
 include_once '../../config/Database.php';
+include_once '../../models/JWT.php';
 include_once '../../models/user.php';
 include_once '../../models/city.php';
 include_once '../../models/state.php';
@@ -23,6 +24,7 @@ $db = $database->connect();
 
 // Instantiate blog post object
 $user = new User($db);
+$jwt = new JWTtoken($db);
 
 // Get username
 if (isset($_GET['username']) && isset($_GET['password'])) {
@@ -45,9 +47,9 @@ if (isset($_GET['username']) && isset($_GET['password'])) {
             $audience_claim = "user_auth";
             $issuedat_claim = time(); // time issued 
             $notbefore_claim = $issuedat_claim + 10;
-            $expire_claim = $issuedat_claim + 60;
+            $expire_claim = $issuedat_claim + 300;
 
-            $token = array(
+            $access_token = array(
                 "iss" => $issuer_claim,
                 "aud" => $audience_claim,
                 "iat" => $issuedat_claim,
@@ -59,11 +61,25 @@ if (isset($_GET['username']) && isset($_GET['password'])) {
                 )
             );
 
-            $jwtValue = JWT::encode($token, $secret_key, 'HS512');
+            $refresh_token = array(
+                "iss" => $issuer_claim,
+                "aud" => $audience_claim,
+                "iat" => $issuedat_claim,
+                "nbf" => $notbefore_claim,
+                "exp" => 600,
+                "data" => array(
+                    "id" => $ID,
+                    "firstName" => $firstname
+                )
+            );
+
+            $access_jwtValue = $jwt->create_token($access_token, $secret_key, 'HS512');
+            $refresh_jwtValue = $jwt->create_token($refresh_token, $secret_key, 'HS512');
             echo json_encode(
                 array(
                     "success" => true,
-                    "token" => $jwtValue,
+                    "access_token" => $access_jwtValue,
+                    "refresh_token" => $refresh_jwtValue,
                     "expiry" => $expire_claim,
                     "firstName" => $firstname,
                     "id" => $ID,

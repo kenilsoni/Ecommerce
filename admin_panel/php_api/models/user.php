@@ -1,4 +1,8 @@
 <?php
+require "../../JWT/vendor/autoload.php";
+
+use \Firebase\JWT\JWT;
+
 class User
 {
     // DB Stuff
@@ -92,4 +96,6 @@ class User
         $stmt->execute();
         return $stmt;
     }
+   
+   
 }

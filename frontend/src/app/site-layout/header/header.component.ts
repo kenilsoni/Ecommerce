@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
     this.getsubcategory();
     this.getcart_data()
     this.is_loogedin()
-
+    this.get_localstorage()
     this.loginval = this.formbuilder.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -50,6 +50,11 @@ export class HeaderComponent implements OnInit {
         this.products = res;
         this.grandTotal = this.cartService.getTotalPrice();
       })
+  }
+  get_localstorage(){
+    // this.products=this.cartService.get_cart()
+    // console.log(this.cartService.get_cart())
+      
   }
   getcategory() {
     this.product.getcategory().subscribe(response => {

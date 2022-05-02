@@ -2,9 +2,10 @@
   // Headers
   header('Access-Control-Allow-Origin: *');
   header('Content-Type: application/json');
-  header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+  header("Access-Control-Allow-Headers: *");
   include_once '../../config/Database.php';
   include_once '../../models/Category.php';
+  include_once '../user/auth.php';
 
   // Instantiate DB & connect
   $database = new Database();
