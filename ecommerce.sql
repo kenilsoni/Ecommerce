@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2022 at 01:13 PM
+-- Generation Time: May 05, 2022 at 03:39 PM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -65,7 +65,9 @@ CREATE TABLE `city` (
 
 INSERT INTO `city` (`ID`, `City`, `State_ID`, `Country_ID`, `Created_At`, `Modified_At`) VALUES
 (1, 'AHMEDABAD', 1, 1, '2022-04-08 09:05:38', '2022-04-13 04:47:38'),
-(6, 'SULTANPUR', 3, 1, '2022-04-12 05:38:48', '2022-04-12 05:38:48');
+(6, 'SULTANPUR', 3, 1, '2022-04-12 05:38:48', '2022-04-12 05:38:48'),
+(7, 'texas', 8, 4, '2022-05-02 10:51:29', '2022-05-02 10:51:29'),
+(8, 'janakpur', 7, 2, '2022-05-02 10:52:00', '2022-05-02 10:52:00');
 
 -- --------------------------------------------------------
 
@@ -118,12 +120,12 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`ID`, `Product_Name`, `Product_Description`, `Product_Price`, `Product_Quantity`, `Product_Color_ID`, `IsTrending`, `Product_Size`, `Category_ID`, `Subcategory_ID`, `SKU`, `Created_At`, `Modified_At`) VALUES
-(23, 'product2 kids tshirt', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected', 1000, 1, '3', 0, '1', 53, 14, NULL, '2022-04-13 06:51:01', '2022-04-25 07:33:44'),
+(23, 'product2 kids tshirt', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected', 1000, 1, '7', 0, '1', 53, 14, NULL, '2022-04-13 06:51:01', '2022-04-25 07:33:44'),
 (24, 'product3 men shirt', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected', 2000, 2, '3', 1, '1', 9, 4, NULL, '2022-04-13 06:54:28', '2022-04-25 09:03:50'),
 (25, 'product1 women jeans', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected', 5000, 11, '2', 1, '6', 10, 6, NULL, '2022-04-13 07:38:58', '2022-04-13 07:38:58'),
 (26, 'product4 accessories wallet', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected', 2556, 12, '3', 0, '1', 69, 15, NULL, '2022-04-18 09:45:08', '2022-04-18 09:45:08'),
 (27, 'product8 men shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 1456, 12, '2', 1, '6', 9, 4, NULL, '2022-04-19 03:44:38', '2022-04-19 03:44:38'),
-(28, 'product9 man product9 man product9 mansssssssssss ', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2554, 14, '7', 0, '6', 9, 12, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
+(28, 'product9 man t-shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2554, 14, '7', 0, '6', 9, 12, NULL, '2022-04-19 03:52:40', '2022-05-05 09:46:57'),
 (29, 'product9 men jeans', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 4444, 44, '2', 0, '1', 9, 16, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
 (30, 'product10 men shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 1212, 11, '2', 0, '1', 9, 4, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
 (31, 'product11 men shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 1213, 22, '3', 1, '1', 9, 4, NULL, '2022-04-19 03:52:40', '2022-04-25 06:00:03'),
@@ -135,7 +137,7 @@ INSERT INTO `product` (`ID`, `Product_Name`, `Product_Description`, `Product_Pri
 (37, 'product 17  women tshirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2563, 21, '2', 0, '6', 10, 18, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
 (38, 'product 20 women jeans', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 1000, 12, '3', 1, '1', 10, 6, NULL, '2022-04-19 03:56:28', '2022-04-19 03:56:28'),
 (39, 'product 22 women tshirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2564, 11, '7', 0, '6', 10, 18, NULL, '2022-04-19 03:56:28', '2022-04-19 03:56:28'),
-(40, 'product25 men jacket', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2525, 22, '2', 1, '1', 9, 17, NULL, '2022-04-19 04:03:34', '2022-04-19 04:03:34'),
+(40, 'product25 men jacket', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2525, 22, '2,3,7', 1, '1,6', 9, 17, NULL, '2022-04-19 04:03:34', '2022-04-19 04:03:34'),
 (41, 'product 29 men jacket', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2527, 14, '3', 1, '6', 9, 17, NULL, '2022-04-19 04:03:34', '2022-04-19 04:03:34');
 
 -- --------------------------------------------------------
@@ -282,6 +284,31 @@ INSERT INTO `product_subcategory` (`ID`, `Category_ID`, `Subcategory_Name`, `Sub
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `service_tax`
+--
+
+CREATE TABLE `service_tax` (
+  `ID` int(11) NOT NULL,
+  `Country_ID` int(11) NOT NULL,
+  `State_ID` int(11) NOT NULL,
+  `tax_percent` float NOT NULL,
+  `Created_At` timestamp NOT NULL DEFAULT current_timestamp(),
+  `Modified_At` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `service_tax`
+--
+
+INSERT INTO `service_tax` (`ID`, `Country_ID`, `State_ID`, `tax_percent`, `Created_At`, `Modified_At`) VALUES
+(1, 1, 3, 2, '2022-05-04 04:31:16', '2022-05-04 05:33:11'),
+(4, 1, 1, 2.9, '2022-05-04 05:39:08', '2022-05-04 05:39:08'),
+(5, 2, 7, 3.6, '2022-05-04 05:39:19', '2022-05-04 05:39:19'),
+(6, 4, 8, 5, '2022-05-04 05:39:31', '2022-05-04 05:39:31');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `state`
 --
 
@@ -315,7 +342,7 @@ CREATE TABLE `user` (
   `FirstName` varchar(50) NOT NULL,
   `LastName` varchar(50) NOT NULL,
   `Email` varchar(50) NOT NULL,
-  `Password` varchar(25) NOT NULL,
+  `Password` varchar(255) NOT NULL,
   `Gender` enum('M','F') NOT NULL,
   `Phone` varchar(12) NOT NULL,
   `Mobile` varchar(12) NOT NULL,
@@ -330,9 +357,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`ID`, `UserName`, `FirstName`, `LastName`, `Email`, `Password`, `Gender`, `Phone`, `Mobile`, `Intrest`, `Created_At`, `Modified_At`, `Status`) VALUES
-(1, 'kps', 'kenil', 'soni', 'abc@gmail.com', '1111111', 'M', '11111111', '11111111', NULL, '2022-04-13 12:00:00', '2022-04-13 12:00:00', 1),
-(2, 'aaa', 'jenil', 'soni', 'abc@gmail.com', '111111', 'M', '111111', '5478965478', NULL, '2022-04-13 12:00:00', '2022-04-13 12:00:00', 1),
-(35, 'kenilll', 'ken', 'soni', 'andd@gmskf.vom', 'abcdef', 'M', '2222222222', '2323232323', 'NULL', '2022-04-25 10:05:34', '2022-04-25 10:05:34', 1);
+(1, 'kps', 'kenil', 'soni', 'abcss@gmail.com', 'an7oiltGds/I9oXIguqGAw==', 'M', '11111111', '11111111', NULL, '2022-04-13 12:00:00', '2022-04-13 12:00:00', 1),
+(2, 'aaa', 'kenil', 'soni', 'abc@gmail.com', 'an7oiltGds/I9oXIguqGAw==', 'M', '1111111111', '5478965478', NULL, '2022-04-13 12:00:00', '2022-04-13 12:00:00', 1),
+(35, 'kenilll', 'kenilll', 'soni', 'andd@gmskf.vom', 'an7oiltGds/I9oXIguqGAw==', 'M', '3333333333', '2323232323', 'NULL', '2022-04-25 10:05:34', '2022-04-25 10:05:34', 1),
+(36, 'kenil1111', 'kenil', 'soni', 'gsyu@gmail.com', 'an7oiltGds/I9oXIguqGAw==', 'F', '2222222223', '5555555555', 'NULL', '2022-04-28 12:25:15', '2022-04-28 12:25:15', 1);
 
 -- --------------------------------------------------------
 
@@ -358,7 +386,12 @@ CREATE TABLE `user_address` (
 INSERT INTO `user_address` (`ID`, `User_ID`, `Street`, `Country_ID`, `State_ID`, `City_ID`, `Address_Type`, `Created_At`) VALUES
 (1, 1, 'abc', 1, 1, 1, 'Shipping', '2022-04-12 13:12:44'),
 (2, 2, 'abcdef', 1, 1, 1, 'Billing', '2022-04-08 10:33:17'),
-(3, 1, 'fgh', 1, 3, 6, 'Billing', '2022-04-13 05:05:51');
+(3, 1, 'fgh', 1, 3, 6, 'Billing', '2022-04-13 05:05:51'),
+(4, 36, 'testbill', 4, 8, 7, 'Billing', '2022-05-03 05:15:44'),
+(5, 36, 'testship', 4, 8, 7, 'Shipping', '2022-05-03 05:15:44'),
+(10, 35, 'abcd', 1, 1, 1, 'Shipping', '2022-05-02 16:26:06'),
+(11, 35, 'abcd', 1, 1, 1, 'Billing', '2022-05-02 16:31:32'),
+(12, 2, 'ship2', 1, 1, 1, 'Shipping', '2022-05-03 04:09:30');
 
 --
 -- Indexes for dumped tables
@@ -427,6 +460,14 @@ ALTER TABLE `product_subcategory`
   ADD KEY `product_subcategory_ibfk_1` (`Category_ID`);
 
 --
+-- Indexes for table `service_tax`
+--
+ALTER TABLE `service_tax`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `Country_ID` (`Country_ID`),
+  ADD KEY `State_ID` (`State_ID`);
+
+--
 -- Indexes for table `state`
 --
 ALTER TABLE `state`
@@ -463,7 +504,7 @@ ALTER TABLE `admin_details`
 -- AUTO_INCREMENT for table `city`
 --
 ALTER TABLE `city`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `country`
@@ -475,13 +516,13 @@ ALTER TABLE `country`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `product_category`
 --
 ALTER TABLE `product_category`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `product_color`
@@ -493,7 +534,7 @@ ALTER TABLE `product_color`
 -- AUTO_INCREMENT for table `product_image`
 --
 ALTER TABLE `product_image`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `product_size`
@@ -508,6 +549,12 @@ ALTER TABLE `product_subcategory`
   MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
+-- AUTO_INCREMENT for table `service_tax`
+--
+ALTER TABLE `service_tax`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `state`
 --
 ALTER TABLE `state`
@@ -517,13 +564,13 @@ ALTER TABLE `state`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `user_address`
 --
 ALTER TABLE `user_address`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
@@ -554,6 +601,13 @@ ALTER TABLE `product_image`
 --
 ALTER TABLE `product_subcategory`
   ADD CONSTRAINT `product_subcategory_ibfk_1` FOREIGN KEY (`Category_ID`) REFERENCES `product_category` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `service_tax`
+--
+ALTER TABLE `service_tax`
+  ADD CONSTRAINT `service_tax_ibfk_1` FOREIGN KEY (`Country_ID`) REFERENCES `country` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `service_tax_ibfk_2` FOREIGN KEY (`State_ID`) REFERENCES `state` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `state`
