@@ -144,36 +144,49 @@
                                                 elit"
                                                 href="product-detail.html"><img
                                                     alt=""
-                                                    src="/assets/images/new-thumb-01.jpg"></a>
+                                                    src="{{image_url}}/{{item.Image_path}}"></a>
                                             <div class="cart-details">
                                                 <a class="btn-remove"
                                                     title="Remove item"
                                                     (click)="removeItem(item)"><img
                                                         src="/assets/images/cross.svg"
                                                         alt=""></a>
-                                                <a class="btn-edit" title="Edit
-                                                    item" href="cart.html">
-                                                    <img
+   
+                                                <a class="btn-edit" title="Edit item" >
+                                                    <img (click)="edit_product(item.ID)"
                                                         src="/assets/images/edit.svg"
                                                         alt="">
                                                 </a>
                                                 <p class="product-name"><a
-                                                        href="product-detail.html">{{item.Product_Name}}</a></p>
+                                                    routerLink="/product/{{item.ID}}">{{item.Product_Name}}</a></p>
                                                 <p class="price">{{item.Product_Price|currency:'INR'}} </p>
                                                 <p class="qty-wrapper">
                                                     <span>Qty : </span>
-                                                    <span>1</span>
+                                                    <span #quantity id="{{item.ID}}">{{item.Product_Quantity}}</span>
+                                                    <input type="text" class="change_box" #quantity_text  id="{{item.ID}}" (keyup)="change_quantity($event)"/>
                                                 </p>
                                                 <div class="size-wrap">
                                                     <dl class="item-options">
                                                         <dt>Size :</dt>
-                                                        <dd>
+                                                        <dd #size_text id="{{item.ID}}">
                                                             {{item.Size_Name}}
                                                         </dd>
+                                                        <!-- -->
+                                                        <select class="default-select form-control change_box"  #size id="{{item.ID}}" (change)="change_size($event)"  > 
+                                                            <option *ngFor="let getitem of size_details" value="{{getitem.size+','+getitem.id}}" id="{{getitem.id}}" >{{getitem.size}}</option>
+                                                            
+                                                        </select>
+                                                        
                                                     </dl>
+                                                   
                                                 </div>
                                             </div>
+                                            <div class="update-action" id="{{item.ID}}" #update>
+                                                <a  title="Update" (click)="update_cart(item.ID)"
+                                                    class="btn-secondary">Update</a>
+                                            </div>
                                         </li>
+                                        
                                         <!-- <li>
                                             <a class="cart-product"
                                                 title="consectetur adipiscing

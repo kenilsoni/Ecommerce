@@ -18,12 +18,14 @@
   // Get raw posted data
   $data = json_decode(file_get_contents("php://input"));
 
+  
+
   if($data){
     $user->UserName = $data->username;
     $user->FirstName = $data->firstname;
     $user->LastName = $data->lastname;
     $user->Email = $data->email;
-    $user->Password=password_hash($data->password,PASSWORD_DEFAULT);
+    $user->Password=openssl_encrypt($data->password, "AES-128-ECB","skp1506");
     $user->Mobile = $data->mobile;
     $user->Phone = $data->phone;
     $user->Gender = $data->gender;

@@ -13,38 +13,41 @@
   // Instantiate city object
   $city = new City($db);
 
-  // city read query
-  $result = $city->read();
+  if(isset($_GET['id'])){
+// city read query
+$result = $city->read($_GET['id']);
   
-  // Get row count
-  $num = $result->rowCount();
+// Get row count
+$num = $result->rowCount();
 
-  // Check if any city
-  if($num > 0) {
-        // city array
-        $city_arr = array();
-        $city_arr['data'] = array();
+// Check if any city
+if($num > 0) {
+      // city array
+      $city_arr = array();
+      $city_arr['data'] = array();
 
-        while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-          extract($row);
+      while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        extract($row);
 
-          $city_item = array(
-            'ID' => $ID,
-            'City' => $City,
-            'State_ID'=>$State_ID,
-            'Country_ID'=>$Country_ID
-          );
-
-          // Push to "data"
-          array_push($city_arr['data'], $city_item);
-        }
-
-        // Turn to JSON & output
-        echo json_encode($city_arr);
-
-  } else {
-        // No city
-        echo json_encode(
-          array('message' => 'No city Found')
+        $city_item = array(
+          'ID' => $ID,
+          'City' => $City,
+          'State_ID'=>$State_ID,
+          'Country_ID'=>$Country_ID
         );
+
+        // Push to "data"
+        array_push($city_arr['data'], $city_item);
+      }
+
+      // Turn to JSON & output
+      echo json_encode($city_arr);
+
+} else {
+      // No city
+      echo json_encode(
+        array('message' => 'No city Found')
+      );
+}
   }
+  

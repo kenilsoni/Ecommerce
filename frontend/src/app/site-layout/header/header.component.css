@@ -4,6 +4,17 @@
 .text-danger{
     color:#ea4748
 }
-/* .login-link{
+.change_box{
     display: none;
-} */
+}
+.update-action{
+    margin-bottom: 20px;
+    display: none;
+    cursor: pointer;
+}
+.btn-remove{
+   cursor: pointer;
+}
+.btn-edit{
+   cursor: pointer;
+}

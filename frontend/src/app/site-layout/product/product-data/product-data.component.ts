@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from 'src/app/service/cart.service';
@@ -18,15 +18,14 @@ export class ProductDataComponent implements OnInit {
   product_details:any=[]
   formgroup!:FormGroup
   addtocart_alert:boolean=false
+  @ViewChild("quantity")
+  quantity!:ElementRef;
   // imgCollection!: Array<object> 
   ngOnInit(): void {
     this.route.params.subscribe(data => {
       this.product_id = data['id'];
     })
     this.getproduct()
-    // this.form()
-    
-
   }
 
 
@@ -40,13 +39,16 @@ export class ProductDataComponent implements OnInit {
           image: this.Image_path+'/'+res.all_img,
           thumbImage: this.Image_path+'/'+res.all_img,
           alt: 'Image 1',
-          // title: 'Image 1'
         })
       }
       
     })
   }
   addtocart(e:any){
+    // console.log(e.Product_Quantity=3)
+    let product_qty=this.quantity.nativeElement.value
+    e.Product_Quantity=product_qty
+    // console.log(e)
     this.cartService.addtoCart(e);
     this.addtocart_alert=true
     setTimeout(() => {

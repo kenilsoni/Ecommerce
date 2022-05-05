@@ -74,7 +74,7 @@ export class ProductDetailsComponent implements OnInit {
       this.productdata = data['data']
       if (this.subcat_id !== undefined) {
         this.getproductbysubcat_id();
-      }
+      }      console.log(this.productdata)
     })
     // console.log(this.checkBoxValue.ID)
   }
@@ -159,6 +159,7 @@ export class ProductDetailsComponent implements OnInit {
     this.allproduct_id()
   }
   addtocart(e: any) {
+    e.Product_Quantity=1
     this.cartService.addtoCart(e);
     // this.addtocart_alert=true
     // setTimeout(() => {

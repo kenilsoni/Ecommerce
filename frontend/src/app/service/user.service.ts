@@ -14,6 +14,9 @@ export class UserService {
   save_user(data: any) {
     return this.httpclient.post<any>(`${environment.API_URL}/user/create.php`, data)
   }
+  update_user(data: any) {
+    return this.httpclient.post<any>(`${environment.API_URL}/user/update.php`, data)
+  }
   check_username(data: string) {
     return this.httpclient.get<any>(`${environment.API_URL}/user/check.php?username=` + data)
   }
@@ -102,4 +105,21 @@ export class UserService {
       localStorage.setItem("loggedInUser", JSON.stringify(data));
     }
   }
+  get_userdetails(id:number){
+    return this.httpclient.get<any>(`${environment.API_URL}/user/getuser.php?ID=`+id)
+  }
+  get_state(id:number){
+    return this.httpclient.get<any>(`${environment.API_URL}/state/read.php?id=`+id)
+  }
+  get_country(){
+    return this.httpclient.get<any>(`${environment.API_URL}/country/read.php`)
+  }
+  get_city(id:number){
+    return this.httpclient.get<any>(`${environment.API_URL}/city/read.php?id=`+id)
+  }
+  // change_name(name:string){
+  //   let data=this.get_user()
+  //   data.firstName=name
+  //   window.location.reload()
+  // }
 }

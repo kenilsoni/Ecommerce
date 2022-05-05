@@ -68,6 +68,9 @@
                                 </div>
                             </li>
                             <li class="nav-item ">
+                                <a class="nav-link active" href="?controller=Admin&function=service_tax"><i class="fa fa-solid fa-pen-square"></i>Service tax</a>
+                            </li>
+                            <li class="nav-item ">
                                 <a class="nav-link active" href="?controller=Admin&function=user_list"><i class="fa fa-fw fa-user-circle"></i>Users </a>
                             </li>
                         </ul>

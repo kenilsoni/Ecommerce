@@ -50,7 +50,8 @@ if ($num > 0) {
       'Category_name' => $Category_Name,
       'Subcategory_name' => $Subcategory_Name,
       'Size_Name' => $Product_Size,
-      'Color_name' => $Product_Color
+      'Color_name' => $Product_Color,
+      'Size_id' => '',
       
     );
       // Push to "data"

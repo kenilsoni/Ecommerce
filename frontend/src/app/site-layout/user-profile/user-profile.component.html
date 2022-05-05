@@ -17,16 +17,39 @@
 </div>
 <section class="content">
     <div class="container">
-        <form >
+        <form  [formGroup]="profileval" #ngForm="ngForm"
+        (ngSubmit)="submituser()" >
         <div class="row">
             <div class="col-sm-12 register profile">
-                <form class="form-block">
+                <div class="alert alert-dismissible alert-success" role="alert" *ngIf="update">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <i> <img src="assets/images/success.svg" height="15px" alt="success"></i>&nbsp; Profile updated Successfully 
+                </div>
+                <ng-template>
+                    <div class="alert alert-dismissible alert-danger" role="alert" >
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <i> <img src="assets/images/error.svg" height="15px" alt="danger"></i>&nbsp; Sorry!! Something went wrong
+                    </div>
+                </ng-template>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
+                                <input type="hidden" formControlName="id">
                                 <label class="form-label">Username</label>
-                                <input type="text" class="form-control"
+                                <input type="text" class="form-control" formControlName="username"   (keyup)="check_username($event)"
                                      placeholder="Please enter your username" />
+                                     <div *ngIf="username_exist">
+                                        <span class="text-danger">Username is already exist</span>
+                                    </div>
+                                    <div *ngIf="username?.invalid ">
+
+                                        <span *ngIf="username?.errors?.['required']  && (username?.touched || ngForm.submitted) "  class="text-danger">
+                                            Username is required
+                                        </span>
+                                        <span *ngIf="username?.errors?.['pattern']  && (username?.touched || ngForm.submitted) "  class="text-danger">
+                                            Please enter valid username
+                                        </span>
+                                    </div>
                             </div>
                         </div>
 
@@ -39,18 +62,26 @@
                                             <li class="custom-check">
                                                 <label> <input type="radio"
                                                         class="icheck"
-                                                       
+                                                        formControlName="gender"
                                                         value="M"
                                                         name="gender" checked/>Male</label>
                                             </li>&nbsp;
                                             <li class="custom-check">
                                                 <label><input type="radio"
                                                         class="icheck"
-                                                        
+                                                        formControlName="gender"
                                                         value="F"
                                                         name="gender" />Female</label>
                                             </li>
                                         </ul>
+                                    </div>
+                                    <div *ngIf="gender?.invalid ">
+
+                                        <span *ngIf="gender?.errors?.['required'] && (gender?.touched || ngForm.submitted) "  class="text-danger">
+                                            Gender is required
+                                        </span>
+                                       
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -61,14 +92,37 @@
                         <div class="col-sm-6">
                             <div class="form-group ">
                                 <label class="form-label">Password</label>
-                                <input type="text" class="form-control" 
+                                <input type="password" class="form-control" 
+                                formControlName="password"
                                     placeholder="Please enter your Password" >
+                                    <div *ngIf="password?.invalid ">
+
+                                        <span *ngIf="password?.errors?.['required'] && (password?.touched || ngForm.submitted) "  class="text-danger">
+                                            Password is required
+                                        </span>
+                                        <span *ngIf="password?.errors?.['minlength'] && (password?.touched || ngForm.submitted) "  class="text-danger">
+                                            Password must be 6 character long
+                                        </span>
+                                       
+                                        
+                                    </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="form-label">Email</label>
-                                <input type="email"  class="form-control" placeholder="Please enter valid email">
+                                <input type="email"  class="form-control"  (keyup)="check_email($event)" formControlName="email" placeholder="Please enter valid email">
+                                <div *ngIf="email?.invalid ">
+                                    <div *ngIf="email_exist">
+                                        <span class="text-danger">Email is already exist</span>
+                                    </div>
+                                    <span *ngIf="email?.errors?.['required'] && (email?.touched || ngForm.submitted) "  class="text-danger">
+                                        Email is required
+                                    </span>
+                                    <span class="text-danger" *ngIf="
+                                    email?.errors?.['email']">Email is invalid</span>
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -78,14 +132,37 @@
                             <div class="form-group">
                                 <label class="form-label">First Name</label>
                                 <input type="text" class="form-control" 
+                                formControlName="firstname"
                                      placeholder="Please enter your first name">
+                                     <div *ngIf="firstname?.invalid ">
+                                        <span *ngIf="firstname?.errors?.['pattern']  && (firstname?.touched || ngForm.submitted) "  class="text-danger">
+                                            Please enter valid firstname
+                                        </span>
+                                        <span *ngIf="firstname?.errors?.['required'] && (firstname?.touched || ngForm.submitted) "  class="text-danger">
+                                            Firstname is required
+                                        </span>
+                                       
+                                        
+                                    </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="form-label">Mobile No.</label>
                                 <input type="text" class="form-control" 
+                                formControlName="mobile"
                                      placeholder="Please enter your mobile no.">
+                                     <div *ngIf="mobile?.invalid ">
+
+                                        <span *ngIf="mobile?.errors?.['required'] && (mobile?.touched || ngForm.submitted) "  class="text-danger">
+                                            Mobile is required
+                                        </span>
+                                        <span *ngIf="(mobile?.errors?.['maxlength'] || mobile?.errors?.['minlength'] || mobile?.errors?.['pattern']) && (mobile?.touched || ngForm.submitted) "  class="text-danger">
+                                            Mobile is Invalid
+                                        </span>
+                                       
+                                        
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -95,14 +172,36 @@
                             <div class="form-group">
                                 <label class="form-label">Last Name</label>
                                 <input type="text" class="form-control" 
+                                formControlName="lastname"
                                      placeholder="Please enter your last name">
+                                     <div *ngIf="lastname?.invalid ">
+                                        <span *ngIf="lastname?.errors?.['pattern']  && (lastname?.touched || ngForm.submitted) "  class="text-danger">
+                                            Please enter valid lastname
+                                        </span>
+                                        <span *ngIf="lastname?.errors?.['required'] && (lastname?.touched || ngForm.submitted) "  class="text-danger">
+                                            Lastname is required
+                                        </span>
+                                       
+                                        
+                                    </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="form-label">Phone</label>
                                 <input type="text" class="form-control" 
+                                formControlName="phone"
                                     placeholder="Please enter your phone">
+                                    <div *ngIf="phone?.invalid ">
+
+                                        <span *ngIf="phone?.errors?.['required'] && (phone?.touched || ngForm.submitted) "  class="text-danger">
+                                            Phone is required
+                                        </span>
+                                        <span *ngIf="(phone?.errors?.['maxlength'] || phone?.errors?.['minlength'] || phone?.errors?.['pattern']) && (phone?.touched || ngForm.submitted) "  class="text-danger">
+                                            Phone is Invalid
+                                        </span>
+                                        
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -147,9 +246,9 @@
 
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="shipping-address-block">
-                                <div class="form-group">
-                                    <a href="#!" class="btn-tertiary"
+                            <div class="shipping-address-block" formGroupName="shipping" (change)="uncheck_sameas()">
+                                <div class="form-group edit_button">
+                                    <a  class="btn-tertiary"
                                         data-toggle="collapse"
                                         data-target=".shipping-form">Edit
                                         Shipping Address</a>
@@ -158,42 +257,40 @@
                                 <div class="shipping-form collapse">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <div class="form-group">
+                                            <div class="form-group ">
                                                 <label class="form-label">Street</label>
                                                 <input type="text"
-                                                    class="form-control"
-                                                    placeholder="Please enter
-                                                    your Street">
+                                                    class="form-control" formControlName="street_ship" #street_check (keyup)="uncheck_sameas()"
+                                                    placeholder="Please enter your Street">
                                             </div>
                                         </div>
                                         <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label class="form-label">City</label>
-                                                <input type="text"
-                                                    class="form-control"
-                                                    placeholder="Please enter
-                                                    your City">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
+                                            <div class="form-group" >
                                                 <label class="form-label">Country</label>
-                                                <select class="form-control">
-                                                    <option value="option1">option1</option>
-                                                    <option value="option2">option2</option>
-                                                    <option value="option3">option3</option>
-                                                    <option value="option4">option4</option>
+                                                <select class="form-control" (change)="get_state_ship($event)" formControlName="country_ship" #country_check>
+                                                    <option value="">Select</option>
+                                                    <option  *ngFor="let country of country_ship" value="{{country.ID}}">{{country.Country}}</option>
+                                                   
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <label class="form-label">State</label>
-                                                <select class="form-control">
-                                                    <option value="option1">option1</option>
-                                                    <option value="option2">option2</option>
-                                                    <option value="option3">option3</option>
-                                                    <option value="option4">option4</option>
+                                                <label class="form-label" >State</label>
+                                               
+                                                    <select class="form-control" (change)="get_city_ship($event)" formControlName="state_ship" #state_check >
+                                                        <option value="">Select</option>
+                                                        <option  *ngFor="let state of state_ship" value="{{state.ID}}">{{state.State}}</option>   
+                                                
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">City</label>
+                                                <select class="form-control"  #city_disable formControlName="city_ship" #city_check (change)="uncheck_sameas()">
+                                                    <option value="">Select</option>
+                                                    <option  *ngFor="let city of city_ship" value="{{city.ID}}">{{city.City}}</option>   
                                                 </select>
                                             </div>
                                         </div>
@@ -202,14 +299,14 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="billing-address-block">
-                                <div class="form-group">
-                                    <a href="#!" class="btn-tertiary"
+                            <div class="billing-address-block" formGroupName="billing" >
+                                <div class="form-group edit_button">
+                                    <a  class="btn-tertiary"
                                         data-toggle="collapse"
                                         data-target=".billing-form">Edit Billing
                                         Address</a>
                                     <label class="billing-label"><input
-                                            type="checkbox" class="icheck">Same
+                                            type="checkbox" class="icheck" (change)="sameas_checkbox($event)" #sameas>Same
                                         as Billing Address</label>
                                 </div>
                                 <div class="billing-form collapse">
@@ -218,42 +315,41 @@
                                             <div class="form-group">
                                                 <label class="form-label">Street</label>
                                                 <input type="text"
-                                                    class="form-control"
-                                                    placeholder="Please enter
-                                                    your Street">
+                                                    class="form-control"  formControlName="street_bill" (keyup)="uncheck_sameas()"
+                                                    placeholder="Please enter your Street">
                                             </div>
                                         </div>
                                         <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label class="form-label">City</label>
-                                                <input type="text"
-                                                    class="form-control"
-                                                    placeholder="Please enter
-                                                    your City">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
+                                            <div class="form-group" >
                                                 <label class="form-label">Country</label>
-                                                <select class="form-control">
-                                                    <option value="option1">option1</option>
-                                                    <option value="option2">option2</option>
-                                                    <option value="option3">option3</option>
-                                                    <option value="option4">option4</option>
+                                                <select class="form-control" (change)="get_state_bill($event)" formControlName="country_bill">
+                                                    <option value="">Select</option>
+                                                    <option  *ngFor="let country of country_bill" value="{{country.ID}}">{{country.Country}}</option>
+                                                   
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">State</label>
-                                                <select class="form-control">
-                                                    <option value="option1">option1</option>
-                                                    <option value="option2">option2</option>
-                                                    <option value="option3">option3</option>
-                                                    <option value="option4">option4</option>
+                                               
+                                                    <select class="form-control" (change)="get_city_bill($event)" formControlName="state_bill">
+                                                        <option value="">Select</option>
+                                                        <option  *ngFor="let state of state_bill" value="{{state.ID}}">{{state.State}}</option>   
+                                                
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">City</label>
+                                                <select class="form-control" formControlName="city_bill" (change)="uncheck_sameas()">
+                                                    <option value="">Select</option>
+                                                    <option  *ngFor="let city of city_bill" value="{{city.ID}}">{{city.City}}</option>   
+                                                </select>
+                                            </div>
+                                        </div>
+                                      
                                     </div>
                                 </div>
                             </div>
@@ -270,7 +366,7 @@
                             </div>
                         </div>
                     </div>
-                </form>
+               
             </div>
 
         </div>

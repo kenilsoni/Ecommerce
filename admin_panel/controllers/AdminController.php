@@ -25,6 +25,10 @@ class AdminController
     {
         include("./views/all_product.php");
     }
+    public function service_tax()
+    {
+        include("./views/service_tax.php");
+    }
     public function add_product()
     {
         include("./views/add_product.php");

@@ -21,7 +21,6 @@ include_once '../../models/country.php';
 // Instantiate DB & connect
 $database = new Database();
 $db = $database->connect();
-
 // Instantiate blog post object
 $user = new User($db);
 $jwt = new JWTtoken($db);
@@ -41,13 +40,14 @@ if (isset($_GET['username']) && isset($_GET['password'])) {
             $ID = $row['ID'];
             $Password = $row['Password'];
         }
-        if (password_verify($user->Password, $Password)) {
+        $plain_password = openssl_decrypt($Password, "AES-128-ECB",'skp1506');
+        if ($plain_password==$_GET['password']) {
             $secret_key = "skp1506";
             $issuer_claim = "localhost";
             $audience_claim = "user_auth";
             $issuedat_claim = time(); // time issued 
             $notbefore_claim = $issuedat_claim + 10;
-            $expire_claim = $issuedat_claim + 300;
+            $expire_claim = $issuedat_claim + 2000;
 
             $access_token = array(
                 "iss" => $issuer_claim,
@@ -66,7 +66,7 @@ if (isset($_GET['username']) && isset($_GET['password'])) {
                 "aud" => $audience_claim,
                 "iat" => $issuedat_claim,
                 "nbf" => $notbefore_claim,
-                "exp" => $issuedat_claim + 300,
+                "exp" => $issuedat_claim + 9000,
                 "data" => array(
                     "id" => $ID,
                     "firstName" => $firstname

@@ -123,4 +123,35 @@ class AddressModel
         $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $success;
     }
+    //tax
+    public function get_taxdetail()
+    {
+        $sql = "SELECT stax.*,ctry.Country,st.State FROM service_tax as stax LEFT JOIN country as ctry ON stax.Country_ID=ctry.ID
+        LEFT JOIN state as st ON stax.State_ID=st.ID";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
+    public function add_taxdb($cid, $sid, $tax)
+    {
+        $sql = "INSERT INTO service_tax (Country_ID,State_ID,tax_percent,Created_At,Modified_At) VALUES (?,?,?,NOW(),NOW())";
+        $stmt = $this->conn->prepare($sql);
+        $success = $stmt->execute([$cid, $sid, $tax]);
+        return $success;
+    }
+    public function delete_tax($id)
+    {
+        $sql = "DELETE FROM service_tax WHERE ID=?";
+        $stmt = $this->conn->prepare($sql);
+        $success = $stmt->execute([$id]);
+        return $success;
+    }
+    public function update_tax($data)
+    {
+        $sql = "UPDATE service_tax SET Country_ID=:country_id,State_ID=:state_id,tax_percent=:tax,Modified_At=NOW() WHERE ID=:tax_id";
+        $stmt = $this->conn->prepare($sql);
+        $success = $stmt->execute($data);
+        return $success;
+    }
 }

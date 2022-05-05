@@ -28,7 +28,7 @@ $(document).ready(function () {
 
     $(".upload-img").hide();
     
-    $("<div class='select_box'><select class='form-select' id='product'><option value='AllProduct'>All Product</option><option value='Trending'>Trending</option></select></div>").insertBefore("#product_table");
+    // $("<div class='select_box'><select class='form-select' id='product'><option value='AllProduct'>All Product</option><option value='Trending'>Trending</option></select></div>").insertBefore("#product_table");
     var mytable = $('#product_table').DataTable({
         "order": [[ 6, "desc" ]]
     });

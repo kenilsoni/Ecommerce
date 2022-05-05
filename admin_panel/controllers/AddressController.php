@@ -258,4 +258,86 @@ class AddressController
             }
         }
     }
+    // tax start
+    public function get_tax()
+    {
+        $success = $this->model->get_taxdetail();
+        if (count($success) > 0) {
+            echo json_encode($success);
+        }
+    }
+    public function add_taxdata()
+    {
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $cid = $_POST['cid'];
+            $sid = $_POST['state'];
+            $tax=$_POST['tax'];
+
+            session_start();
+            if ($tax != "") {
+                $success = $this->model->add_taxdb($cid, $sid, $tax);
+                if ($success == 1) {
+
+                    $_SESSION['addtax_token'] = true;
+                    header("location:?controller=Admin&function=service_tax");
+                } else {
+                    $_SESSION['addtax_token'] = false;
+                    header("location:?controller=Admin&function=service_tax");
+                }
+            } else {
+                $_SESSION['addtax_token'] = false;
+                header("location:?controller=Admin&function=service_tax");
+            }
+        }
+    }
+    public function delete_tax()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_POST['id'];
+
+            session_start();
+            if ($id != "") {
+                $success = $this->model->delete_tax($id);
+                if ($success == 1) {
+                    $_SESSION['deletetax_token'] = true;
+                } else {
+                    $_SESSION['deletetax_token'] = false;
+                }
+            } else {
+                $_SESSION['deletetax_token'] = false;
+            }
+        }
+    }
+    public function update_tax()
+    {
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $tax_id = $_POST['tax_id'];
+            $country_id = $_POST['cid'];
+            $state_id = $_POST['state'];
+            $tax = $_POST['tax'];
+            session_start();
+            if ($tax != "") {
+                $data = array(
+                    'tax_id' => $tax_id,
+                    'country_id' => $country_id,
+                    'state_id' => $state_id,
+                    'tax' => $tax
+                );
+                $success = $this->model->update_tax($data);
+                if ($success == 1) {
+
+                    $_SESSION['updatetax_token'] = true;
+                    header("location:?controller=Admin&function=service_tax");
+                } else {
+                    $_SESSION['updatetax_token'] = false;
+                    header("location:?controller=Admin&function=service_tax");
+                }
+            } else {
+                $_SESSION['updatetax_token'] = false;
+                header("location:?controller=Admin&function=service_tax");
+            }
+        }
+    }
 }

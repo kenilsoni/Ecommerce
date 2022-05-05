@@ -54,30 +54,42 @@
                         <tr  *ngIf="products.length == 0 " class="text-center"><td class="empty_cart" colspan="6">your cart is empty</td></tr>
                         <tr *ngFor="let item of products; let i = index" >
                             <td class="product-image-outer">
-                                <a href="#" title="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men"><img src="assets/images/cart-img01.jpg" alt="U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men"></a>
+                                <a href="#" title="{{item.Product_Name}}"><img src="{{image_url}}/{{item.Image_path}}" width="75px" height="94px"  alt="{{item.Product_Name}}"></a>
                             </td>
                             <td>
                                 <h2 class="product-name">
-                                    <a href="product-detail.html">{{item.Product_Name}}</a>
+                                    <a routerLink="/product/{{item.ID}}">{{item.Product_Name}}</a>
                                 </h2>
                                 <ul>
                                     <li><strong>Color</strong></li>
-                                    <li>{{item.Color_name}}</li>
+                                    <li #color_text id="{{item.ID}}">{{item.Color_name}}</li>
+                                    <select class="default-select form-control change_box"  #color id="{{item.ID}}" (change)="change_color($event)">
+                                        <option *ngFor="let getitem of color_details" value="{{getitem.color+','+getitem.id}}" >{{getitem.color}}</option>
+                                    </select>
+
                                     <li><strong>size</strong></li>
-                                    <li>{{item.Size_Name}} </li>
+                                    <li #size_text id="{{item.ID}}">{{item.Size_Name}} </li>
+                                 
+                                        <select class="default-select form-control change_box"  #size id="{{item.ID}}" (change)="change_size($event)"> 
+                                            <option *ngFor="let getitem of size_details" value="{{getitem.size+','+getitem.id}}" id="{{getitem.id}}" >{{getitem.size}}</option>
+                                            
+                                        </select>
+                      
+                                   
                                 </ul>
                             </td>
                             <td>
-                                <a href="#" title="Edit item" class="edit-link"> <img src="assets/images/edit-dark.svg" alt="edit"></a>
+                                <a (click)="edit_product(item.ID)" title="Edit item" class="edit-link"> <img src="assets/images/edit-dark.svg" alt="edit"></a>
                             </td>
                             <td>
                                 <span class="orange-text">{{item.Product_Price |currency:'INR'}}</span>
                             </td>
                             <td>
-                                <input type="text" value="1" title="Qty" class="form-control qty">
+                                <!-- {{item.Product_Quantity}} -->
+                                <input type="text" value="{{item.Product_Quantity}}" title="Qty" id="{{item.ID}}" class="form-control qty" (keyup)="change_quantity($event)" #quantity>
                             </td>
                             <td>
-                                <span class="orange-text">{{item.Product_Price |currency:'INR'}}</span>
+                                <span class="orange-text">{{item.Product_Quantity*item.Product_Price|currency:'INR'}}</span>
                             </td>
                             <td>
                                 <a style="cursor:pointer" (click)="removeItem(item)" title="Remove item" class="remove-link"><img src="assets/images/cross-dark.svg" alt="delete"></a>
@@ -95,7 +107,7 @@
                             </td>
                             <td colspan="5" class="btn-right">
                                 <button (click)="emptycart()" title="Clear Shopping Cart" class="btn-tertiary">Clear Shopping Cart</button>&nbsp;
-                                <button  title="Update Shopping Cart" class="btn-tertiary">Update Shopping Cart</button>
+                                <button  title="Update Shopping Cart" (click)="update_cart()" class="btn-tertiary">Update Shopping Cart</button>
                             </td>
                         </tr>
                     </tfoot>
@@ -109,21 +121,24 @@
                         <form>
                             <div class="form-group">
                                 <label class="form-label">country</label>
-                                <select class="default-select form-control">
-                                    <option>India</option>
-                                    <option>United States</option>
-                                    <option>Australia</option>
-                                    <option>China</option>
+                                <select class="default-select form-control" (change)="get_state($event)" #country>
+                                    <option value="" selected>Select</option>
+                                    <option *ngFor="let data of country_data" value="{{data.Country_ID}}" >{{data.Country}}</option>
+                                    
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label class="form-label">State/Province</label>
-                                <input type="text" class="form-control" placeholder="State/Province">
+                                <label class="form-label">state</label>
+                                <select class="default-select form-control" (change)="find_tax($event)" #state>
+                                    <option value="" selected>Select</option>
+                                    <option  *ngFor="let data of state_details" value="{{data.tax}}" >{{data.State}}</option>
+                                    
+                                </select>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label class="form-label">Zip/Postal Code</label>
                                 <input type="text" class="form-control" placeholder="Zip/Postal Code">
-                            </div>
+                            </div> -->
                         </form>
                     </div>
                 </div>
@@ -136,12 +151,16 @@
                                     <td>{{grandTotal|currency:'INR'}}</td>
                                 </tr>
                                 <tr>
+                                    <td>Service Tax</td>
+                                    <td>{{service_tax|currency:'INR'}}</td>
+                                </tr>
+                                <tr>
                                     <td class="summary-total"><strong>Total</strong></td>
-                                    <td class="summary-price"><strong>{{grandTotal|currency:'INR'}}</strong></td>
+                                    <td class="summary-price"><strong>{{final_amount|currency:'INR'}}</strong></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <a href="#" title="Update Shopping Cart" class="btn-secondary">Update Shopping Cart</a>
+                                        <a href="#" title="Checkout" class="btn-secondary">Checkout</a>
                                     </td>
                                 </tr>
                             </tbody>

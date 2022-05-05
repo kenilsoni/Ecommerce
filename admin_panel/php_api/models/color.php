@@ -8,6 +8,7 @@
     public $ID;
     public $Product_Color;
     public $Color_Code;
+    public $Product_ID;
 
     // Constructor with DB
     public function __construct($db) {
@@ -27,28 +28,38 @@
 
       return $stmt;
     }
+    public function colorby_product(){
+      // Create query
+      $query = 'SELECT Product_Color_ID FROM  product WHERE ID=?';
+  
+        //Prepare statement
+        $stmt = $this->conn->prepare($query);
+  
+        // Bind ID
+        $stmt->bindParam(1, $this->Product_ID);
+  
+        // Execute query
+        $stmt->execute();
+        return $stmt;
+  
+    
+        
+    }
 
     // Get Single Category
-  public function read_single(){
-    // Create query
-    $query = 'SELECT ID,Product_Color,Color_Code FROM  ' . $this->table . ' WHERE ID=?';
-
-      //Prepare statement
-      $stmt = $this->conn->prepare($query);
-
-      // Bind ID
-      $stmt->bindParam(1, $this->id);
-
-      // Execute query
-      $stmt->execute();
-
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-      // set properties
-      $this->ID = $row['ID'];
-      $this->Product_Color = $row['Product_Color'];
-      $this->Color_Code = $row['Color_Code'];
-  }
+    public function read_single($id){
+      // Create query
+      $query = 'SELECT ID,Product_Color FROM product_color WHERE ID='.$id.'';
+  
+        //Prepare statement
+        $stmt = $this->conn->prepare($query);
+  
+        // Execute query
+        $stmt->execute();
+  
+      return $stmt;
+        
+    }
   public function total_item($id)
   {
     // Create query

@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
     })
   }
   addtocart(e:any){
+    e.Product_Quantity=1
     this.cartService.addtoCart(e);
     // this.addtocart_alert=true
     // setTimeout(() => {

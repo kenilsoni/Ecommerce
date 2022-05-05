@@ -16,9 +16,9 @@
     }
 
     // Get state
-    public function read() {
+    public function read($ID) {
       // Create query
-      $query = 'SELECT ID,State,Country_ID FROM  ' . $this->table . '';
+      $query = 'SELECT ID,State,Country_ID FROM  ' . $this->table . ' WHERE Country_ID='.$ID.'';
 
       // Prepare statement
       $stmt = $this->conn->prepare($query);

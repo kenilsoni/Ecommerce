@@ -8,6 +8,7 @@
     public $ID;
     public $Product_Size;
     public $Category_ID;
+    public $Product_ID;
 
 
     // Constructor with DB
@@ -30,24 +31,34 @@
     }
 
     // Get  size
-  public function read_single(){
+  public function read_single($id){
     // Create query
-    $query = 'SELECT * FROM  '. $this->table .' WHERE ID=?';
+    $query = 'SELECT ID,Product_Size FROM product_size WHERE ID='.$id.'';
+
+      //Prepare statement
+      $stmt = $this->conn->prepare($query);
+
+      // Execute query
+      $stmt->execute();
+
+    return $stmt;
+      
+  }
+  public function sizeby_product(){
+    // Create query
+    $query = 'SELECT Product_Size FROM  product WHERE ID=?';
 
       //Prepare statement
       $stmt = $this->conn->prepare($query);
 
       // Bind ID
-      $stmt->bindParam(1, $this->id);
+      $stmt->bindParam(1, $this->Product_ID);
 
       // Execute query
       $stmt->execute();
+      return $stmt;
 
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-      // set properties
-      $this->ID = $row['ID'];
-      $this->Product_Size = $row['Product_Size'];
+  
       
   }
   public function total_item($id)
