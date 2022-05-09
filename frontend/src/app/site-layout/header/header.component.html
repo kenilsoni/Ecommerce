@@ -54,9 +54,28 @@
                                     <li class="hidden-xs" *ngIf="islogin">
                                         <span><em>Welcome</em>, {{ user_name | titlecase}}</span>
                                     </li>
-                                    <li *ngIf="islogin" >
-                                        <a routerLink="/profile" title="My Profile">Profile</a>
-                                    </li>
+                                    <li *ngIf="islogin">
+                                        <span (click)="manage_dropdown()" style="cursor: pointer;">Manage <svg xmlns="http://www.w3.org/2000/svg" width="10px" height="10px" viewBox="0 0 384 512"><path d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"/></svg></span>
+                                        <div #myDropdown class="dropdown-content myDropdown" (click)="close_dropdown()">
+                                            <ul>
+                                                <li class="padding"><a routerLink="/profile" title="Profile">Profile</a></li>
+                                                <li class="padding"><a routerLink="/profile" title="Orders">Orders</a></li>
+                                                <li class="padding"><a routerLink="/profile" title="Change Password">Change Password</a></li>
+                                                <li class="padding"><a routerLink="/profile" title="Coupans">Coupans</a></li>
+                                                <li class="padding"><a routerLink="/wishlist" title="Wishlist">Wishlist</a></li>
+                                            </ul>
+                                        </div>
+                                        <!-- <select class="manage_drop"> 
+                                        <option  style='display:none'>Manage</option>
+                                        <option><a routerLink="/profile" title="My Profile">Profile</a></option>
+                                        <option>Orders</option>
+                                        <option>Change Password</option>
+                                        <option>Coupans</option>
+                                        <option>Wishlist</option>
+                                    </select> -->
+                                </li>
+                                
+                                    
                                     <li *ngIf="islogin;" class="login-link"><a routerLink="/home" (click)="unset_user()" title="Logout" >Logout</a></li>
                                     <div class="modal fade" id="Login-popup" tabindex="-1" 
                                     role="dialog" aria-hidden="true">
@@ -83,9 +102,9 @@
                                                     <label class="form-label">Username</label>
                                                     <input type="text" class="form-control" formControlName="username"
                                                         placeholder="Enter your Username">
-                                                        <div *ngIf="username?.invalid ">
+                                                        <div *ngIf="loginval.controls['username']?.invalid ">
 
-                                                            <span *ngIf="username?.errors?.['required']  && (username?.touched || ngForm.submitted) "  class="text-danger">
+                                                            <span *ngIf="loginval.controls['username']?.errors?.['required']  && (loginval.controls['username']?.touched || ngForm.submitted) "  class="text-danger">
                                                                 Username is required
                                                             </span>
                                                             <!-- <span *ngIf="username?.errors?.['pattern']  && (username?.touched || ngForm.submitted) "  class="text-danger">
@@ -98,12 +117,12 @@
                                                     <input type="password"
                                                         class="form-control" formControlName="password"
                                                         placeholder="Enter your Password">
-                                                        <div *ngIf="password?.invalid ">
+                                                        <div *ngIf="loginval.controls['password']?.invalid ">
 
-                                                            <span *ngIf="password?.errors?.['required'] && (password?.touched || ngForm.submitted) "  class="text-danger">
+                                                            <span *ngIf="loginval.controls['password']?.errors?.['required'] && (loginval.controls['password']?.touched || ngForm.submitted) "  class="text-danger">
                                                                 Password is required
                                                             </span>
-                                                            <span *ngIf="password?.errors?.['minlength'] && (password?.touched || ngForm.submitted) "  class="text-danger">
+                                                            <span *ngIf="loginval.controls['password']?.errors?.['minlength'] && (loginval.controls['password']?.touched || ngForm.submitted) "  class="text-danger">
                                                                 Password must be 6 character long
                                                             </span>
                                                            
@@ -130,7 +149,7 @@
                                 </div>
                                
                             <li class="cart-outer">
-                                <a href="#" title="Add to Cart"
+                                <a (click)="check_cart()" title="Add to Cart"
                                     class="add-to-cart"></a>
                                 <div class="cart-wrap" >
                                    
@@ -144,25 +163,25 @@
                                                 elit"
                                                 href="product-detail.html"><img
                                                     alt=""
-                                                    src="{{image_url}}/{{item.Image_path}}"></a>
+                                                    src="{{image_url}}/{{item.Product_Image}}"></a>
                                             <div class="cart-details">
                                                 <a class="btn-remove"
                                                     title="Remove item"
-                                                    (click)="removeItem(item)"><img
+                                                    (click)="removeItem(item.ID)"><img
                                                         src="/assets/images/cross.svg"
                                                         alt=""></a>
    
                                                 <a class="btn-edit" title="Edit item" >
-                                                    <img (click)="edit_product(item.ID)"
+                                                    <img (click)="edit_product(item.ID,item.Product_ID)"
                                                         src="/assets/images/edit.svg"
                                                         alt="">
                                                 </a>
                                                 <p class="product-name"><a
                                                     routerLink="/product/{{item.ID}}">{{item.Product_Name}}</a></p>
-                                                <p class="price">{{item.Product_Price|currency:'INR'}} </p>
+                                                <p class="price">{{item.Unit_Price|currency:'INR'}} </p>
                                                 <p class="qty-wrapper">
                                                     <span>Qty : </span>
-                                                    <span #quantity id="{{item.ID}}">{{item.Product_Quantity}}</span>
+                                                    <span #quantity id="{{item.ID}}">{{item.Quantity}}</span>
                                                     <input type="text" class="change_box" #quantity_text  id="{{item.ID}}" (keyup)="change_quantity($event)"/>
                                                 </p>
                                                 <div class="size-wrap">
@@ -173,7 +192,7 @@
                                                         </dd>
                                                         <!-- -->
                                                         <select class="default-select form-control change_box"  #size id="{{item.ID}}" (change)="change_size($event)"  > 
-                                                            <option *ngFor="let getitem of size_details" value="{{getitem.size+','+getitem.id}}" id="{{getitem.id}}" >{{getitem.size}}</option>
+                                                            <option *ngFor="let getitem of size_details" value="{{getitem.id}}" id="{{getitem.id}}" >{{getitem.size}}</option>
                                                             
                                                         </select>
                                                         
@@ -186,48 +205,6 @@
                                                     class="btn-secondary">Update</a>
                                             </div>
                                         </li>
-                                        
-                                        <!-- <li>
-                                            <a class="cart-product"
-                                                title="consectetur adipiscing
-                                                elit"
-                                                href="product-detail.html"><img
-                                                    alt=""
-                                                    src="/assets/images/new-thumb-02.jpg"></a>
-                                            <div class="cart-details">
-                                                <a class="btn-remove"
-                                                    title="Remove item"
-                                                    href="#"><img
-                                                        src="/assets/images/cross.svg"
-                                                        alt=""></a>
-                                                <a class="btn-edit" title="Edit
-                                                    item" href="cart.html">
-                                                    <img
-                                                        src="/assets/images/edit.svg"
-                                                        alt="">
-                                                </a>
-                                                <p class="product-name"><a
-                                                        href="product-detail.html">U.S.
-                                                        Polo Assn. Full Sleeve
-                                                        Plain T-Shirts for Men</a></p>
-                                                <p class="price">$120.00</p>
-
-                                                <p class="qty-wrapper">
-                                                    <span>Qty : </span>
-                                                    <span>
-                                                        1
-                                                    </span>
-                                                </p>
-                                                <div class="size-wrap">
-                                                    <dl class="item-options">
-                                                        <dt>Size :</dt>
-                                                        <dd>
-                                                            Medium/Large
-                                                        </dd>
-                                                    </dl>
-                                                </div>
-                                            </div>
-                                        </li> -->
                                     </ul>
                                    
                                     <div class="summary">

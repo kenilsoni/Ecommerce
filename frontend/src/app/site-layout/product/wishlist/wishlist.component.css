@@ -1,0 +1,11 @@
+.container{
+    min-height: calc(100vh - 380px);
+}
+.record{
+    text-align: center;
+    font-size: 50px;
+    margin-top: 50px;
+}
+.cart-button{
+    cursor: pointer;
+}

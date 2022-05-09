@@ -4,40 +4,46 @@
   header('Content-Type: application/json');
   header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
   include_once '../../config/Database.php';
+  include_once '../../models/wishlist.php';
   include_once '../../models/product.php';
   include_once '../user/auth.php';
   // Instantiate DB & connect
   $database = new Database();
   $db = $database->connect();
-
-  // Instantiate product object
   $product = new Product($db);
+  // Instantiate wishlist object
+  $wishlist = new Wishlist($db);
 
   // Get ID
-  $product->cat_id = isset($_GET['cat_id']) ? $_GET['cat_id'] : die();
-  $product->load = isset($_GET['limit']) ? $_GET['limit'] : die();
-  if(isset($_GET['subcat_id'])){
-    $product->subcat_id = isset($_GET['subcat_id']) ? $_GET['subcat_id'] : die();
+  
+  if(isset($_GET['user_id'])){
+    $wishlist->user_id = isset($_GET['user_id']) ? $_GET['user_id'] : die();
+      // wishlist read query
+    $result = $wishlist->get_id();
+      // Get row count
+  $num = $result->rowCount();
   }
 
 
-  // product read query
-  $result = $product->read();
+
 
   
-  // Get row count
-  $num = $result->rowCount();
 
-  // Check if any product
+
+  // Check if any wishlist
   if($num > 0) {
-        // product array
-        $product_arr = array();
-        $product_arr['data'] = array();
-
+        // wishlist array
+        $wishlist_arr = array();
+        $wishlist_arr['data'] = array();
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-          extract($row);
+           $Product_ID=$row['Product_ID'];
+           $pdt_detail=$wishlist->get_detail($Product_ID);
+        
+        }
+        while($row2 = $pdt_detail->fetch(PDO::FETCH_ASSOC)) {
+          extract($row2);
 
-          $product_item1 = array(
+          $wishlist_item1 = array(
             'ID' => $ID,
             'Product_Name' => $Product_Name,
             'Product_Description'=>$Product_Description,
@@ -56,30 +62,30 @@
             
           );
           $result2 = $product->getsingle_image($ID);
-          while($row = $result2->fetch(PDO::FETCH_ASSOC)) {
-            extract($row);
+          while($row3 = $result2->fetch(PDO::FETCH_ASSOC)) {
+            extract($row3);
   
-            $product_item2 = array(
+            $wishlist_item2 = array(
               'Image_path'=>$Image_Path
             );
   
             // Push to "data"
-            $newdata=array_merge($product_item1, $product_item2);
+            $newdata=array_merge($wishlist_item1, $wishlist_item2);
           }
           // Push to "data"
-          array_push($product_arr['data'], $newdata);
+          array_push($wishlist_arr['data'], $newdata);
          
         }
        
         // echo "<pre>";
-        // print_r($product_arr);
+        // print_r($wishlist_arr);
         // Turn to JSON & output
-        echo json_encode($product_arr); 
+        echo json_encode($wishlist_arr); 
 
   } else {
-        // No product
+        // No wishlist
         echo json_encode(
-          array('message' => 'No product Found')
+          array('message' => 'No wishlist Found')
         );
   }
   

@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/service/product.service';
 import { Options, LabelType } from "@angular-slider/ngx-slider";
 import { SliderComponent } from '@angular-slider/ngx-slider/slider.component';
@@ -15,8 +15,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class ProductDetailsComponent implements OnInit {
   [x: string]: any;
   sorted_data: any;
+  user_id!:any
   image_url: string = environment.IMAGE_URL
-  constructor(private product: ProductService, public route: ActivatedRoute, private cartService: CartService, private formbuilder: FormBuilder) { }
+  constructor(private product: ProductService, public route: ActivatedRoute, private cartService: CartService, private formbuilder: FormBuilder,private router: Router) { }
   cat_id!: number
   subcat_id!: number
   productdata: any = []
@@ -67,6 +68,7 @@ export class ProductDetailsComponent implements OnInit {
       this.getcolor();
       this.getsize();
       this.getcount();
+      this.getuser_id()
     })
   }
   getproductby_cat() {
@@ -160,12 +162,19 @@ export class ProductDetailsComponent implements OnInit {
   }
   addtocart(e: any) {
     e.Product_Quantity=1
-    this.cartService.addtoCart(e);
-    // this.addtocart_alert=true
-    // setTimeout(() => {
-    //   this.addtocart_alert=false
-    // }, 4000);
-    // console.log(qty)
+    e.user_id=this.user_id
+    this.cartService.addtoCart(e).subscribe(data=>{
+      if(data['message']){
+        this.router.navigate(['/cart']);
+        }
+    });
+  }
+  getuser_id(){
+    let data=this.cartService.get_id()
+    if(data){
+      this.user_id=data['id']
+    }
+   
   }
   allproduct_id() {
     this.size_arr = []

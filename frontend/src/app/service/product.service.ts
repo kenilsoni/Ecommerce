@@ -54,8 +54,19 @@ export class ProductService {
   }
   //all product filter
   all_product_filter(order:any,from:number,to:number,load:number,cat_id:number,subcat_id:any,clr_id:any,size_id:any){
-    console.log(`${environment.API_URL}/product/filter.php?from=`+from+'&to='+to+'&load='+load+'&order='+order+'&cat_id='+cat_id+'&clr_id='+clr_id+'&subcat_id='+subcat_id+'&size_id='+size_id)
     return this.httpclient.get<product>(`${environment.API_URL}/product/filter.php?from=`+from+'&to='+to+'&load='+load+'&order='+order+'&cat_id='+cat_id+'&clr_id='+clr_id+'&subcat_id='+subcat_id+'&size_id='+size_id)
+  }
+  //get wishlist
+  get_wishlist(user_id:number){
+    return this.httpclient.get<product>(`${environment.API_URL}/wishlist/get.php?user_id=`+user_id)
+  }
+  //remove wishlist item
+  remove_item(user_id:number,product_id:number){
+    return this.httpclient.get<product>(`${environment.API_URL}/wishlist/remove.php?user_id=`+user_id+'&product_id='+product_id)
+  }
+  //add wishlist
+  add_wishlist(user_id:number,product_id:number){
+    return this.httpclient.get<product>(`${environment.API_URL}/wishlist/add.php?user_id=`+user_id+'&product_id='+product_id)
   }
   
 

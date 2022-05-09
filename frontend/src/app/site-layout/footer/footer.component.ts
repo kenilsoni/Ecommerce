@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private userservice:UserService) { }
+  isShow!:boolean
   ngOnInit(): void {
+    this.getuser_id()
+  }
+  getuser_id(){
+    let user=this.userservice.get_user()
+
+    if(user['id']){
+      this.isShow=false
+    }else{
+      this.isShow=true
+    }
   }
 
 }

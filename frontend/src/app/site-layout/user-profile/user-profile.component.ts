@@ -73,30 +73,6 @@ export class UserProfileComponent implements OnInit{
       }
     })
   }
-  get username(){
-    return this.profileval.get('username')
-  }
-  get password(){
-    return this.profileval.get('password')
-  }
-  get firstname(){
-    return this.profileval.get('firstname')
-  }
-  get lastname(){
-    return this.profileval.get('lastname')
-  }
-  get phone(){
-    return this.profileval.get('phone')
-  }
-  get email(){
-    return this.profileval.get('email')
-  }
-  get mobile(){
-    return this.profileval.get('mobile')
-  }
-  get gender(){
-    return this.profileval.get('gender')
-  }
   set_details(){
     this.profileval.patchValue({
       id:this.user_id['id'],

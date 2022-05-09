@@ -10,6 +10,7 @@ import { TitlecasePipe } from './pipes/titlecase.pipe';
 import { PricePipe } from './pipes/price.pipe';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { AuthGuard } from './interceptor/auth.guard';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
     ProductModule,
     NgImageSliderModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [AuthGuard,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

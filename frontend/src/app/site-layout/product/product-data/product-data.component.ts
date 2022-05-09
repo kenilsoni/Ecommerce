@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from 'src/app/service/cart.service';
@@ -18,22 +18,23 @@ export class ProductDataComponent implements OnInit {
   product_details:any=[]
   formgroup!:FormGroup
   addtocart_alert:boolean=false
+  user_id!:number
+  islogin!:boolean
+  size_details:any=[]
   @ViewChild("quantity")
   quantity!:ElementRef;
-  // imgCollection!: Array<object> 
+  @ViewChild("size") size!:ElementRef
   ngOnInit(): void {
     this.route.params.subscribe(data => {
       this.product_id = data['id'];
     })
     this.getproduct()
+    this.getuser_id()
+    this.get_size(this.product_id)
   }
-
-
-
   getproduct(){
     this.product.getproduct_single(this.product_id).subscribe(data=>{
       this.product_details=data['data']
-      // console.log(data['img'])
       for(let res of data['img']){
         this.imgCollection.push({
           image: this.Image_path+'/'+res.all_img,
@@ -44,22 +45,47 @@ export class ProductDataComponent implements OnInit {
       
     })
   }
-  addtocart(e:any){
-    // console.log(e.Product_Quantity=3)
-    let product_qty=this.quantity.nativeElement.value
-    e.Product_Quantity=product_qty
-    // console.log(e)
-    this.cartService.addtoCart(e);
-    this.addtocart_alert=true
-    setTimeout(() => {
-      this.addtocart_alert=false
-    }, 4000);
-    // console.log(qty)
+  get_size(id: number) {
+    this.cartService.getsizeby_id(id).subscribe(data => {
+      this.size_details = data
+      
+    })
   }
-  // form(){
-  //   this.registerval = this.formbuilder.group({
-  //     size: ['', [Validators.required]]
-  //   })
-  // }
+  getuser_id(){
+    let data=this.cartService.get_id()
+    if(data){
+      this.user_id=data['id']
+    }
+   
+  }
+  addtocart(e:any){
+    if(this.user_id){
+      e.Product_Quantity=this.quantity.nativeElement.value
+      e.Size_id=this.size.nativeElement.value
+      e.user_id=this.user_id
+      this.cartService.addtoCart(e).subscribe(data=>{
+        if(data['message']){
+          this.addtocart_alert=true
+      setTimeout(() => {
+        this.addtocart_alert=false
+      }, 4000);
+          }
+      });
+    }else{
+      this.islogin=true
+    }
+  }
+  add_wishlist(id:number){
+    if(this.user_id){
+      this.product.add_wishlist(this.user_id,id).subscribe(data=>{
+        if(data['message']){
+          alert("add")
+        }else{
+          alert("already available")
+        }
+      })
+    }
+  }
+ 
   
 }

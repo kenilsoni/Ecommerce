@@ -41,12 +41,12 @@
                                      <div *ngIf="username_exist">
                                         <span class="text-danger">Username is already exist</span>
                                     </div>
-                                    <div *ngIf="username?.invalid ">
+                                    <div *ngIf="profileval.controls['username']?.invalid ">
 
-                                        <span *ngIf="username?.errors?.['required']  && (username?.touched || ngForm.submitted) "  class="text-danger">
+                                        <span *ngIf="profileval.controls['username']?.errors?.['required']  && (profileval.controls['username']?.touched || ngForm.submitted) "  class="text-danger">
                                             Username is required
                                         </span>
-                                        <span *ngIf="username?.errors?.['pattern']  && (username?.touched || ngForm.submitted) "  class="text-danger">
+                                        <span *ngIf="profileval.controls['username']?.errors?.['pattern']  && (profileval.controls['username']?.touched || ngForm.submitted) "  class="text-danger">
                                             Please enter valid username
                                         </span>
                                     </div>
@@ -75,9 +75,9 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div *ngIf="gender?.invalid ">
+                                    <div *ngIf="profileval.controls['gender']?.invalid ">
 
-                                        <span *ngIf="gender?.errors?.['required'] && (gender?.touched || ngForm.submitted) "  class="text-danger">
+                                        <span *ngIf="profileval.controls['gender']?.errors?.['required'] && (profileval.controls['gender']?.touched || ngForm.submitted) "  class="text-danger">
                                             Gender is required
                                         </span>
                                        
@@ -95,12 +95,12 @@
                                 <input type="password" class="form-control" 
                                 formControlName="password"
                                     placeholder="Please enter your Password" >
-                                    <div *ngIf="password?.invalid ">
+                                    <div *ngIf="profileval.controls['password']?.invalid ">
 
-                                        <span *ngIf="password?.errors?.['required'] && (password?.touched || ngForm.submitted) "  class="text-danger">
+                                        <span *ngIf="profileval.controls['password']?.errors?.['required'] && (profileval.controls['password']?.touched || ngForm.submitted) "  class="text-danger">
                                             Password is required
                                         </span>
-                                        <span *ngIf="password?.errors?.['minlength'] && (password?.touched || ngForm.submitted) "  class="text-danger">
+                                        <span *ngIf="profileval.controls['password']?.errors?.['minlength'] && (profileval.controls['password']?.touched || ngForm.submitted) "  class="text-danger">
                                             Password must be 6 character long
                                         </span>
                                        
@@ -112,15 +112,15 @@
                             <div class="form-group">
                                 <label class="form-label">Email</label>
                                 <input type="email"  class="form-control"  (keyup)="check_email($event)" formControlName="email" placeholder="Please enter valid email">
-                                <div *ngIf="email?.invalid ">
+                                <div *ngIf="profileval.controls['email']?.invalid ">
                                     <div *ngIf="email_exist">
                                         <span class="text-danger">Email is already exist</span>
                                     </div>
-                                    <span *ngIf="email?.errors?.['required'] && (email?.touched || ngForm.submitted) "  class="text-danger">
+                                    <span *ngIf="profileval.controls['email']?.errors?.['required'] && (profileval.controls['email']?.touched || ngForm.submitted) "  class="text-danger">
                                         Email is required
                                     </span>
                                     <span class="text-danger" *ngIf="
-                                    email?.errors?.['email']">Email is invalid</span>
+                                    profileval.controls['email']?.errors?.['email']">Email is invalid</span>
                                     
                                 </div>
                             </div>
@@ -134,11 +134,11 @@
                                 <input type="text" class="form-control" 
                                 formControlName="firstname"
                                      placeholder="Please enter your first name">
-                                     <div *ngIf="firstname?.invalid ">
-                                        <span *ngIf="firstname?.errors?.['pattern']  && (firstname?.touched || ngForm.submitted) "  class="text-danger">
+                                     <div *ngIf="profileval.controls['firstname']?.invalid ">
+                                        <span *ngIf="profileval.controls['firstname']?.errors?.['pattern']  && (profileval.controls['firstname']?.touched || ngForm.submitted) "  class="text-danger">
                                             Please enter valid firstname
                                         </span>
-                                        <span *ngIf="firstname?.errors?.['required'] && (firstname?.touched || ngForm.submitted) "  class="text-danger">
+                                        <span *ngIf="profileval.controls['firstname']?.errors?.['required'] && (profileval.controls['firstname']?.touched || ngForm.submitted) "  class="text-danger">
                                             Firstname is required
                                         </span>
                                        
@@ -152,12 +152,12 @@
                                 <input type="text" class="form-control" 
                                 formControlName="mobile"
                                      placeholder="Please enter your mobile no.">
-                                     <div *ngIf="mobile?.invalid ">
+                                     <div *ngIf="profileval.controls['mobile']?.invalid ">
 
-                                        <span *ngIf="mobile?.errors?.['required'] && (mobile?.touched || ngForm.submitted) "  class="text-danger">
+                                        <span *ngIf="profileval.controls['mobile']?.errors?.['required'] && (profileval.controls['mobile']?.touched || ngForm.submitted) "  class="text-danger">
                                             Mobile is required
                                         </span>
-                                        <span *ngIf="(mobile?.errors?.['maxlength'] || mobile?.errors?.['minlength'] || mobile?.errors?.['pattern']) && (mobile?.touched || ngForm.submitted) "  class="text-danger">
+                                        <span *ngIf="(profileval.controls['mobile']?.errors?.['maxlength'] || profileval.controls['mobile']?.errors?.['minlength'] || profileval.controls['mobile']?.errors?.['pattern']) && (profileval.controls['mobile']?.touched || ngForm.submitted) "  class="text-danger">
                                             Mobile is Invalid
                                         </span>
                                        
@@ -174,11 +174,11 @@
                                 <input type="text" class="form-control" 
                                 formControlName="lastname"
                                      placeholder="Please enter your last name">
-                                     <div *ngIf="lastname?.invalid ">
-                                        <span *ngIf="lastname?.errors?.['pattern']  && (lastname?.touched || ngForm.submitted) "  class="text-danger">
+                                     <div *ngIf="profileval.controls['lastname']?.invalid ">
+                                        <span *ngIf="profileval.controls['lastname']?.errors?.['pattern']  && (profileval.controls['lastname']?.touched || ngForm.submitted) "  class="text-danger">
                                             Please enter valid lastname
                                         </span>
-                                        <span *ngIf="lastname?.errors?.['required'] && (lastname?.touched || ngForm.submitted) "  class="text-danger">
+                                        <span *ngIf="profileval.controls['lastname']?.errors?.['required'] && (profileval.controls['lastname']?.touched || ngForm.submitted) "  class="text-danger">
                                             Lastname is required
                                         </span>
                                        
@@ -192,12 +192,12 @@
                                 <input type="text" class="form-control" 
                                 formControlName="phone"
                                     placeholder="Please enter your phone">
-                                    <div *ngIf="phone?.invalid ">
+                                    <div *ngIf="profileval.controls['phone']?.invalid ">
 
-                                        <span *ngIf="phone?.errors?.['required'] && (phone?.touched || ngForm.submitted) "  class="text-danger">
+                                        <span *ngIf="profileval.controls['phone']?.errors?.['required'] && (profileval.controls['phone']?.touched || ngForm.submitted) "  class="text-danger">
                                             Phone is required
                                         </span>
-                                        <span *ngIf="(phone?.errors?.['maxlength'] || phone?.errors?.['minlength'] || phone?.errors?.['pattern']) && (phone?.touched || ngForm.submitted) "  class="text-danger">
+                                        <span *ngIf="(profileval.controls['phone']?.errors?.['maxlength'] || profileval.controls['phone']?.errors?.['minlength'] || profileval.controls['phone']?.errors?.['pattern']) && (profileval.controls['phone']?.touched || ngForm.submitted) "  class="text-danger">
                                             Phone is Invalid
                                         </span>
                                         

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -12,9 +13,10 @@ export class UserRegisterComponent implements OnInit {
   register!:boolean
   username_exist!:boolean
   email_exist!:boolean
-  constructor(private formbuilder: FormBuilder,private userservice:UserService) { }
+  constructor(private formbuilder: FormBuilder,private userservice:UserService,private route:Router) { }
 
   ngOnInit(): void {
+    this.get_user()
     this.registerval = this.formbuilder.group({
         username: ['',[Validators.required]],
         password: ['', [Validators.required, Validators.minLength(6)]],
@@ -28,29 +30,10 @@ export class UserRegisterComponent implements OnInit {
     })
   
   }
-  get username(){
-    return this.registerval.get('username')
-  }
-  get password(){
-    return this.registerval.get('password')
-  }
-  get firstname(){
-    return this.registerval.get('firstname')
-  }
-  get lastname(){
-    return this.registerval.get('lastname')
-  }
-  get phone(){
-    return this.registerval.get('phone')
-  }
-  get email(){
-    return this.registerval.get('email')
-  }
-  get mobile(){
-    return this.registerval.get('mobile')
-  }
-  get gender(){
-    return this.registerval.get('gender')
+  get_user(){
+    if(this.userservice.get_user()){
+      this.route.navigate(['/home'])
+    }
   }
   submituser(){
     if(this.registerval.valid){

@@ -8,4 +8,11 @@
 .change_box{
     width: 100px;
     height: 32px;
+    display: none;
+}
+.shopping-table .qty{
+    width: 60px !important;
+}
+.Checkout{
+    cursor: pointer;
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { CartService } from 'src/app/service/cart.service';
 import { UserService } from 'src/app/service/user.service';
 import { environment } from 'src/environments/environment';
@@ -8,9 +8,9 @@ import { environment } from 'src/environments/environment';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit, AfterViewInit {
+export class CartComponent implements OnInit {
   products: any = [];
-  grandTotal!: number;
+  grandTotal: number = 0;
   image_url: string = environment.IMAGE_URL
   country_data: any = []
   state_details: any = []
@@ -19,6 +19,7 @@ export class CartComponent implements OnInit, AfterViewInit {
   service_tax: number = 0
   color_details: any = []
   size_details: any = []
+  user_id!: number
 
   @ViewChild("state") state!: ElementRef
   @ViewChild("country") country!: ElementRef
@@ -27,15 +28,21 @@ export class CartComponent implements OnInit, AfterViewInit {
   @ViewChildren("size") size_change!: QueryList<ElementRef>
   @ViewChildren("color_text") color_text!: QueryList<ElementRef>
   @ViewChildren("size_text") size_text!: QueryList<ElementRef>
+  handler:any = null;
   constructor(private cartService: CartService, private userservice: UserService) { }
-  ngAfterViewInit(): void {
-    this.hide_dropdown()
-  }
+
   ngOnInit(): void {
+    this.getuser_id()
     this.getcart_data()
     this.get_taxdetails()
+    this.loadStripe();
   }
-
+  getuser_id() {
+    let data = this.cartService.get_id()
+    if (data) {
+      this.user_id = data['id']
+    }
+  }
   get_color(id: number) {
     this.cartService.getcolorby_id(id).subscribe(data => {
       this.color_details = data
@@ -47,42 +54,49 @@ export class CartComponent implements OnInit, AfterViewInit {
     })
   }
   getcart_data() {
-    this.cartService.getProducts()
-      .subscribe(res => {
-        this.products = res;
-        this.grandTotal = this.cartService.getTotalPrice();
-        this.final_amount = this.grandTotal
-      })
+    this.cartService.getProducts(this.user_id).subscribe(data => {
+      if (data['data']) {
+        this.products = data['data'];
+        this.final_amount = this.get_total()
+        this.grandTotal = this.get_total()
+      } else {
+        this.products = []
+        this.grandTotal = 0
+        this.final_amount = 0
+      }
+    })
   }
   get_taxdetails() {
     this.cartService.get_country().subscribe(data => {
       this.country_data = data['data']
     })
   }
-
-  removeItem(item: any) {
-    this.cartService.removeCartItem(item);
+  removeItem(cart_id: any) {
+    this.cartService.removeCartItem(cart_id).subscribe();
     this.getcart_data()
     this.service_tax = 0
     this.state.nativeElement.value = ''
     this.country.nativeElement.value = ''
+    this.getcart_data()
+    this.grandTotal = this.get_total()
   }
   emptycart() {
-    this.cartService.removeAllCart();
+    this.cartService.removeAllCart(this.user_id).subscribe();
     this.getcart_data()
+    this.grandTotal = 0
     this.final_amount = 0
     this.service_tax = 0
     this.state.nativeElement.value = ''
     this.country.nativeElement.value = ''
+    this.getcart_data()
   }
-  edit_product(id: number) {
-    // console.log(id)
-    // console.log(cid)
-    // console.log(sid)
-    this.get_color(id)
-    this.get_size(id)
-    this.display_dropdownid(id)
-    this.hide_textid(id)
+  edit_product(product_id: number, cart_id: number) {
+    this.get_color(product_id)
+    this.get_size(product_id)
+    this.hide_dropdown()
+    this.display_text()
+    this.display_dropdownid(cart_id)
+    this.hide_textid(cart_id)
   }
   get_state(e: any) {
     if (e.target.value == "") {
@@ -93,79 +107,68 @@ export class CartComponent implements OnInit, AfterViewInit {
       })
     }
   }
+  get_total() {
+    let grandTotal = 0;
+    this.products.map((a: any) => {
+      grandTotal += Number(a.Total_Amount);
+    })
+    return grandTotal;
+  }
   update_cart() {
     this.hide_dropdown()
     this.display_text()
-    // this.products.forEach((element: any) => {
-    //   element.final_amount=this.final_amount
-
-    // });
-    this.cartService.update_product(this.products)
     this.getcart_data()
-    console.log(this.products)
+    this.service_tax = 0
+    this.state.nativeElement.value = ''
+    this.country.nativeElement.value = ''
+
   }
   find_tax(e: any) {
-    let number = Number(this.grandTotal)
+    let number = Number(this.final_amount)
     let percentToGet = Number(e.target.value)
     let percent = (percentToGet / 100) * number
     this.service_tax = percent
-    this.final_amount = percent + this.grandTotal
+    this.final_amount = percent + this.final_amount
   }
   change_color(e: any) {
     this.color_change.forEach((element) => {
-
       if (e.target.id == element.nativeElement.id) {
-        let myArray = element.nativeElement.value.split(",");
-        // console.log(myArray)
-        // let assign_color = myArray[0]
-        // console.log(e.target.class)
-        this.color_text.forEach((element) => {
-          if (e.target.id == element.nativeElement.id) {
-
-            this.products.forEach((element: any) => {
-              element.Color_name =myArray[0]
-              element.Product_Color_ID =myArray[1]
-
-            });
-            // element.nativeElement.innerHTML = assign_color
+        let color_id = element.nativeElement.value
+        this.products.forEach((element: any) => {
+          if (element.ID == e.target.id) {
+            element.Color_ID = color_id
+            this.cartService.update_product(element).subscribe()
           }
-        })
+        });
       }
     })
   }
   change_size(e: any) {
     this.size_change.forEach((element) => {
       if (e.target.id == element.nativeElement.id) {
-        let myArray = element.nativeElement.value.split(",");
+        let size_id = element.nativeElement.value
         // let assign_size = myArray[0]
-        this.size_text.forEach((element) => {
-          if (e.target.id == element.nativeElement.id) {
-            this.products.forEach((element: any) => {
-              if(element.ID==e.target.id){
-              element.Size_Name =myArray[0]
-              element.Size_id =myArray[1]
-              }
-            });
-            // element.nativeElement.innerHTML = assign_size
-          }
-        })
-      }
-    })
-  }
-  change_quantity(e: any) {  
-  
-    this.quantity.forEach((element) => {
-      // console.log(element.nativeElement)
-      if (e.target.id == element.nativeElement.id) {
-        let quantity = element.nativeElement.value
-        console.log(quantity)
         this.products.forEach((element: any) => {
-          if(element.ID==e.target.id){
-            element.Product_Quantity = quantity
+          if (element.ID == e.target.id) {
+            element.Size_ID = size_id
+            this.cartService.update_product(element).subscribe()
           }
         });
       }
-      console.log(this.products)
+    })
+  }
+  change_quantity(e: any) {
+    this.quantity.forEach((element) => {
+      if (e.target.id == element.nativeElement.id) {
+        let quantity = element.nativeElement.value
+        this.products.forEach((element: any) => {
+          if (element.ID == e.target.id) {
+            element.Quantity = quantity
+            element.Total_Amount = quantity * element.Unit_Price
+            this.cartService.update_product(element).subscribe()
+          }
+        });
+      }
     })
   }
   hide_dropdown() {
@@ -248,5 +251,49 @@ export class CartComponent implements OnInit, AfterViewInit {
         element.nativeElement.hidden = false;
       }
     })
+  }
+  pay(amount: any) {
+
+    var handler = (<any>window).StripeCheckout.configure({
+      key: 'pk_test_51KxNo9SJ5Q50OIO5yrzakAllPW0Bylht9AGS4fRd8dGOLy954fMBIafsUrgjnlRfBcxZIAPoYARnFx8gJSuEOty400VLE9g7yw',
+      locale: 'auto',
+      token: function (token: any) {
+        // You can access the token ID with `token.id`.
+        // Get the token ID to your server-side code for use.
+        console.log(token)
+        alert('Token Created!!');
+      }
+    });
+
+    handler.open({
+      name: 'Ecommerce',
+      currency:'inr',
+      amount: amount * 100
+    });
+
+  }
+
+  loadStripe() {
+
+    if (!window.document.getElementById('stripe-script')) {
+      var s = window.document.createElement("script");
+      s.id = "stripe-script";
+      s.type = "text/javascript";
+      s.src = "https://checkout.stripe.com/checkout.js";
+      s.onload = () => {
+        this.handler = (<any>window).StripeCheckout.configure({
+          key: 'pk_test_51KxNo9SJ5Q50OIO5yrzakAllPW0Bylht9AGS4fRd8dGOLy954fMBIafsUrgjnlRfBcxZIAPoYARnFx8gJSuEOty400VLE9g7yw',
+          locale: 'auto',
+          token: function (token: any) {
+            // You can access the token ID with `token.id`.
+            // Get the token ID to your server-side code for use.
+            console.log(token)
+            alert('Payment Success!!');
+          }
+        });
+      }
+
+      window.document.body.appendChild(s);
+    }
   }
 }

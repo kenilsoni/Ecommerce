@@ -18,3 +18,22 @@
 .btn-edit{
    cursor: pointer;
 }
+.add-to-cart{
+    cursor: pointer;
+}
+.manage_drop{
+    border: none;
+    width: 75px;
+    cursor: pointer;
+}
+.myDropdown{
+    display: none;
+    position: absolute;
+    background: white;
+    width: 128px;
+    top: 85%;
+    left: 7%;
+}
+.padding{
+    padding: 3px;
+}

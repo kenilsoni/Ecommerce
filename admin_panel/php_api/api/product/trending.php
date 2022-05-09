@@ -47,7 +47,7 @@ if ($num > 0) {
       'Subcategory_name' => $Subcategory_Name,
       'Color_name' => $Product_Color,
       'Size_Name' => $Product_Size,
-      'Size_id' => '',
+      'Size_id' => $size_id,
 
     );
     $result2 = $product->getsingle_image($ID);

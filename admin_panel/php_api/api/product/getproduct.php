@@ -51,7 +51,7 @@ if ($num > 0) {
       'Subcategory_name' => $Subcategory_Name,
       'Size_Name' => $Product_Size,
       'Color_name' => $Product_Color,
-      'Size_id' => '',
+      'Size_id' => $size_id,
       
     );
       // Push to "data"
