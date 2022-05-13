@@ -3,7 +3,7 @@
         <!-- ============================================================== -->
         <div class="nav-left-sidebar sidebar-dark">
             <div class="menu-list">
-                <nav class="navbar navbar-expand-lg navbar-light">
+                <nav class="navbar navbar-expand-lg navbar-light" style="margin-bottom:100px;">
 
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav flex-column">
@@ -73,6 +73,22 @@
                             <li class="nav-item ">
                                 <a class="nav-link active" href="?controller=Admin&function=user_list"><i class="fa fa-fw fa-user-circle"></i>Users </a>
                             </li>
+                            <li class="nav-item ">
+                                <a class="nav-link active" href="?controller=Admin&function=slider"><i class="fa fa-fw fa-user-circle"></i>Slider </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link active" href="?controller=Admin&function=add_coupan"><i class="fa fa-fw fa-user-circle"></i>Coupan</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link active" href="?controller=Admin&function=add_testimonial"><i class="fa fa-fw fa-user-circle"></i>Testimonial</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link active" href="?controller=Admin&function=add_about"><i class="fa fa-fw fa-user-circle"></i>About</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link active" href="?controller=Admin&function=add_contact"><i class="fa fa-fw fa-user-circle"></i>Contact</a>
+                            </li>
+                            
                         </ul>
                     </div>
                 </nav>

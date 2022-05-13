@@ -5,7 +5,7 @@
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle nav-toggle
-                        collapsed"data-toggle="collapse"
+                        collapsed" data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1"
                         aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
@@ -47,201 +47,647 @@
                 <div class="col-sm-6 col-xs-12 search-outer">
                     <form>
                         <ul class="header-right-block clearfix">
-                     
-                            <li class="login-link" *ngIf="!islogin"><a href="#" title="Login"
-                                    data-toggle="modal" 
+
+                            <li class="login-link" *ngIf="!islogin"><a href="#"
+                                    title="Login"
+                                    data-toggle="modal"
                                     data-target="#Login-popup">Login</a></li>
-                                    <li class="hidden-xs" *ngIf="islogin">
-                                        <span><em>Welcome</em>, {{ user_name | titlecase}}</span>
-                                    </li>
-                                    <li *ngIf="islogin">
-                                        <span (click)="manage_dropdown()" style="cursor: pointer;">Manage <svg xmlns="http://www.w3.org/2000/svg" width="10px" height="10px" viewBox="0 0 384 512"><path d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"/></svg></span>
-                                        <div #myDropdown class="dropdown-content myDropdown" (click)="close_dropdown()">
+                            <li class="hidden-xs" *ngIf="islogin">
+                                <span><em>Welcome</em>, {{ user_name |
+                                    titlecase}}</span>
+                            </li>
+                            
+                                <li *ngIf="islogin">
+                                    <span (click)="manage_dropdown()" style="cursor:
+                                        pointer;">Manage <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="10px" height="10px" viewBox="0 0
+                                            384 512"><path d="M192 384c-8.188
+                                                0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75
+                                                0-45.25s32.75-12.5 45.25 0L192
+                                                306.8l137.4-137.4c12.5-12.5
+                                                32.75-12.5 45.25 0s12.5 32.75 0
+                                                45.25l-160 160C208.4 380.9 200.2 384
+                                                192 384z" /></svg></span>
+                                        <div #myDropdown class="dropdown-content
+                                            myDropdown" (click)="close_dropdown()">
                                             <ul>
-                                                <li class="padding"><a routerLink="/profile" title="Profile">Profile</a></li>
-                                                <li class="padding"><a routerLink="/profile" title="Orders">Orders</a></li>
-                                                <li class="padding"><a routerLink="/profile" title="Change Password">Change Password</a></li>
-                                                <li class="padding"><a routerLink="/profile" title="Coupans">Coupans</a></li>
-                                                <li class="padding"><a routerLink="/wishlist" title="Wishlist">Wishlist</a></li>
+                                                <li class="padding"><a
+                                                        routerLink="/profile"
+                                                        title="Profile">Profile</a></li>
+                                                <li class="padding"><a
+                                                        routerLink="/profile"
+                                                        title="Orders">Orders</a></li>
+                                                <li class="padding"><a href="#"
+                                                        data-toggle="modal"
+                                                        data-target="#change_password"
+                                                        title="Change Password">Change
+                                                        Password</a></li>
+                                                <li class="padding"><a
+                                                        routerLink="/coupan"
+                                                        title="Coupans">Coupans</a></li>
+                                                <li class="padding"><a
+                                                        routerLink="/wishlist"
+                                                        title="Wishlist">Wishlist</a></li>
                                             </ul>
                                         </div>
-                                        <!-- <select class="manage_drop"> 
-                                        <option  style='display:none'>Manage</option>
-                                        <option><a routerLink="/profile" title="My Profile">Profile</a></option>
-                                        <option>Orders</option>
-                                        <option>Change Password</option>
-                                        <option>Coupans</option>
-                                        <option>Wishlist</option>
-                                    </select> -->
-                                </li>
-                                
-                                    
-                                    <li *ngIf="islogin;" class="login-link"><a routerLink="/home" (click)="unset_user()" title="Logout" >Logout</a></li>
-                                    <div class="modal fade" id="Login-popup" tabindex="-1" 
-                                    role="dialog" aria-hidden="true">
-
-                         
-                                  <!-- Modal -->
-                                  <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header" >
-                                            <button  type="button" class="close" id="cls"
-                                                data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true" >&times;</span>
-                                            </button>
-                                            <div class="text-center" style="font-size:23px">eShopper Login</div>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form class="loginform" [formGroup]="loginval" #ngForm="ngForm"
-                                            (ngSubmit)="login()">
-                                            <div class="alert alert-dismissible alert-danger" role="alert" *ngIf="login_error">
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-                                                <i> <img src="assets/images/error.svg" height="15px" alt="error"></i> Invalid Username or Password
+                                    </li>
+    
+                                    <li >
+                                        <span (click)="currency_btn()" style="cursor:
+                                            pointer;">Currency <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="10px" height="10px" viewBox="0 0
+                                                384 512"><path d="M192 384c-8.188
+                                                    0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75
+                                                    0-45.25s32.75-12.5 45.25 0L192
+                                                    306.8l137.4-137.4c12.5-12.5
+                                                    32.75-12.5 45.25 0s12.5 32.75 0
+                                                    45.25l-160 160C208.4 380.9 200.2 384
+                                                    192 384z" /></svg></span>
+                                            <div #currency class="dropdown-content
+                                                myDropdown" (click)="currency_dropdown()">
+                                                <ul>
+                                                    <li class="padding"><a (click)="INR_convert()"
+                                                            href="#"
+                                                            title="INR">INR</a></li>
+                                                    <li class="padding"><a  (click)="USD_convert()" href="#" title="USD">USD</a></li>
+                            
+                                                </ul>
                                             </div>
-                                                <div class="form-group">
-                                                    <label class="form-label">Username</label>
-                                                    <input type="text" class="form-control" formControlName="username"
-                                                        placeholder="Enter your Username">
-                                                        <div *ngIf="loginval.controls['username']?.invalid ">
+                                        </li>
 
-                                                            <span *ngIf="loginval.controls['username']?.errors?.['required']  && (loginval.controls['username']?.touched || ngForm.submitted) "  class="text-danger">
-                                                                Username is required
+                                <li *ngIf="islogin;" class="login-link"><a
+                                        routerLink="/home"
+                                        (click)="unset_user()" title="Logout">Logout</a></li>
+                                        <!-- Login Modal -->
+                                <div class="modal fade" id="Login-popup"
+                                    tabindex="-1"
+                                    role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button"
+                                                    class="close" 
+                                                    data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <div class="text-center"
+                                                    style="font-size:23px">eShopper
+                                                    Login</div>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form class="loginform"
+                                                    [formGroup]="loginval"
+                                                    #ngForm="ngForm"
+                                                    (ngSubmit)="login()">
+                                                    <div class="alert
+                                                        alert-dismissible
+                                                        alert-danger"
+                                                        role="alert"
+                                                        *ngIf="login_error">
+                                                        <button type="button"
+                                                            class="close"
+                                                            data-dismiss="alert"
+                                                            aria-label="Close"></button>
+                                                        <i> <img
+                                                                src="assets/images/error.svg"
+                                                                height="15px"
+                                                                alt="error"></i>
+                                                        Invalid Username or
+                                                        Password
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label
+                                                            class="form-label">Username</label>
+                                                        <input type="text"
+                                                            class="form-control"
+                                                            formControlName="username"
+                                                            placeholder="Enter your Username">
+                                                        <div
+                                                            *ngIf="loginval.controls['username']?.invalid">
+                                                            <span
+                                                                *ngIf="loginval.controls['username']?.errors?.['required']
+                                                                &&
+                                                                (loginval.controls['username']?.touched
+                                                                ||
+                                                                ngForm.submitted)"class="text-danger">
+                                                                Username is
+                                                                required
                                                             </span>
                                                             <!-- <span *ngIf="username?.errors?.['pattern']  && (username?.touched || ngForm.submitted) "  class="text-danger">
                                                                 Please enter valid username
                                                             </span> -->
                                                         </div>
+                                                    </div>
+                                                    <div class="form-group 
+                                                   ">
+                                                        <label
+                                                            class="form-label">Password</label>
+                                                            
+                                                        <input type="password"
+                                                            class="form-control"
+                                                            formControlName="password"
+                                                            placeholder="Enter your Password">
+                                                        <div
+                                                            *ngIf="loginval.controls['password']?.invalid">
+                                                            <span
+                                                                *ngIf="loginval.controls['password']?.errors?.['required']
+                                                                &&
+                                                                (loginval.controls['password']?.touched
+                                                                ||
+                                                                ngForm.submitted)"class="text-danger">
+                                                                Password is
+                                                                required
+                                                            </span>
+                                                            <span
+                                                                *ngIf="loginval.controls['password']?.errors?.['minlength']
+                                                                &&
+                                                                (loginval.controls['password']?.touched
+                                                                ||
+                                                                ngForm.submitted)"class="text-danger">
+                                                                Password must be
+                                                                6 character long
+                                                            </span>
+
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group
+                                                        clearfix
+                                                        login-options">
+                                                        <button type="submit"
+                                                            class="btn-secondary">Login</button>
+                                                        <p>Not a Member? <a
+                                                                routerLink="/register"
+                                                                (click)="close_modal()"
+                                                                title="Register">Register</a>
+                                                                <br>
+                                                                <span> <a href="#"
+                                                                    data-toggle="modal"
+                                                                    data-target="#forgot_password"
+                                                                    (click)="close_modal()"
+                                                                    title="Forgot Password">Forgot Password</a></span></p>
+                                                               
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                 <!-- Forgot Password Modal -->
+                                 <div class="modal fade" id="forgot_password" #forgot
+                                 tabindex="-1"
+                                 role="dialog" aria-hidden="true">
+ 
+                                 <div class="modal-dialog"
+                                     role="document">
+                                     <div class="modal-content">
+                                         <div class="modal-header">
+                                             <button type="button"
+                                                 class="close" 
+                                                 data-dismiss="modal"
+                                                 aria-label="Close">
+                                                 <span aria-hidden="true">&times;</span>
+                                             </button>
+                                             <div class="text-center"
+                                                 style="font-size:23px">Forgot
+                                                 Password</div>
+                                         </div>
+                                         <div class="modal-body">
+                                             <form class="loginform"
+                                                 [formGroup]="forgot_password"
+                                                 #ngForm="ngForm"
+                                                 (ngSubmit)="password_forgot()">
+                                                 <div class="alert
+                                                     alert-dismissible
+                                                     alert-danger"
+                                                     role="alert"
+                                                     *ngIf="login_error">
+                                                     <button
+                                                         type="button"
+                                                         class="close"
+                                                         data-dismiss="alert"
+                                                         aria-label="Close"></button>
+                                                     <i> <img
+                                                             src="assets/images/error.svg"
+                                                             height="15px"
+                                                             alt="error"></i>
+                                                    Email Is Not Exist In Our Record
+                                                 </div>
+                                                
+                                                 <div class="form-group">
+                                                     <label
+                                                         class="form-label">Enter Email
+                                                         </label>
+                                                      
+                                                     <input type="email" 
+                                                         class="form-control"
+                                                         formControlName="email"
+                                                         placeholder="Enter your email">
+                                                         
+                                                         
+                                                     <div
+                                                         *ngIf="forgot_password.controls['email']?.invalid">
+                                                         <span
+                                                             *ngIf="forgot_password.controls['email']?.errors?.['email']
+                                                             &&
+                                                             (forgot_password.controls['email']?.touched
+                                                             ||
+                                                             ngForm.submitted)"class="text-danger">
+                                                             Email is
+                                                             required
+                                                         </span>
+                                                     </div>
+                                                 </div>
+                                             
+                                               
+ 
+                                                 <div class="form-group
+                                                     clearfix
+                                                     login-options">
+                                                     <button 
+                                                         type="submit"
+                                                         class="btn-secondary">Forgot Password</button>
+
+                                                 </div>
+                                             </form>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 </div>
+                                     <!-- otp Modal -->
+                                     <div class="modal" id="check_otp" #otp
+                                     tabindex="-1"
+                                     role="dialog" style="display: none;">
+     
+                                     <div class="modal-dialog"
+                                         role="document">
+                                         <div class="modal-content">
+                                             <div class="modal-header">
+                                                 <button type="button" (click)="close_otp()"
+                                                     class="close" 
+                                                     data-dismiss="modal"
+                                                     aria-label="Close">
+                                                     <span aria-hidden="true">&times;</span>
+                                                 </button>
+                                                 <div class="text-center"
+                                                     style="font-size:23px">Verify OTP</div>
+                                             </div>
+                                             <div class="modal-body">
+                                                 <form class="loginform"
+                                                     [formGroup]="check_otp"
+                                                     #ngForm="ngForm"
+                                                     (ngSubmit)="submit_otp()">
+                                                    
+                                                    
+                                                     <div class="form-group">
+                                                         <label
+                                                             class="form-label">Enter OTP
+                                                             </label>
+                                                          
+                                                         <input type="text" 
+                                                             class="form-control"
+                                                             formControlName="otp"
+                                                             placeholder="Enter your otp">
+                                                             
+                                                             
+                                                         <div
+                                                             *ngIf="check_otp.controls['otp']?.invalid">
+                                                             <span
+                                                                 *ngIf="check_otp.controls['otp']?.errors?.['required']
+                                                                 &&
+                                                                 (check_otp.controls['otp']?.touched
+                                                                 ||
+                                                                 ngForm.submitted)"class="text-danger">
+                                                                 otp is
+                                                                 required
+                                                             </span>
+                                                             <span *ngIf="(check_otp.controls['otp']?.errors?.['minlength']) && (check_otp.controls['otp']?.touched || ngForm.submitted)" class="text-danger">
+                                                             otp must be 6 character long
+                                                         </span>
+                                                            
+                                                         </div>
+                                                         <div
+                                                         *ngIf="check_otp.controls['otp']?.errors?.['wrong_otp']">
+                                                         <span class="text-danger">
+                                                            Invalid OTP
+                                                         </span>
+                                                     </div>
+                                                     </div>
+                                                     <div class="form-group
+                                                         clearfix
+                                                         login-options">
+                                                         <button 
+                                                             type="submit"
+                                                             class="btn-secondary">Check OTP</button>
+                                                     </div>
+                                                 </form>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     </div>
+                                <!-- Update Password Modal -->
+                                <div class="modal fade" id="change_password"
+                                tabindex="-1"
+                                role="dialog" aria-hidden="true">
+
+                                <div class="modal-dialog"
+                                    role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button"
+                                                class="close" 
+                                                data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <div class="text-center"
+                                                style="font-size:23px">Change
+                                                Password</div>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="loginform"
+                                                [formGroup]="change_password"
+                                                #ngForm="ngForm"
+                                                (ngSubmit)="update_password()">
+                                                <div class="alert
+                                                    alert-dismissible
+                                                    alert-danger"
+                                                    role="alert"
+                                                    *ngIf="login_error">
+                                                    <button
+                                                        type="button"
+                                                        class="close"
+                                                        data-dismiss="alert"
+                                                        aria-label="Close"></button>
+                                                    <i> <img
+                                                            src="assets/images/error.svg"
+                                                            height="15px"
+                                                            alt="error"></i>
+                                                   Current Password is Not Match!!
+                                                </div>
+                                                <div class="alert
+                                                    alert-dismissible
+                                                    alert-success"
+                                                    role="alert"
+                                                    *ngIf="update_success">
+                                                    <button
+                                                        type="button"
+                                                        class="close"
+                                                        data-dismiss="alert"
+                                                        aria-label="Close"></button>
+                                                    <i> <img
+                                                            src="assets/images/success.svg"
+                                                            height="15px"
+                                                            alt="success"></i>
+                                                   Password Updated Successfully!!
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label
+                                                        class="form-label">Current
+                                                        Password</label>
+                                                        <span class="input-placeholder">
+                                                    <input [type]="hide_current ? 'password' : 'text'" 
+                                                        class="form-control"
+                                                        formControlName="password"
+                                                        placeholder="Enter your password">
+                                                        
+                                                         <i class="fa fa-eye placeholder" *ngIf="!hide_current"  (click)="eye_icon_current()"></i><i class="fa fa-eye-slash placeholder" *ngIf="hide_current" (click)="eye_icon_current()" aria-hidden="true"></i>
+                                                        </span>
+                                                    <div
+                                                        *ngIf="loginval.controls['password']?.invalid">
+                                                        <span
+                                                            *ngIf="loginval.controls['password']?.errors?.['required']
+                                                            &&
+                                                            (loginval.controls['password']?.touched
+                                                            ||
+                                                            ngForm.submitted)"class="text-danger">
+                                                            Curent password is
+                                                            required
+                                                        </span>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="form-label">Password</label>
-                                                    <input type="password"
-                                                        class="form-control" formControlName="password"
-                                                        placeholder="Enter your Password">
-                                                        <div *ngIf="loginval.controls['password']?.invalid ">
+                                                    <label
+                                                        class="form-label">New
+                                                        Password</label>
+                                                        <span class="input-placeholder">
+                                                    <input
+                                                    [type]="hide_newpass ? 'password' : 'text'" 
+                                                        class="form-control"
+                                                        formControlName="new_password"
+                                                        placeholder="Enter New Password">
+                                                      <i class="fa fa-eye placeholder" *ngIf="!hide_newpass"  (click)="eye_icon_newpass()"></i><i class="fa fa-eye-slash placeholder" *ngIf="hide_newpass" (click)="eye_icon_newpass()" aria-hidden="true"></i>
+                                                        </span>
+                                                    <div
+                                                        *ngIf="loginval.controls['new_password']?.invalid">
+                                                        <span
+                                                            *ngIf="loginval.controls['new_password']?.errors?.['required']
+                                                            &&
+                                                            (loginval.controls['new_password']?.touched
+                                                            ||
+                                                            ngForm.submitted)"class="text-danger">
+                                                            New password is
+                                                            required
+                                                        </span>
+                                                        <span
+                                                            *ngIf="loginval.controls['new_password']?.errors?.['minlength']
+                                                            &&
+                                                            (loginval.controls['new_password']?.touched
+                                                            ||
+                                                            ngForm.submitted)"class="text-danger">
+                                                            Password
+                                                            must be 6
+                                                            character
+                                                            long
+                                                        </span>
 
-                                                            <span *ngIf="loginval.controls['password']?.errors?.['required'] && (loginval.controls['password']?.touched || ngForm.submitted) "  class="text-danger">
-                                                                Password is required
-                                                            </span>
-                                                            <span *ngIf="loginval.controls['password']?.errors?.['minlength'] && (loginval.controls['password']?.touched || ngForm.submitted) "  class="text-danger">
-                                                                Password must be 6 character long
-                                                            </span>
-                                                           
-                                                            
-                                                        </div>
+
+                                                    </div>
                                                 </div>
-                                                <!-- <div class="form-group ">
-                                                    <label class="form-label">Password</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Enter your Password"
-                                                        value="Incorrect Password">
-                                                </div> -->
-                                                <div class="form-group clearfix
+                                                <div class="form-group">
+                                                    <label
+                                                        class="form-label">Confirm
+                                                        Password</label>
+                                                        <span class="input-placeholder">
+                                                    <input
+                                                    [type]="hide_cpass ? 'password' : 'text'" 
+                                                        class="form-control"
+                                                        formControlName="cpassword"
+                                                        placeholder="Enter Confirm Password">
+                                                       <i class="fa fa-eye placeholder" *ngIf="!hide_cpass"  (click)="eye_icon_cpass()"></i><i class="fa fa-eye-slash placeholder" *ngIf="hide_cpass" (click)="eye_icon_cpass()" aria-hidden="true"></i>
+                                                    </span>
+                                                    <div
+                                                        *ngIf="loginval.controls['cpassword']?.invalid">
+                                                        <span
+                                                            *ngIf="loginval.controls['cpassword']?.errors?.['required']
+                                                            &&
+                                                            (loginval.controls['cpassword']?.touched
+                                                            ||
+                                                            ngForm.submitted)"class="text-danger">
+                                                            Confirm password is
+                                                            required
+                                                        </span>
+                                                        <span
+                                                            *ngIf="loginval.controls['cpassword']?.errors?.['minlength']
+                                                            &&
+                                                            (loginval.controls['cpassword']?.touched
+                                                            ||
+                                                            ngForm.submitted)"class="text-danger">
+                                                            Password
+                                                            must be 6
+                                                            character
+                                                            long
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group
+                                                    clearfix
                                                     login-options">
-                                                    <button type="submit"
-                                                        class="btn-secondary">Login</button>
-                                                    <p>Not a Member? <a routerLink="/register" (click)="close_modal()"
-                                                            title="Register">Register</a></p>
+                                                    <button 
+                                                        type="submit"
+                                                        class="btn-secondary">Update Password</button>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
-                                </div>
-                               
-                            <li class="cart-outer">
-                                <a (click)="check_cart()" title="Add to Cart"
-                                    class="add-to-cart"></a>
-                                <div class="cart-wrap" >
-                                   
-                                   
-                                    <div *ngIf="products.length > 0;else nodata">
-                                        <p>Recently added item(s)</p>
-                                    <ul *ngFor="let item of products; let i = index">
-                                        <li>
-                                            <a class="cart-product"
-                                                title="consectetur adipiscing
-                                                elit"
-                                                href="product-detail.html"><img
-                                                    alt=""
-                                                    src="{{image_url}}/{{item.Product_Image}}"></a>
-                                            <div class="cart-details">
-                                                <a class="btn-remove"
-                                                    title="Remove item"
-                                                    (click)="removeItem(item.ID)"><img
-                                                        src="/assets/images/cross.svg"
-                                                        alt=""></a>
-   
-                                                <a class="btn-edit" title="Edit item" >
-                                                    <img (click)="edit_product(item.ID,item.Product_ID)"
-                                                        src="/assets/images/edit.svg"
-                                                        alt="">
-                                                </a>
-                                                <p class="product-name"><a
-                                                    routerLink="/product/{{item.ID}}">{{item.Product_Name}}</a></p>
-                                                <p class="price">{{item.Unit_Price|currency:'INR'}} </p>
-                                                <p class="qty-wrapper">
-                                                    <span>Qty : </span>
-                                                    <span #quantity id="{{item.ID}}">{{item.Quantity}}</span>
-                                                    <input type="text" class="change_box" #quantity_text  id="{{item.ID}}" (keyup)="change_quantity($event)"/>
-                                                </p>
-                                                <div class="size-wrap">
-                                                    <dl class="item-options">
-                                                        <dt>Size :</dt>
-                                                        <dd #size_text id="{{item.ID}}">
-                                                            {{item.Size_Name}}
-                                                        </dd>
-                                                        <!-- -->
-                                                        <select class="default-select form-control change_box"  #size id="{{item.ID}}" (change)="change_size($event)"  > 
-                                                            <option *ngFor="let getitem of size_details" value="{{getitem.id}}" id="{{getitem.id}}" >{{getitem.size}}</option>
-                                                            
-                                                        </select>
-                                                        
-                                                    </dl>
-                                                   
-                                                </div>
-                                            </div>
-                                            <div class="update-action" id="{{item.ID}}" #update>
-                                                <a  title="Update" (click)="update_cart(item.ID)"
-                                                    class="btn-secondary">Update</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                   
-                                    <div class="summary">
-                                        <p class="subtotal">
-                                            <span>Cart Subtotal:</span> <span
-                                                class="price">{{grandTotal|currency:'INR'}}</span>
-                                        </p>
-                                    </div>
-                                    <div class="cart-action">
-                                        <a routerLink="/cart"title="View Cart"
-                                            class="btn-secondary">View Cart</a>
-                                    </div></div>
-                                    <ng-template #nodata>
-                                        <p>Your Cart Is Empty</p>
-                                    </ng-template>
-                                </div>
-                            </li>
-                            <li class="search-link-wrap">
-                                <div class="search-link-outer">
-                                    <div class="search-link clearfix">
-                                        <input type="text" class="form-control"
-                                            placeholder="Search">
-                                        <a href="#" title="Search"><i><img
-                                                    src="/assets/images/search.svg"
-                                                    alt="Search"></i></a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                       
-                    </form>
-                </div>
+                            </div>
 
-                <!-- /.navbar-collapse -->
+                                <li class="cart-outer">
+                                    <a (click)="check_cart()" title="Add to Cart"
+                                        class="add-to-cart"></a>
+                                    <div class="cart-wrap">
+
+
+                                        <div *ngIf="products.length> 0;else
+                                            nodata">
+                                            <p>Recently added item(s)</p>
+                                            <ul *ngFor="let item of products;
+                                                let i= index">
+                                                <li>
+                                                    <a class="cart-product"
+                                                        title="consectetur
+                                                        adipiscing
+                                                        elit"
+                                                        href="product-detail.html"><img
+                                                            alt=""
+                                                            src="{{image_url}}/{{item.Product_Image}}"></a>
+                                                    <div class="cart-details">
+                                                        <a class="btn-remove"
+                                                            title="Remove item"
+                                                            (click)="removeItem(item.ID)"><img
+                                                                src="/assets/images/cross.svg"
+                                                                alt=""></a>
+
+                                                        <a class="btn-edit"
+                                                            title="Edit item">
+                                                            <img
+                                                                (click)="edit_product(item.ID,item.Product_ID)"
+                                                                src="/assets/images/edit.svg"
+                                                                alt="">
+                                                        </a>
+                                                        <p class="product-name"><a
+                                                                routerLink="/product/{{item.ID}}">{{item.Product_Name}}</a></p>
+                                                        <p class="price">{{convertWithCurrencyRate(item.Unit_Price, selectedCurrency) 
+                                                            | currency:selectedCurrency:true}}
+                                                        </p>
+                                                        <p class="qty-wrapper">
+                                                            <span>Qty : </span>
+                                                            <span #quantity
+                                                                id="{{item.ID}}">{{item.Quantity}}</span>
+                                                            <input type="text"
+                                                                class="change_box"
+                                                                #quantity_text
+                                                                id="{{item.ID}}"
+                                                                (keyup)="change_quantity($event)"
+                                                                />
+                                                        </p>
+                                                        <div class="size-wrap">
+                                                            <dl
+                                                                class="item-options">
+                                                                <dt>Size :</dt>
+                                                                <dd #size_text
+                                                                    id="{{item.ID}}">
+                                                                    {{item.Size_Name}}
+                                                                </dd>
+                                                                <!-- -->
+                                                                <select
+                                                                    class="default-select
+                                                                    form-control
+                                                                    change_box"
+                                                                    #size
+                                                                    id="{{item.ID}}"
+                                                                    (change)="change_size($event)">
+                                                                    <option
+                                                                        *ngFor="let
+                                                                        getitem
+                                                                        of
+                                                                        size_details"
+                                                                        value="{{getitem.id}}"
+                                                                        id="{{getitem.id}}">{{getitem.size}}</option>
+                                                                </select>
+
+                                                            </dl>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="update-action"
+                                                        id="{{item.ID}}"
+                                                        #update>
+                                                        <a title="Update"
+                                                            (click)="update_cart(item.ID)"
+                                                            class="btn-secondary">Update</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <div class="summary">
+                                                <p class="subtotal">
+                                                    <span>Cart Subtotal:</span>
+                                                    <span
+                                                        class="price">{{convertWithCurrencyRate(grandTotal, selectedCurrency) 
+                                                            | currency:selectedCurrency:true}}</span>
+                                                </p>
+                                            </div>
+                                            <div class="cart-action">
+                                                <a routerLink="/cart"
+                                                    title="View Cart"
+                                                    class="btn-secondary">View
+                                                    Cart</a>
+                                            </div></div>
+                                        <ng-template #nodata>
+                                            <p>Your Cart Is Empty</p>
+                                        </ng-template>
+                                    </div>
+                                </li>
+                                <li class="search-link-wrap">
+                                    <div class="search-link-outer">
+                                        <div class="search-link clearfix">
+                                            <input type="text"
+                                                class="form-control"
+                                                placeholder="Search">
+                                            <a href="#" title="Search"><i><img
+                                                        src="/assets/images/search.svg"
+                                                        alt="Search"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </form>
+                    </div>
+
+                    <!-- /.navbar-collapse -->
+                </div>
             </div>
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-</header>
-<!-- {{categorylist}} -->
+            <!-- /.container-fluid -->
+        </nav>
+    </header>
+    <!-- {{categorylist}} -->

@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { CartService } from 'src/app/service/cart.service';
+import { ProductService } from 'src/app/service/product.service';
 import { UserService } from 'src/app/service/user.service';
 import { environment } from 'src/environments/environment';
 
@@ -29,13 +30,14 @@ export class CartComponent implements OnInit {
   @ViewChildren("color_text") color_text!: QueryList<ElementRef>
   @ViewChildren("size_text") size_text!: QueryList<ElementRef>
   handler:any = null;
-  constructor(private cartService: CartService, private userservice: UserService) { }
+  constructor(private cartService: CartService, private userservice: UserService,private productservice:ProductService) { }
 
   ngOnInit(): void {
     this.getuser_id()
     this.getcart_data()
     this.get_taxdetails()
-    this.loadStripe();
+    // this.loadStripe();
+    this.get_currency()
   }
   getuser_id() {
     let data = this.cartService.get_id()
@@ -252,18 +254,31 @@ export class CartComponent implements OnInit {
       }
     })
   }
+ 
+  token_checkout!:any
+  
   pay(amount: any) {
-
     var handler = (<any>window).StripeCheckout.configure({
       key: 'pk_test_51KxNo9SJ5Q50OIO5yrzakAllPW0Bylht9AGS4fRd8dGOLy954fMBIafsUrgjnlRfBcxZIAPoYARnFx8gJSuEOty400VLE9g7yw',
       locale: 'auto',
       token: function (token: any) {
-        // You can access the token ID with `token.id`.
-        // Get the token ID to your server-side code for use.
         console.log(token)
-        alert('Token Created!!');
+        paymentstripe(token);
       }
     });
+    const paymentstripe = (stripeToken: any) => {
+      this.productservice.checkout_product(stripeToken).subscribe((data: any) => {
+        console.log(data);
+        // if (data.data === "success") {
+        //   this.success = true
+        // }
+        // else {
+        //   this.failure = true
+        // }
+      });
+    };
+ 
+    
 
     handler.open({
       name: 'Ecommerce',
@@ -272,7 +287,8 @@ export class CartComponent implements OnInit {
     });
 
   }
-
+  
+  
   loadStripe() {
 
     if (!window.document.getElementById('stripe-script')) {
@@ -288,12 +304,32 @@ export class CartComponent implements OnInit {
             // You can access the token ID with `token.id`.
             // Get the token ID to your server-side code for use.
             console.log(token)
+           
+            
             alert('Payment Success!!');
           }
         });
       }
 
       window.document.body.appendChild(s);
+    }
+  }
+  selectedCurrency:any
+  get_currency(){
+    if(this.productservice.get_currencyval()){
+      let currency_val=this.productservice.get_currencyval()
+      this.selectedCurrency=currency_val
+    }else{
+      this.selectedCurrency='INR'
+    }
+  }
+  convertWithCurrencyRate(value: number, currency: string){
+    if(currency=='USD'){
+      return value/75;
+    }else if(currency=='INR'){
+      return value;
+    }else{
+      return value;
     }
   }
 }

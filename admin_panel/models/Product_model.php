@@ -121,7 +121,7 @@ class ProductModel
     }
     public function add_productdb($data)
     {
-        $sql = "INSERT INTO product (Product_Name,Product_Description,Product_Price,Product_Quantity,Product_Color_ID,Product_Size,Category_ID,Subcategory_ID,IsTrending) VALUES (:product_name,:product_desc,:price,:quantity,:color,:size,:category,:subcategory,:trend)";
+        $sql = "INSERT INTO product (Stripe_ID,Product_Name,Product_Description,Product_Price,Product_Quantity,Product_Color_ID,Product_Size,Category_ID,Subcategory_ID,IsTrending) VALUES (:stripe_id,:product_name,:product_desc,:price,:quantity,:color,:size,:category,:subcategory,:trend)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute($data);
         $LAST_ID = $this->conn->lastInsertId();

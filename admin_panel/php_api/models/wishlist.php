@@ -64,7 +64,7 @@
       }
       public function check_wishlist($user_id,$product_id) {
         // Create query
-        $query = 'SELECT * FROM product_wishlist WHERE User_ID='.$user_id.' AND Product_ID='.$product_id.'';
+        $query = 'SELECT count(*) as count FROM product_wishlist WHERE User_ID='.$user_id.' AND Product_ID='.$product_id.'';
   
         // Prepare statement
         $stmt = $this->conn->prepare($query);

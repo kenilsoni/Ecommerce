@@ -265,7 +265,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: "?controller=Product&function=delete_product",
-                data: { id: product_id },
+                data: { id: product_id},
                 datatype: "json",
                 success: function () {
                     window.location.href = "?controller=Product&function=all_product";

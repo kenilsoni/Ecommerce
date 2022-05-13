@@ -20,18 +20,29 @@ export class HeaderComponent implements OnInit {
   @ViewChildren("size") size_change!: QueryList<ElementRef>
   @ViewChildren("size_text") size_text!: QueryList<ElementRef>
   @ViewChildren("update") update!: QueryList<ElementRef>
+  @ViewChild("otp") otp!:ElementRef
+  @ViewChild("forgot") forgot!:ElementRef
   categorylist: any;
   subcategorylist: any;
   products: any = []
   grandTotal: any
   loginval!: FormGroup
+  change_password!: FormGroup
+  forgot_password!: FormGroup
+  check_otp!: FormGroup
   islogin!: boolean
+  update_success!: boolean
   user_name!: any
   login_error!: boolean
   size_details: any = []
   image_url: string = environment.IMAGE_URL
   final_amount: number = 0;
+  //change password purpose
+  hide_current: boolean = true;
+  hide_newpass: boolean = true;
+  hide_cpass: boolean = true;
   @ViewChild("myDropdown") dropdown!:ElementRef
+  @ViewChild("currency") currency!:ElementRef
   constructor(private product: ProductService, private cartService: CartService, private formbuilder: FormBuilder, private userservice: UserService) { }
 
   ngOnInit(): void {
@@ -39,9 +50,22 @@ export class HeaderComponent implements OnInit {
     this.getsubcategory();
     this.getcart_data()
     this.is_loogedin()
+    this.get_currency()
     this.loginval = this.formbuilder.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+    })
+    this.change_password = this.formbuilder.group({
+      user_id: [''],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      new_password: ['', [Validators.required, Validators.minLength(6)]],
+      cpassword: ['', [Validators.required, Validators.minLength(6)]],
+    })
+    this.forgot_password = this.formbuilder.group({
+      email: ['', [Validators.required, Validators.email]]   
+    })
+    this.check_otp = this.formbuilder.group({
+      otp: ['', [Validators.required, Validators.minLength(6)]]   
     })
   }
 
@@ -244,11 +268,100 @@ export class HeaderComponent implements OnInit {
     }else{
       this.dropdown.nativeElement.style.display="block"
     }
-    
-    // document.getElementById("myDropdown").classList.toggle("show");
   }
   close_dropdown(){
     this.dropdown.nativeElement.style.display="none"
   }
+  currency_btn(){
+    if(this.currency.nativeElement.style.display=='block'){
+      this.currency.nativeElement.style.display="none"
+    }else{
+      this.currency.nativeElement.style.display="block"
+    }
+  }
+  currency_dropdown(){
+    this.currency.nativeElement.style.display="none"
+  }
+  update_password(){
 
+    if(this.change_password.valid){
+      let name = this.userservice.get_user()
+      this.change_password.patchValue({
+        user_id:name['id']
+      })
+      this.userservice.update_password(this.change_password.value).subscribe(data=>{
+        if(data['success']){
+          this.update_success=true
+          setTimeout(() => {
+            this.update_success=false
+          }, 4000);       
+          this.change_password.reset()
+        }else{
+          this.login_error=true
+          setTimeout(() => {
+            this.login_error=false
+          }, 4000);
+          this.change_password.reset()
+        }
+      })
+    }
+  }
+  eye_icon_current(){
+    this.hide_current = !this.hide_current;
+  }
+  eye_icon_newpass(){
+    this.hide_newpass = !this.hide_newpass;
+  }
+  eye_icon_cpass(){
+    this.hide_cpass = !this.hide_cpass;
+  }
+  password_forgot(){
+    if(this.forgot_password.valid){
+      this.userservice.check_email(this.forgot_password.value.email).subscribe(data=>{
+        if(data['success']){
+          this.otp.nativeElement.style.display='block'
+          this.forgot.nativeElement.style.display='none'
+          
+          }else{
+          this.login_error=true
+          setTimeout(() => {
+            this.login_error=false  
+          }, 4000);
+        }
+      })
+    }
+  }
+  close_otp(){
+    this.otp.nativeElement.style.display='none'
+  }
+  submit_otp(){
+    this.check_otp.controls['otp'].setErrors({ 'wrong_otp': true});
+  }
+  INR_convert(){
+    this.product.set_currency('INR')
+    window.location.reload()
+  }
+  USD_convert(){
+    this.product.set_currency('USD')
+    window.location.reload()
+  }
+
+  selectedCurrency:any
+  get_currency(){
+    if(this.product.get_currencyval()){
+      let currency_val=this.product.get_currencyval()
+      this.selectedCurrency=currency_val
+    }else{
+      this.selectedCurrency='INR'
+    }
+  }
+  convertWithCurrencyRate(value: number, currency: string){
+    if(currency=='USD'){
+      return value/75;
+    }else if(currency=='INR'){
+      return value;
+    }else{
+      return value;
+    }
+  }
 }

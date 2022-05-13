@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/service/product.service';
 import { Options, LabelType } from "@angular-slider/ngx-slider";
@@ -7,17 +7,21 @@ import { environment } from 'src/environments/environment';
 import { CartService } from 'src/app/service/cart.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit,AfterViewInit {
   [x: string]: any;
   sorted_data: any;
   user_id!:any
   image_url: string = environment.IMAGE_URL
   constructor(private product: ProductService, public route: ActivatedRoute, private cartService: CartService, private formbuilder: FormBuilder,private router: Router) { }
+  ngAfterViewInit(): void {
+    this.get_currency()
+  }
   cat_id!: number
   subcat_id!: number
   productdata: any = []
@@ -69,7 +73,17 @@ export class ProductDetailsComponent implements OnInit {
       this.getsize();
       this.getcount();
       this.getuser_id()
+
     })
+  }
+  selectedCurrency:any
+  get_currency(){
+    if(this.product.get_currencyval()){
+      let currency_val=this.product.get_currencyval()
+      this.selectedCurrency=currency_val
+    }else{
+      this.selectedCurrency='INR'
+    }
   }
   getproductby_cat() {
     this.product.getproductbycat_id(this.cat_id, this.load_product).subscribe(data => {
@@ -96,14 +110,16 @@ export class ProductDetailsComponent implements OnInit {
   }
   getcount() {
     this.product.getprice().subscribe(data => {
-      // this.price = data['data']
+      // this.price = data['data'] 
       for (let val of data['data']) {
+        let min=Math.round(this.convertWithCurrencyRate(val.min,this.selectedCurrency))
+        let max=Math.round(this.convertWithCurrencyRate(val.max,this.selectedCurrency))
         this.options = {
-          floor: val.min,
-          ceil: val.max
+          floor:min,
+          ceil:max 
         }
-        this.maxValue = val.max
-        this.minValue = val.min
+        this.maxValue =max,
+        this.minValue =min
       }
     })
   }
@@ -216,5 +232,14 @@ export class ProductDetailsComponent implements OnInit {
         this.productdata = []
       }
     })
+  }
+  convertWithCurrencyRate(value: number, currency: string){
+    if(currency=='USD'){
+      return value/75;
+    }else if(currency=='INR'){
+      return value;
+    }else{
+      return value;
+    }
   }
 }

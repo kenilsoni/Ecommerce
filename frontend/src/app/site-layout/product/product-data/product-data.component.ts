@@ -31,6 +31,7 @@ export class ProductDataComponent implements OnInit {
     this.getproduct()
     this.getuser_id()
     this.get_size(this.product_id)
+    this.get_currency()
   }
   getproduct(){
     this.product.getproduct_single(this.product_id).subscribe(data=>{
@@ -78,6 +79,7 @@ export class ProductDataComponent implements OnInit {
   add_wishlist(id:number){
     if(this.user_id){
       this.product.add_wishlist(this.user_id,id).subscribe(data=>{
+        console.log(data)
         if(data['message']){
           alert("add")
         }else{
@@ -86,6 +88,23 @@ export class ProductDataComponent implements OnInit {
       })
     }
   }
- 
+  selectedCurrency:any
+  get_currency(){
+    if(this.product.get_currencyval()){
+      let currency_val=this.product.get_currencyval()
+      this.selectedCurrency=currency_val
+    }else{
+      this.selectedCurrency='INR'
+    }
+  }
+  convertWithCurrencyRate(value: number, currency: string){
+    if(currency=='USD'){
+      return value/75;
+    }else if(currency=='INR'){
+      return value;
+    }else{
+      return value;
+    }
+  }
   
 }

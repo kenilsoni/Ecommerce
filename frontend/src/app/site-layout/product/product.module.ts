@@ -13,6 +13,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { WishlistComponent } from './wishlist/wishlist.component';
+import { CoupanComponent } from './coupan/coupan.component';
 // import { NgImageSliderModule } from 'ng-image-slider';
 
 
@@ -23,7 +24,8 @@ import { WishlistComponent } from './wishlist/wishlist.component';
     ProductDetailsComponent,
     ProductDataComponent,
     CartComponent,
-    WishlistComponent
+    WishlistComponent,
+    CoupanComponent
   ],
   imports: [
     CommonModule,

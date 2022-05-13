@@ -16,7 +16,8 @@
                 <figcaption>
                     <a routerLink="/product/{{product.ID}}"
                         title={{product.Product_Name}} class="heading">{{product.Product_Name}}</a>
-                    <span>{{product.Product_Price | currency:'INR'}}  </span>
+                    <span>{{convertWithCurrencyRate(product.Product_Price, selectedCurrency) 
+                        | currency:selectedCurrency:true}}</span>
                     <a (click)="remove_item(product.ID)" title="Remove Item"  class="btn-secondary"
                     >Remove Item</a>
                 </figcaption>

@@ -37,3 +37,16 @@
 .padding{
     padding: 3px;
 }
+.placeholder{
+    position: absolute;
+    top: 18px;
+    bottom: 0;
+    height: 18px;
+    font-size: 21px;
+    right: 10px;
+    margin: auto;
+}
+
+.input-placeholder {
+  position: relative;
+}

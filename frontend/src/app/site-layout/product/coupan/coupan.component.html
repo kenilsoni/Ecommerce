@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row" style="margin-top: 10px;">
+        <div class="text-center">Available Coupans</div>
+        <div *ngIf="available.length>0;else nocoupon">
+            <div *ngFor="let data of available">
+                <div class="row add_css">
+                    <div class="col-9">Coupan Code:-&nbsp;<strong>{{data.ID}}</strong>
+                        <div>Get {{data.discount}}% discount on all product</div>
+                    </div>
+
+                    <div class="col-3" style="float: right;">Valid till:-
+                        <strong>{{data.expiry}}</strong></div>
+                </div>
+            </div>
+        </div>
+        <ng-template #nocoupon><h1 style="text-align:center" class="add_css">No Coupan Available</h1></ng-template>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+        <div class="text-center">Expired Coupans</div>
+        <div *ngIf="expire.length>0;else nocoupan">
+            <div *ngFor="let data of expire">
+                <div class="row add_css">
+                    <div class="col-9">Coupan Code:-&nbsp;<strong>{{data.ID}}</strong>
+                        <div>Get {{data.discount}}% discount on all product</div>
+                    </div>
+
+                    <div class="col-3" style="float: right;"><strong>Expired</strong></div>
+                </div>
+
+                <div>
+                </div>
+
+            </div>
+        </div>
+        <ng-template #nocoupan><h1 style="text-align:center" class="add_css">No Coupan Available</h1></ng-template>
+    </div>
+
+</div>

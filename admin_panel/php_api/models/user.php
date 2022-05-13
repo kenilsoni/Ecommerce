@@ -226,5 +226,19 @@ class User
             return true;
         }
     }
+    public function check_password($id){
+        $query = 'SELECT * FROM user WHERE ID='.$id.' ' ;
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function update_password($id,$password){
+        $query = 'UPDATE user SET Password=? WHERE ID=?';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $password);
+        $stmt->bindParam(2, $id);
+        $stmt->execute();
+        return $stmt;
+    }
    
 }

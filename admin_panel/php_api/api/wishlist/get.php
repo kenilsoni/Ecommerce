@@ -39,7 +39,7 @@
            $Product_ID=$row['Product_ID'];
            $pdt_detail=$wishlist->get_detail($Product_ID);
         
-        }
+        
         while($row2 = $pdt_detail->fetch(PDO::FETCH_ASSOC)) {
           extract($row2);
 
@@ -76,6 +76,7 @@
           array_push($wishlist_arr['data'], $newdata);
          
         }
+      }
        
         // echo "<pre>";
         // print_r($wishlist_arr);

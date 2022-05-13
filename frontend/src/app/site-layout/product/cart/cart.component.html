@@ -82,14 +82,17 @@
                                 <a (click)="edit_product(item.Product_ID,item.ID)" title="Edit item" class="edit-link"> <img src="assets/images/edit-dark.svg" alt="edit"></a>
                             </td>
                             <td>
-                                <span class="orange-text">{{item.Unit_Price |currency:'INR'}}</span>
+                                <span class="orange-text">{{convertWithCurrencyRate(item.Unit_Price, selectedCurrency) 
+                                    | currency:selectedCurrency:true}}</span>
                             </td>
                             <td>
                                 <!-- {{item.Product_Quantity}} -->
                                 <input type="text" value="{{item.Quantity}}" title="Qty" id="{{item.ID}}" class="form-control qty" (keyup)="change_quantity($event)" #quantity >
                             </td>
                             <td>
-                                <span class="orange-text">{{item.Quantity*item.Unit_Price|currency:'INR'}}</span>
+                               
+                                <span class="orange-text"> {{convertWithCurrencyRate(item.Quantity*item.Unit_Price, selectedCurrency) 
+                                    | currency:selectedCurrency:true}}</span>
                             </td>
                             <td>
                                 <a style="cursor:pointer" (click)="removeItem(item.ID)" title="Remove item" class="remove-link"><img src="assets/images/cross-dark.svg" alt="delete"></a>
@@ -147,16 +150,19 @@
                         <table class="table summary-table">
                             <tbody>
                                 <tr>
-                                    <td>Subtotal</td>
-                                    <td>{{grandTotal|currency:'INR'}}</td>
+                                    <td>Subtotal</td> 
+                                    <td>{{convertWithCurrencyRate(grandTotal, selectedCurrency) 
+                                        | currency:selectedCurrency:true}}</td>
                                 </tr>
                                 <tr>
                                     <td>Service Tax</td>
-                                    <td>{{service_tax|currency:'INR'}}</td>
+                                    <td>{{convertWithCurrencyRate(service_tax, selectedCurrency) 
+                                        | currency:selectedCurrency:true}}</td>
                                 </tr>
                                 <tr>
                                     <td class="summary-total"><strong>Total</strong></td>
-                                    <td class="summary-price"><strong>{{final_amount|currency:'INR'}}</strong></td>
+                                    <td class="summary-price"><strong>{{convertWithCurrencyRate(final_amount, selectedCurrency) 
+                                        | currency:selectedCurrency:true}}</strong></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">

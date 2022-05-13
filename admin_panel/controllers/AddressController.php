@@ -5,6 +5,10 @@ class AddressController
     {
         include('models/Address_model.php');
         $this->model = new AddressModel();
+        require './php_api/api/checkout/stripe-php-master/init.php';
+        $this->stripe = new \Stripe\StripeClient(
+            'sk_test_51KxNo9SJ5Q50OIO5VnFcjevn1wRbzTfYFTuxvZ05BIf1jMdKOQVNiMtQKzE21DsCZqQkSDYu8UQXo4K8cMIOub1j00ehZHuEns'
+          );
     }
     public function test_input($data)
     {
@@ -273,6 +277,15 @@ class AddressController
             $cid = $_POST['cid'];
             $sid = $_POST['state'];
             $tax=$_POST['tax'];
+
+            $tax=$this->stripe->taxRates->create([
+                'display_name' => 'VAT',
+                'country' => 'US',
+                'state' => 'DE',
+                'percentage' =>  $tax,
+                'inclusive' => false,
+              ]);
+            // print_r($tax);die();
 
             session_start();
             if ($tax != "") {

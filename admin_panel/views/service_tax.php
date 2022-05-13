@@ -179,7 +179,7 @@
                                         <label for="inputText3" class="col-form-label">Tax Percent(%)</label><span class="star">*</span>
                                         <input id="inputText3" type="text" class="form-control add-tax" name="tax" placeholder="Tax">
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-block">Add Tax</button>
+                                    <button type="submit" class="btn btn-primary btn-block tax_add">Add Tax</button>
                                 </form>
                             </div>
                         </div>

@@ -20,6 +20,7 @@ export class WishlistComponent implements OnInit {
   ngOnInit(): void {
     this. get_userid()
     this.get_wishlist()
+    this.get_currency()
   }
   get_userid(){
     let data=this.user.get_user()
@@ -47,9 +48,30 @@ export class WishlistComponent implements OnInit {
   }
   remove_item(id:number){
     this.product.remove_item(this.user_id,id).subscribe(data=>{
-      console.log(data)
-      this.get_wishlist()
+      // console.log(data)
+      if(data['message']){
+        this.get_wishlist()
+      }
+
     })
+  }
+  selectedCurrency:any
+  get_currency(){
+    if(this.product.get_currencyval()){
+      let currency_val=this.product.get_currencyval()
+      this.selectedCurrency=currency_val
+    }else{
+      this.selectedCurrency='INR'
+    }
+  }
+  convertWithCurrencyRate(value: number, currency: string){
+    if(currency=='USD'){
+      return value/75;
+    }else if(currency=='INR'){
+      return value;
+    }else{
+      return value;
+    }
   }
 
 }

@@ -5,6 +5,8 @@ class ProductController
     {
         include('models/Product_model.php');
         $this->model = new ProductModel();
+        $stripe_key = new Stripe();
+        $this->stripe=$stripe_key->stripe_key();
     }
     public function test_input($data)
     {
@@ -232,6 +234,9 @@ class ProductController
     }
     public function add_productdata()
     {
+  
+       
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $uploadsDir = "./assets/uploads/";
             $allowedFileType = array('jpg', 'png', 'jpeg');
@@ -245,6 +250,17 @@ class ProductController
             $size = $_POST['product_size'];
             $color_string = implode(",", $color);
             $size_string = implode(",", $size);
+
+           
+             $product_stripe=$this->stripe->products->create([
+                'name' => $product,
+                'description'=>$product_desc
+              ]);
+              $this->stripe->prices->create([
+                'unit_amount' =>$price*100,
+                'currency' => 'inr',
+                'product' =>  $product_stripe->id,
+              ]);
 
             session_start();
             if (($product &&  $product_desc &&  $price &&  $quantity && $category &&  $subcategory &&   $color &&  $size) != '') {
@@ -277,7 +293,8 @@ class ProductController
                     'subcategory' => $subcategory,
                     'color' => $color_string,
                     'size' => $size_string,
-                    'trend' => $trend
+                    'trend' => $trend,
+                    'stripe_id'=>$product_stripe->id
                 );
                 $success = $this->model->add_productdb($data);
                 if ($success) {
@@ -372,13 +389,9 @@ class ProductController
             $data = $this->model->fetch_image_count($pid);
             foreach ($data as $res) {
                 $count = $res['images'];
-                // echo $count; die();
             }
-            if ($count == 1) {
-                // $add = $this->model->add_imagedb("NULL", $pid);
-                // if ($add) {
-                    echo 3;
-                // }
+            if ($count == 1) {            
+                    echo 3;      
             }else{
                 $image_name = $this->model->fetch_image_table($id);
                 foreach ($image_name as $val) {
@@ -390,24 +403,6 @@ class ProductController
                     echo $success;
                 }
             }
-
-          
-            // if ($success) {
-            //     $data = $this->model->fetch_image_count($pid);
-            //     foreach ($data as $res) {
-            //         $count = $res['images'];
-            //         // echo $count; die();
-            //     }
-            //     if ($count == 1) {
-            //         $add = $this->model->add_imagedb("NULL", $pid);
-            //         if ($add) {
-            //             echo 3;
-            //         }
-            //     } else {
-            //          echo $success;
-            //     }
-               
-            // }
         }
     }
     public function delete_product()

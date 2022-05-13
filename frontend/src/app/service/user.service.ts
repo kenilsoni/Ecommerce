@@ -117,9 +117,14 @@ export class UserService {
   get_city(id:number){
     return this.httpclient.get<any>(`${environment.API_URL}/city/read.php?id=`+id)
   }
-  // change_name(name:string){
-  //   let data=this.get_user()
-  //   data.firstName=name
-  //   window.location.reload()
+  update_password(data:any){
+    return this.httpclient.post<any>(`${environment.API_URL}/user/change_password.php`,data)
+  }
+  //contact data
+  add_contact(data:any){
+    return this.httpclient.post<any>(`${environment.API_URL}/contact/add.php`,data)
+  }
+  // generate_otp(user_id:number){
+  //   return this.httpclient.get<any>(`${environment.API_URL}/user/generate_otp.php?user_id=`)
   // }
 }

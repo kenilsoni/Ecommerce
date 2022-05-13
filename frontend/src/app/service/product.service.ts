@@ -68,6 +68,25 @@ export class ProductService {
   add_wishlist(user_id:number,product_id:number){
     return this.httpclient.get<product>(`${environment.API_URL}/wishlist/add.php?user_id=`+user_id+'&product_id='+product_id)
   }
+  checkout_product(stripe_data:any){
+    console.log("ff")
+    return this.httpclient.post(`${environment.API_URL}/checkout/checkout.php`,stripe_data)
+  }
+  //get slider
+  get_slider(){
+    return this.httpclient.get(`${environment.API_URL}/slider/slider.php`)
+  }
+  //set currnecy
+  set_currency(val:any){
+    localStorage.setItem("currency_val",val)
+  }
+  get_currencyval(){
+    return localStorage.getItem('currency_val')
+  }
+  //get coupan
+  get_coupan(){
+    return this.httpclient.get(`${environment.API_URL}/coupan/coupan.php`)
+  }
   
 
 }

@@ -40,7 +40,8 @@
             <div class="sku">
                 <span>SKU: </span> mag209_prod1
             </div>
-            <div class="price-box">{{data.Product_Price|currency:'INR'}}</div>
+            <div class="price-box">{{convertWithCurrencyRate(data.Product_Price, selectedCurrency) 
+                | currency:selectedCurrency:true}}</div>
             <div class="product-options">
                 <label class="required"><em>*</em> size</label>
                 <p class="required">* Required Fields</p>

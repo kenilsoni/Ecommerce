@@ -1,15 +1,5 @@
 <div class="banner">
-    <div id="sync1" class="owl-carousel">
-        <div class="item">
-            <img src="/assets/images/banner.jpg" alt="banner">
-        </div>
-        <div class="item">
-            <img src="/assets/images/banner1.jpg" alt="banner">
-        </div>
-        <div class="item">
-            <img src="/assets/images/banner2.jpg" alt="banner">
-        </div>
-    </div>
+    <div><ng-image-slider [images]="imgCollection" [imageSize]="{width: 1400, height: 400}"></ng-image-slider></div>          
 </div>
 <section class="services-section">
     <div class="container">
@@ -62,7 +52,8 @@
                                 </div>
                                 <figcaption>
                                     <a routerLink="/product/{{product.ID}}" title="{{product.Product_Name}}" class="heading">{{product.Product_Name}}</a>
-                                    <span>{{product.Product_Price|currency:'INR'}}</span>
+                                    <span>{{convertWithCurrencyRate(product.Product_Price, selectedCurrency) 
+                                        | currency:selectedCurrency:true}}</span>
                                 </figcaption>
                             </figure>
                         </div>
