@@ -1,0 +1,15 @@
+<div class="container">
+    <div *ngIf="order">
+        <div class="text-center">Your payment is successfull</div>
+        <div class="add_css">
+            <div>Status:&nbsp;<span>{{order_detail.payment_status}}</span></div>
+            <div>Payment Reference id:&nbsp;<span>{{order_detail.payment_intent}}</span></div>
+            <!-- <div>Tax:&nbsp;<span>{{order_detail.total_details['amount_tax']}}</span></div> -->
+            <!-- <div>Discount:&nbsp;<span>{{order_detail.total_details.amount_discount}}</span></div> -->
+            <div>Total:&nbsp;<span>{{(order_detail.amount_total)/100}}</span></div>
+        </div>
+    </div>
+    <div *ngIf="!order">
+        <div class="text-center">Your payment is failed!!</div>
+    </div>
+</div>

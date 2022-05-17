@@ -26,6 +26,7 @@
     $cart->Product_ID=$data->ID;
     $cart->Unit_Price=$data->Product_Price;
     $cart->Total_Amount=$data->Product_Price;
+    $cart->price_id=$data->price_id;
 
     $check=$cart->check_item();
     $count = $check->rowCount();

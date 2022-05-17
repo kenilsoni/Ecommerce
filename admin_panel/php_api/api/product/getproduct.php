@@ -52,6 +52,7 @@ if ($num > 0) {
       'Size_Name' => $Product_Size,
       'Color_name' => $Product_Color,
       'Size_id' => $size_id,
+      'price_id'=>$Price_ID
       
     );
       // Push to "data"

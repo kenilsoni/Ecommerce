@@ -21,14 +21,14 @@ class User
     public $Gender;
     public $Intrest;
     public $country_ship;
-    public $city_ship ;
-    public $state_ship ;
-    public $street_ship ;
+    public $city_ship;
+    public $state_ship;
+    public $street_ship;
     public $address_type;
     public $country_bill;
-    public $city_bill ;
-    public $state_bill ;
-    public $street_bill ;
+    public $city_bill;
+    public $state_bill;
+    public $street_bill;
 
 
 
@@ -109,7 +109,7 @@ class User
     public function get_user($ID)
     {
         // Create Query
-        $query = 'SELECT * FROM user WHERE ID ='.$ID.'';
+        $query = 'SELECT * FROM user WHERE ID =' . $ID . '';
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -117,7 +117,7 @@ class User
     public function get_useraddress($ID)
     {
         // Create Query
-        $query = 'SELECT * FROM user_address WHERE User_ID ='.$ID.'';
+        $query = 'SELECT * FROM user_address WHERE User_ID =' . $ID . '';
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -125,16 +125,16 @@ class User
     public function check_address_billing($ID)
     {
         // Create Query
-        $query = 'SELECT count(*) as count FROM user_address WHERE User_ID ='.$ID.' AND Address_Type="Billing"';
+        $query = 'SELECT count(*) as count FROM user_address WHERE User_ID =' . $ID . ' AND Address_Type="Billing"';
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }
-    
+
     public function check_address_shipping($ID)
     {
         // Create Query
-        $query = 'SELECT count(*) as count FROM user_address WHERE User_ID ='.$ID.' AND Address_Type="Shipping"';
+        $query = 'SELECT count(*) as count FROM user_address WHERE User_ID =' . $ID . ' AND Address_Type="Shipping"';
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -148,7 +148,7 @@ class User
         $stmt->bindParam(':Country_ID', $this->country_bill);
         $stmt->bindParam(':State_ID', $this->state_bill);
         $stmt->bindParam(':City_ID', $this->city_bill);
-        $stmt->bindParam(':User_ID',$ID);
+        $stmt->bindParam(':User_ID', $ID);
         $stmt->execute();
         return $stmt;
     }
@@ -161,7 +161,7 @@ class User
         $stmt->bindParam(':Country_ID', $this->country_bill);
         $stmt->bindParam(':State_ID', $this->state_bill);
         $stmt->bindParam(':City_ID', $this->city_bill);
-        $stmt->bindParam(':User_ID',$ID);
+        $stmt->bindParam(':User_ID', $ID);
         $stmt->execute();
         return $stmt;
     }
@@ -175,7 +175,7 @@ class User
         $stmt->bindParam(':Country_ID', $this->country_ship);
         $stmt->bindParam(':State_ID', $this->state_ship);
         $stmt->bindParam(':City_ID', $this->city_ship);
-        $stmt->bindParam(':User_ID',$ID);
+        $stmt->bindParam(':User_ID', $ID);
         $stmt->execute();
         return $stmt;
     }
@@ -188,7 +188,7 @@ class User
         $stmt->bindParam(':Country_ID', $this->country_ship);
         $stmt->bindParam(':State_ID', $this->state_ship);
         $stmt->bindParam(':City_ID', $this->city_ship);
-        $stmt->bindParam(':User_ID',$ID);
+        $stmt->bindParam(':User_ID', $ID);
         $stmt->execute();
         return $stmt;
     }
@@ -226,19 +226,91 @@ class User
             return true;
         }
     }
-    public function check_password($id){
-        $query = 'SELECT * FROM user WHERE ID='.$id.' ' ;
+    public function check_password($id)
+    {
+        $query = 'SELECT * FROM user WHERE ID=' . $id . ' ';
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }
-    public function update_password($id,$password){
-        $query = 'UPDATE user SET Password=? WHERE ID=?';
+    public function update_password($id, $password)
+    {
+        $query = 'UPDATE user SET Password=?,Modified_At=NOW() WHERE ID=?';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $password);
         $stmt->bindParam(2, $id);
         $stmt->execute();
         return $stmt;
     }
-   
+    public function update_password_email($email,$password)
+    {
+        $query = 'UPDATE user SET Password=?,Modified_At=NOW() WHERE Email=?';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $password);
+        $stmt->bindParam(2, $email);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function send_otp($email_user, $random)
+    {
+        require "../../../models/vendor/autoload.php";
+        require "../../../models/stripe.php";
+        $sendgrid = new Stripe();
+        $email = new \SendGrid\Mail\Mail();
+        $email->setFrom("comicbykenil@gmail.com", "Ecommerce");
+        $email->setSubject("Forgot password otp!!!");
+        $email->addTo($email_user);
+        $email->addContent("text/html", "<h2>Your OTP IS</h2> &nbsp;<strong>$random</strong>");
+        $sendgrid = new \SendGrid($sendgrid->sendgrid_api());
+        $success = $sendgrid->send($email);
+        if ($success) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function add_otp($email, $otp)
+    {
+        $query = 'INSERT INTO forgot_password (Email,OTP) VALUES (?,?)';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $email);
+        $stmt->bindParam(2, $otp);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function check_otp($email, $otp)
+    {
+        $query = 'SELECT * FROM forgot_password WHERE Email=? AND OTP=? AND IsExpire=0';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $email);
+        $stmt->bindParam(2, $otp);
+        $stmt->execute();
+        return $stmt;
+    }
+    //set expire otp
+    public function select_datetime($email,$otp)
+    {
+        $query = 'SELECT Created_At FROM forgot_password WHERE Email=? AND OTP= ? AND IsExpire=0';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $email);
+        $stmt->bindParam(2, $otp);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function modify_otp($email)
+    {
+        $query = "UPDATE forgot_password SET IsExpire=1 WHERE Email=?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $email);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function check_extra_otp($email)
+    {
+        $query = 'SELECT count(*) as count FROM forgot_password WHERE Email=? AND IsExpire=0';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $email);
+        $stmt->execute();
+        return $stmt;
+    }
 }

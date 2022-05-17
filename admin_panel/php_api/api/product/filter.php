@@ -89,6 +89,7 @@ if ($num > 0) {
             'Category_name' => $Category_Name,
             'Subcategory_name' => $Subcategory_Name,
             'Size_id' => $size_id,
+            'price_id'=>$Price_ID
 
         );
         $result2 = $product->getsingle_image($ID);

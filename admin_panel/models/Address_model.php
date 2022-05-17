@@ -133,11 +133,11 @@ class AddressModel
         $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $success;
     }
-    public function add_taxdb($cid, $sid, $tax)
+    public function add_taxdb($cid, $sid, $tax,$tax_stripe)
     {
-        $sql = "INSERT INTO service_tax (Country_ID,State_ID,tax_percent,Created_At,Modified_At) VALUES (?,?,?,NOW(),NOW())";
+        $sql = "INSERT INTO service_tax (Country_ID,State_ID,tax_percent,tax_stripe,Created_At,Modified_At) VALUES (?,?,?,?,NOW(),NOW())";
         $stmt = $this->conn->prepare($sql);
-        $success = $stmt->execute([$cid, $sid, $tax]);
+        $success = $stmt->execute([$cid, $sid, $tax,$tax_stripe]);
         return $success;
     }
     public function delete_tax($id)

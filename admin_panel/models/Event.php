@@ -138,12 +138,14 @@ class EventModel
     }
     public function send_reply($reply,$email_user){
         require "vendor/autoload.php";
+        require "stripe.php";
+        $sendgrid = new Stripe();
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom("comicbykenil@gmail.com", "Ecommerce");
         $email->setSubject("Response to your query !!!");
         $email->addTo($email_user);
         $email->addContent("text/html","<p>$reply</p>");
-        $sendgrid = new \SendGrid("");
+        $sendgrid = new \SendGrid($sendgrid->sendgrid_api());
         $success=$sendgrid->send($email);
         if($success){
             return true;

@@ -65,16 +65,19 @@ export class ProductService {
     return this.httpclient.get<product>(`${environment.API_URL}/wishlist/remove.php?user_id=`+user_id+'&product_id='+product_id)
   }
   //add wishlist
-  add_wishlist(user_id:number,product_id:number){
-    return this.httpclient.get<product>(`${environment.API_URL}/wishlist/add.php?user_id=`+user_id+'&product_id='+product_id)
+  add_wishlist(user_id:number,product_id:number,price_id:any){
+    return this.httpclient.get<product>(`${environment.API_URL}/wishlist/add.php?user_id=`+user_id+'&product_id='+product_id+'&price_id='+price_id)
   }
-  checkout_product(stripe_data:any){
-    console.log("ff")
-    return this.httpclient.post(`${environment.API_URL}/checkout/checkout.php`,stripe_data)
+  checkout_product(product:any){
+    return this.httpclient.post(`${environment.API_URL}/checkout/checkout.php`,product)
   }
   //get slider
   get_slider(){
     return this.httpclient.get(`${environment.API_URL}/slider/slider.php`)
+  }
+  //get testimonial
+  get_testimonial(){
+    return this.httpclient.get(`${environment.API_URL}/testimonial/testimonial.php`)
   }
   //set currnecy
   set_currency(val:any){
@@ -86,6 +89,16 @@ export class ProductService {
   //get coupan
   get_coupan(){
     return this.httpclient.get(`${environment.API_URL}/coupan/coupan.php`)
+  }
+  get_shipadd(user_id:number){
+    return this.httpclient.get(`${environment.API_URL}/tax/tax.php?ship_id=`+user_id)
+  }
+  //get success order detail
+  get_success(cs_id:any){
+    return this.httpclient.get(`${environment.API_URL}/checkout/success.php?cs_id=`+cs_id)
+  }
+  addto_db_product(user_id:any,payment_id:any,total:any){
+    return this.httpclient.get(`${environment.API_URL}/checkout/place_order.php?user_id=`+user_id+'&payment_id='+payment_id+'&total='+total)
   }
   
 

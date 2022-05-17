@@ -19,19 +19,19 @@ if (isset($_GET['user_id']) && isset($_GET['product_id'])) {
     // wishlist read query
     $check=$wishlist->check_wishlist($_GET['user_id'], $_GET['product_id']);
     while($row3 = $check->fetch(PDO::FETCH_ASSOC)) {
-        $count=$row3['count'];
+        $count_data=$row3['count'];
     }
-    if($count>0){
+    if($count_data>0){
         echo json_encode(
             array('message' => false)
         );
     }else{
-        $result = $wishlist->add_wishlist($_GET['user_id'], $_GET['product_id']);
+        $result = $wishlist->add_wishlist($_GET['user_id'], $_GET['product_id'],$_GET['price_id']);
         // Get row count
         $num = $result->rowCount();
     
         // Check if any wishlist
-        // if ($num > 0) {
+        // if ($num) {
             echo json_encode(
                 array('message' => true)
             );

@@ -4,9 +4,10 @@ class ProductController
     function __construct()
     {
         include('models/Product_model.php');
+        include('models/stripe.php');
         $this->model = new ProductModel();
         $stripe_key = new Stripe();
-        $this->stripe=$stripe_key->stripe_key();
+        $this->stripe = $stripe_key->stripe_key();
     }
     public function test_input($data)
     {
@@ -234,8 +235,8 @@ class ProductController
     }
     public function add_productdata()
     {
-  
-       
+
+
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $uploadsDir = "./assets/uploads/";
@@ -251,16 +252,16 @@ class ProductController
             $color_string = implode(",", $color);
             $size_string = implode(",", $size);
 
-           
-             $product_stripe=$this->stripe->products->create([
+
+            $product_stripe = $this->stripe->products->create([
                 'name' => $product,
-                'description'=>$product_desc
-              ]);
-              $this->stripe->prices->create([
-                'unit_amount' =>$price*100,
+                'description' => $product_desc
+            ]);
+            $price_stripe = $this->stripe->prices->create([
+                'unit_amount' => $price * 100,
                 'currency' => 'inr',
                 'product' =>  $product_stripe->id,
-              ]);
+            ]);
 
             session_start();
             if (($product &&  $product_desc &&  $price &&  $quantity && $category &&  $subcategory &&   $color &&  $size) != '') {
@@ -294,7 +295,8 @@ class ProductController
                     'color' => $color_string,
                     'size' => $size_string,
                     'trend' => $trend,
-                    'stripe_id'=>$product_stripe->id
+                    'stripe_id' => $product_stripe->id,
+                    'price_id' => $price_stripe->id
                 );
                 $success = $this->model->add_productdb($data);
                 if ($success) {
@@ -390,16 +392,16 @@ class ProductController
             foreach ($data as $res) {
                 $count = $res['images'];
             }
-            if ($count == 1) {            
-                    echo 3;      
-            }else{
+            if ($count == 1) {
+                echo 3;
+            } else {
                 $image_name = $this->model->fetch_image_table($id);
                 foreach ($image_name as $val) {
                     unlink("./assets/uploads/" . $val['Image_Path']);
                 }
-    
+
                 $success = $this->model->image_delete($id);
-                if($success){
+                if ($success) {
                     echo $success;
                 }
             }
@@ -427,4 +429,76 @@ class ProductController
             }
         }
     }
+    //get pending order
+    public function get_pendingorder()
+    {
+        $success = $this->model->get_pending_order();
+        $final_arr = [];
+        if (count($success) > 0) {
+            foreach ($success as $val) {
+                $userid = $val['User_ID'];
+                $add = $this->model->get_address($userid);
+                $name = $this->model->user_detail($userid);
+                $merge = array_merge($add, $name, array($val));
+                array_push($final_arr, $merge);
+            }
+            echo json_encode($final_arr);
+        }
+    }
+    public function getproductby_id_placed()
+    {
+        $success = $this->model->get_orderid($_POST['order_id']);
+        $final_arr = [];
+        $final_arr['name']=[];
+        $final_arr['clr']=[];
+        $final_arr['size']=[];
+        $final_arr['qty']=[];
+        if (count($success) > 0) {
+            foreach ($success as $val) {
+                $productid = explode(",", $val['Product_ID']);
+                $qty = explode(",", $val['Quantity']);
+                $clr = explode(",", $val['Color']);
+                $size = explode(",", $val['Size']);
+            }
+            foreach ($productid as $pid) {
+                $pdt = $this->model->get_details_pdt($pid);
+                array_push($final_arr['name'], $pdt);
+               
+            }
+            foreach ($clr as $cid) {
+                $clrnew = $this->model->get_clr($cid);
+                array_push($final_arr['clr'], $clrnew);
+            }
+            foreach ($size as $sid) {
+                $sizenew = $this->model->get_size($sid);
+                array_push($final_arr['size'], $sizenew);
+            }
+            foreach ($qty as $q) {
+                array_push($final_arr['qty'], $q);
+            }
+            echo json_encode($final_arr);
+        }
+    }
+    public function update_status(){      
+        $success = $this->model->update_status($_POST['order_id']);    
+        if (count($success) > 0) {
+            echo json_encode($success);
+        }
+    }
+     //get complete order
+     public function get_completeorder()
+     {
+         $success = $this->model->get_complete_order();
+         $final_arr = [];
+         if (count($success) > 0) {
+             foreach ($success as $val) {
+                 $userid = $val['User_ID'];
+                 $add = $this->model->get_address($userid);
+                 $name = $this->model->user_detail($userid);
+                 $merge = array_merge($add, $name, array($val));
+                 array_push($final_arr, $merge);
+             }
+             echo json_encode($final_arr);
+         }
+     }
 }

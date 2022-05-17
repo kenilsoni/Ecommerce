@@ -210,8 +210,11 @@ class AdminController
                 'duration' => 'repeating',
                 'duration_in_months' => $duration,
             ]);
+            $promocode = $this->stripe->promotionCodes->create([
+                'coupon' => $coupan->id,
+              ]);
             $data = array(
-                'coupan' => $coupan->id,
+                'coupan' => $promocode->code,
                 'expiry' => $Expiry,
                 'discount' => $percent
             );

@@ -46,7 +46,8 @@
             'User_ID' => $User_ID,
             'Color_Name' => $Product_Color,
             'Size_Name' => $Product_Size,
-            'Product_Image'=>$Product_Image
+            'Product_Image'=>$Product_Image,
+            'price_id'=>$Price_ID
           );
 
           // Push to "data"

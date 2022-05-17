@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/service/cart.service';
 import { ProductService } from 'src/app/service/product.service';
 import { environment } from 'src/environments/environment';
+import { NgToastService } from 'ng-angular-popup';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-home',
@@ -14,14 +16,49 @@ export class HomeComponent implements OnInit {
   user_id!:number
   imgCollection: Array<object> = [];
   image_url: string = environment.IMAGE_URL
-  constructor(private product:ProductService,private cartService : CartService,private route:ActivatedRoute,  private router: Router) { }
+  testimonial_data:any=[]
+  constructor(private toastr: NgToastService,private product:ProductService,private cartService : CartService,private route:ActivatedRoute,  private router: Router) { }
 
   ngOnInit(): void {
     this.getuser_id()
     this.getproduct_trend()
     this.getslider()
     this.get_currency()
+    this.get_testimonial()
   }
+  get_testimonial(){
+    this.product.get_testimonial().subscribe((data:any)=>{
+      if(data['data']){
+        this.testimonial_data=data['data']
+      }
+    })
+  }
+  tesimonial: OwlOptions = {
+    loop: true,
+    autoplay:true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: true,
+    navSpeed: 500,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 1
+      },
+      740: {
+        items: 1
+      },
+      940: {
+        items: 1
+      },
+    },
+    nav: true
+  }
+
   getproduct_trend(){
     this.product.gettrend_product(8,1).subscribe(data=>{
       this.product_data=data['data']
@@ -41,6 +78,7 @@ export class HomeComponent implements OnInit {
     this.cartService.addtoCart(e).subscribe(data=>{
       if(data['message']){
       this.router.navigate(['/cart']);
+      this.toastr.success({detail:'Success!', summary:'Product added successfully!'});
       }
 
     });

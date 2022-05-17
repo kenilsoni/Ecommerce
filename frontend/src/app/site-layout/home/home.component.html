@@ -1,5 +1,6 @@
 <div class="banner">
-    <div><ng-image-slider [images]="imgCollection" [imageSize]="{width: 1400, height: 400}"></ng-image-slider></div>          
+    <div><ng-image-slider [images]="imgCollection" [imageSize]="{width: 1400,
+            height: 400}"></ng-image-slider></div>
 </div>
 <section class="services-section">
     <div class="container">
@@ -43,16 +44,26 @@
                     <h2>Trending Product</h2>
                 </div>
                 <div class="grid-content">
-                    <div class="grid row" *ngIf="product_data.length > 0;else nodata">
-                        <div class="col-sm-3 col-xs-6" *ngFor="let product of product_data">
+                    <div class="grid row" *ngIf="product_data.length> 0;else
+                        nodata">
+                        <div class="col-sm-3 col-xs-6" *ngFor="let product of
+                            product_data">
                             <figure class="effect-goliath">
                                 <div class="thumb-outer">
-                                    <a style="cursor:pointer" title="{{product.Product_Name}}" class="thumb-image"><img src="/assets/images/new-thumb-01.jpg" alt="thumb"></a>
-                                    <a  (click)="addtocart(product)" title="Add to Cart" class="cart-button">Add to Cart</a>
+                                    <a style="cursor:pointer"
+                                        title="{{product.Product_Name}}"
+                                        class="thumb-image"><img
+                                            src="/assets/images/new-thumb-01.jpg"
+                                            alt="thumb"></a>
+                                    <a (click)="addtocart(product)" title="Add
+                                        to Cart" class="cart-button">Add to Cart</a>
                                 </div>
                                 <figcaption>
-                                    <a routerLink="/product/{{product.ID}}" title="{{product.Product_Name}}" class="heading">{{product.Product_Name}}</a>
-                                    <span>{{convertWithCurrencyRate(product.Product_Price, selectedCurrency) 
+                                    <a routerLink="/product/{{product.ID}}"
+                                        title="{{product.Product_Name}}"
+                                        class="heading">{{product.Product_Name}}</a>
+                                    <span>{{convertWithCurrencyRate(product.Product_Price,
+                                        selectedCurrency)
                                         | currency:selectedCurrency:true}}</span>
                                 </figcaption>
                             </figure>
@@ -62,32 +73,96 @@
                               <a href="product.html" title="More Products" class="btn-tertiary">More Products</a>
                           </span>
                       </div> -->
-                  </div>
-                  <ng-template #nodata>
-                    <div class="grid row">
-                      <div class="col-sm-4 col-xs-6">Record Not Found!!!</div>
                     </div>
-                  </ng-template>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="inner-banner">
-    <div class="container">
-        <div class="banner-inner-text">
-            <div class="banner-inner-width">
-                <div class="text01">
-                    <span>Get the</span> latest
+                    <ng-template #nodata>
+                        <div class="grid row">
+                            <div class="col-sm-4 col-xs-6">Record Not Found!!!</div>
+                        </div>
+                    </ng-template>
                 </div>
-                <div class="text01">
-                    <span>womens</span> fashion
-                </div>
-                <a href="product.html" title="Get Exclusive Collection For Women" class="btn-secondary">Get Exclusive Collection For Women</a>
             </div>
         </div>
     </div>
-</div>
-<div class="container">
+    <div class="inner-banner">
+        <div class="container">
+            <div class="banner-inner-text">
+                <div class="banner-inner-width">
+                    <div class="text01">
+                        <span>Get the</span> latest
+                    </div>
+                    <div class="text01">
+                        <span>womens</span> fashion
+                    </div>
+                    <a href="product.html" title="Get Exclusive Collection For
+                        Women" class="btn-secondary">Get Exclusive Collection
+                        For Women</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Testimonial</h2>
+        <div class="slider-outer">
+            <div class="testimonial-slider">
+                <owl-carousel-o [options]="tesimonial">
+                    <ng-template carouselSlide *ngFor="let data of
+                        testimonial_data" >
+                        <div class="item">
+                            <div class="">
+                                <div class="col-sm-3 col-xs-4">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <img
+                                                src="{{image_url}}/{{data.Image_Path}}"
+                                                width="60px" height="60px"
+                                                alt="Testimonial">
+                                        </div>
+                                        <div class="media-body">
+                                            <h5>{{data.Name}}</h5>
+                                            <p>{{data.Designation}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 col-xs-8">
+                                    <div class="description">"{{data.Description}}"</div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                </owl-carousel-o>
+            </div>
+            <!-- <div class="testimonial-slider owl-carousel">
+            <div class="item">
+                <div class="row">
+                    <div class="col-sm-3 col-xs-4">
+                        <div class="media">
+                            <div class="media-left">
+                                <img src="/assets/images/testimonial_3.jpg" alt="Testimonial">
+                            </div>
+                            <div class="media-body">
+                                <h5>John Clay</h5>
+                                <p>Cyclist</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-9 col-xs-8">
+                        <div class="description">"lorem ipsum suffered alteration in aome from, by injected humor , or randomized words which don't look even slightly believable.There are many varation of passenger randomized words which don't look even slightly believable"</div>
+                    </div>
+                </div>
+            </div>
+          
+        </div> -->
+        </div>
+        <!-- <owl-carousel-o [options]="customOptions">
+        <ng-template carouselSlide>Slide 1</ng-template>  
+        <ng-template carouselSlide>Slide 2</ng-template>  
+        <ng-template carouselSlide>Slide 3</ng-template>  
+      </owl-carousel-o> -->
+    </div>
+</section>
+<!-- Content End-->
+<!-- <div class="container">
     <h2>Testimonial</h2>
     <div class="slider-outer">
         <div class="testimonial-slider owl-carousel">
@@ -165,6 +240,9 @@
             </div>
         </div>
     </div>
-</div>
-</section>
-<!-- Content End-->
+    <owl-carousel-o [options]="customOptions">
+        <ng-template carouselSlide>Slide 1</ng-template>  
+        <ng-template carouselSlide>Slide 2</ng-template>  
+        <ng-template carouselSlide>Slide 3</ng-template>  
+      </owl-carousel-o>
+</div> -->

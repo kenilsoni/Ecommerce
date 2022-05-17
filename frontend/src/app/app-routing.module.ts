@@ -5,6 +5,7 @@ import { AboutComponent } from './site-layout/about/about.component';
 import { ContactUsComponent } from './site-layout/contact-us/contact-us.component';
 import { HomeComponent } from './site-layout/home/home.component';
 import { CartComponent } from './site-layout/product/cart/cart.component';
+import { OrderStatusComponent } from './site-layout/order-status/order-status.component';
 import { CoupanComponent } from './site-layout/product/coupan/coupan.component';
 import { MainComponent } from './site-layout/product/main/main.component';
 import { ProductDataComponent } from './site-layout/product/product-data/product-data.component';
@@ -27,12 +28,8 @@ const routes: Routes = [
   {path:'home/registration',component:UserRegisterComponent},
   {path:'cart',component:CartComponent,canActivate:[AuthGuard]},
   {path:'wishlist',component:WishlistComponent},
-  {path:'coupan',component:CoupanComponent}
-
-
-
-
-
+  {path:'coupan',component:CoupanComponent,canActivate:[AuthGuard]},
+  {path:'status/:id',component:OrderStatusComponent,canActivate:[AuthGuard]}
 ];
 
 @NgModule({

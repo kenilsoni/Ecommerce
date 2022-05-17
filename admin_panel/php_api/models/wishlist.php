@@ -50,9 +50,9 @@
   
         return $stmt;
       }
-      public function add_wishlist($user_id,$product_id) {
+      public function add_wishlist($user_id,$product_id,$priceid) {
         // Create query
-        $query = 'INSERT INTO product_wishlist (User_ID,Product_ID) VALUES ('.$user_id.','.$product_id.')';
+        $query = "INSERT INTO product_wishlist (User_ID,Product_ID,Price_ID) VALUES ('$user_id','$product_id','$priceid')";
   
         // Prepare statement
         $stmt = $this->conn->prepare($query);

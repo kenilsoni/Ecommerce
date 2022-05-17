@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
-
+import { NgToastService } from 'ng-angular-popup';
 @Component({
   selector: 'app-user-register',
   templateUrl: './user-register.component.html',
@@ -13,7 +13,7 @@ export class UserRegisterComponent implements OnInit {
   register!:boolean
   username_exist!:boolean
   email_exist!:boolean
-  constructor(private formbuilder: FormBuilder,private userservice:UserService,private route:Router) { }
+  constructor(private toastr: NgToastService,private formbuilder: FormBuilder,private userservice:UserService,private route:Router) { }
 
   ngOnInit(): void {
     this.get_user()
@@ -40,9 +40,19 @@ export class UserRegisterComponent implements OnInit {
       this.userservice.save_user(this.registerval.value).subscribe(res=>{
         if(res['success']){
           this.register=true
+          this.toastr.success({detail:'Success!', summary:'User register successfully!'});
           this.form_reset()
+          this.registerval.controls['username'].setErrors(null)
+          this.registerval.controls['password'].setErrors(null)
+          this.registerval.controls['email'].setErrors(null)
+          this.registerval.controls['firstname'].setErrors(null)
+          this.registerval.controls['lastname'].setErrors(null)
+          this.registerval.controls['mobile'].setErrors(null)
+          this.registerval.controls['gender'].setErrors(null)
+          this.registerval.controls['phone'].setErrors(null)
         }else{
           this.register=false
+          this.toastr.error({detail:'Error!', summary:'Something went wrong!'});
         }
       })
     }

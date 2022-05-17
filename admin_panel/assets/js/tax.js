@@ -169,6 +169,12 @@ $(document).ready(function () {
             },
             tax:{
                 required:true
+            },
+            ccode:{
+                required:true
+            },
+            scode:{
+                required:true
             }
         }
     });
@@ -182,6 +188,12 @@ $(document).ready(function () {
                 
             },
             tax:{
+                required:true
+            },
+            ccode:{
+                required:true
+            },
+            scode:{
                 required:true
             }
         }

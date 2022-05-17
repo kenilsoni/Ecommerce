@@ -6,7 +6,7 @@ import { SliderComponent } from '@angular-slider/ngx-slider/slider.component';
 import { environment } from 'src/environments/environment';
 import { CartService } from 'src/app/service/cart.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-product-details',
@@ -18,7 +18,7 @@ export class ProductDetailsComponent implements OnInit,AfterViewInit {
   sorted_data: any;
   user_id!:any
   image_url: string = environment.IMAGE_URL
-  constructor(private product: ProductService, public route: ActivatedRoute, private cartService: CartService, private formbuilder: FormBuilder,private router: Router) { }
+  constructor(private toastr: NgToastService,private product: ProductService, public route: ActivatedRoute, private cartService: CartService, private formbuilder: FormBuilder,private router: Router) { }
   ngAfterViewInit(): void {
     this.get_currency()
   }
@@ -182,6 +182,7 @@ export class ProductDetailsComponent implements OnInit,AfterViewInit {
     this.cartService.addtoCart(e).subscribe(data=>{
       if(data['message']){
         this.router.navigate(['/cart']);
+        this.toastr.success({detail:'Success!', summary:'Product added successfully!'});
         }
     });
   }

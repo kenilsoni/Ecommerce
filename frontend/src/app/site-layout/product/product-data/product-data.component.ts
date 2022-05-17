@@ -1,9 +1,11 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import { CartService } from 'src/app/service/cart.service';
 import { ProductService } from 'src/app/service/product.service';
 import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-product-data',
   templateUrl: './product-data.component.html',
@@ -13,7 +15,7 @@ export class ProductDataComponent implements OnInit {
   registerval!: FormGroup;
   Image_path:string=environment.IMAGE_URL
   imgCollection: Array<object> = [];
-  constructor(private product: ProductService, public route: ActivatedRoute, private cartService : CartService,private formbuilder:FormBuilder) { }
+  constructor(private toastr: NgToastService,private product: ProductService, public route: ActivatedRoute, private cartService : CartService,private formbuilder:FormBuilder) { }
   product_id!:number
   product_details:any=[]
   formgroup!:FormGroup
@@ -64,28 +66,35 @@ export class ProductDataComponent implements OnInit {
       e.Product_Quantity=this.quantity.nativeElement.value
       e.Size_id=this.size.nativeElement.value
       e.user_id=this.user_id
-      this.cartService.addtoCart(e).subscribe(data=>{
-        if(data['message']){
-          this.addtocart_alert=true
-      setTimeout(() => {
-        this.addtocart_alert=false
-      }, 4000);
-          }
-      });
-    }else{
+      if(this.size.nativeElement.value!==''){
+        this.cartService.addtoCart(e).subscribe(data=>{
+          if(data['message']){
+            this.addtocart_alert=true
+        setTimeout(() => {
+          this.addtocart_alert=false
+        }, 4000);
+            }
+        });
+      }else{
+        this.toastr.info({detail:'Select Size!', summary:'Please Select Size!'});
+      }
+      }
+     else{
       this.islogin=true
     }
   }
-  add_wishlist(id:number){
+  add_wishlist(id:number,price_id:any){
     if(this.user_id){
-      this.product.add_wishlist(this.user_id,id).subscribe(data=>{
-        console.log(data)
+      this.product.add_wishlist(this.user_id,id,price_id).subscribe(data=>{
+        console.log(id)
         if(data['message']){
-          alert("add")
+          this.toastr.success({detail:'Success!', summary:'Product added successfully!'});
         }else{
-          alert("already available")
+          this.toastr.info({detail:'Available!', summary:'Product is already available!'});
         }
       })
+    }else{
+      this.toastr.error({detail:'Login First!', summary:'Please Login First!'});
     }
   }
   selectedCurrency:any

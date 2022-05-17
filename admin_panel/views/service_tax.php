@@ -176,6 +176,14 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
+                                        <label for="inputText31" class="col-form-label">Country Code</label><span class="star">*</span>
+                                        <input id="inputText31" type="text" class="form-control add-tax" name="ccode" placeholder="Country Code">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputText21" class="col-form-label">State Code</label><span class="star">*</span>
+                                        <input id="inputText21" type="text" class="form-control add-tax" name="scode" placeholder="State Code">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Tax Percent(%)</label><span class="star">*</span>
                                         <input id="inputText3" type="text" class="form-control add-tax" name="tax" placeholder="Tax">
                                     </div>
@@ -207,6 +215,14 @@
                                         <select class="form-control State" name="state">
                                             <option value="" selected>Select</option>
                                         </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputText21" class="col-form-label">State Code</label><span class="star">*</span>
+                                        <input id="inputText21" type="text" class="form-control add-tax" name="scode" placeholder="State Code">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputText3" class="col-form-label">Tax Percent(%)</label><span class="star">*</span>
+                                        <input id="inputText3" type="text" class="form-control add-tax" name="tax" placeholder="Tax">
                                     </div>
                                     <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Tax Percent(%)</label><span class="star">*</span>

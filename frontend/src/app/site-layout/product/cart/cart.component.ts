@@ -29,15 +29,18 @@ export class CartComponent implements OnInit {
   @ViewChildren("size") size_change!: QueryList<ElementRef>
   @ViewChildren("color_text") color_text!: QueryList<ElementRef>
   @ViewChildren("size_text") size_text!: QueryList<ElementRef>
-  handler:any = null;
-  constructor(private cartService: CartService, private userservice: UserService,private productservice:ProductService) { }
+  handler: any = null;
+
+  constructor(private cartService: CartService, private userservice: UserService, private productservice: ProductService) { }
 
   ngOnInit(): void {
+
     this.getuser_id()
     this.getcart_data()
     this.get_taxdetails()
     // this.loadStripe();
     this.get_currency()
+    this.get_shippingadd()
   }
   getuser_id() {
     let data = this.cartService.get_id()
@@ -61,12 +64,14 @@ export class CartComponent implements OnInit {
         this.products = data['data'];
         this.final_amount = this.get_total()
         this.grandTotal = this.get_total()
+        console.log(this.products)
       } else {
         this.products = []
         this.grandTotal = 0
         this.final_amount = 0
       }
     })
+
   }
   get_taxdetails() {
     this.cartService.get_country().subscribe(data => {
@@ -254,43 +259,27 @@ export class CartComponent implements OnInit {
       }
     })
   }
- 
-  token_checkout!:any
-  
-  pay(amount: any) {
-    var handler = (<any>window).StripeCheckout.configure({
-      key: 'pk_test_51KxNo9SJ5Q50OIO5yrzakAllPW0Bylht9AGS4fRd8dGOLy954fMBIafsUrgjnlRfBcxZIAPoYARnFx8gJSuEOty400VLE9g7yw',
-      locale: 'auto',
-      token: function (token: any) {
-        console.log(token)
-        paymentstripe(token);
+
+  token_checkout!: any
+
+  get_shippingadd() {
+    this.productservice.get_shipadd(this.user_id).subscribe((data: any) => {
+      for (let val of data['data']) {
+        this.products.forEach((element: any) => {
+          element.tax = val['tax']
+        })
       }
-    });
-    const paymentstripe = (stripeToken: any) => {
-      this.productservice.checkout_product(stripeToken).subscribe((data: any) => {
-        console.log(data);
-        // if (data.data === "success") {
-        //   this.success = true
-        // }
-        // else {
-        //   this.failure = true
-        // }
-      });
-    };
- 
-    
-
-    handler.open({
-      name: 'Ecommerce',
-      currency:'inr',
-      amount: amount * 100
-    });
-
+    })
   }
-  
-  
-  loadStripe() {
+  pay() {
+    console.log(this.products);
+    var stripe = (<any>window).Stripe(environment.PUBLISHER_KEY)
+    this.productservice.checkout_product(this.products).subscribe((data: any) => {
+      stripe.redirectToCheckout({ sessionId: data })
+    });
+  }
 
+  loadStripe() {
     if (!window.document.getElementById('stripe-script')) {
       var s = window.document.createElement("script");
       s.id = "stripe-script";
@@ -298,37 +287,29 @@ export class CartComponent implements OnInit {
       s.src = "https://checkout.stripe.com/checkout.js";
       s.onload = () => {
         this.handler = (<any>window).StripeCheckout.configure({
-          key: 'pk_test_51KxNo9SJ5Q50OIO5yrzakAllPW0Bylht9AGS4fRd8dGOLy954fMBIafsUrgjnlRfBcxZIAPoYARnFx8gJSuEOty400VLE9g7yw',
+          key: environment.PUBLISHER_KEY,
           locale: 'auto',
-          token: function (token: any) {
-            // You can access the token ID with `token.id`.
-            // Get the token ID to your server-side code for use.
-            console.log(token)
-           
-            
-            alert('Payment Success!!');
-          }
         });
       }
 
       window.document.body.appendChild(s);
     }
   }
-  selectedCurrency:any
-  get_currency(){
-    if(this.productservice.get_currencyval()){
-      let currency_val=this.productservice.get_currencyval()
-      this.selectedCurrency=currency_val
-    }else{
-      this.selectedCurrency='INR'
+  selectedCurrency: any
+  get_currency() {
+    if (this.productservice.get_currencyval()) {
+      let currency_val = this.productservice.get_currencyval()
+      this.selectedCurrency = currency_val
+    } else {
+      this.selectedCurrency = 'INR'
     }
   }
-  convertWithCurrencyRate(value: number, currency: string){
-    if(currency=='USD'){
-      return value/75;
-    }else if(currency=='INR'){
+  convertWithCurrencyRate(value: number, currency: string) {
+    if (currency == 'USD') {
+      return value / 75;
+    } else if (currency == 'INR') {
       return value;
-    }else{
+    } else {
       return value;
     }
   }

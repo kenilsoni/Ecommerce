@@ -47,7 +47,7 @@
                 <p class="required">* Required Fields</p>
                 <div class="form-group">
                     <select #size>
-                        <option>-- Please Select --</option>
+                        <option value="">-- Please Select --</option>
                         <option *ngFor="let val of size_details"  value="{{val.id}}" >{{val.size}}</option>
                     </select>
                 </div>
@@ -64,7 +64,7 @@
             </div>
             <div class="email-addto-box clearfix">
                 <ul class="add-to-links">
-                    <li><a (click)="add_wishlist(data.ID)" class="link-wishlist">Add to Wishlist</a></li>
+                    <li><a (click)="add_wishlist(data.ID,data.price_id)" class="link-wishlist">Add to Wishlist</a></li>
                 </ul>
             </div>
         <!-- </form> -->

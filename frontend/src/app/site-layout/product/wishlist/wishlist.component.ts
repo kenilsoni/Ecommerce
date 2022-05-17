@@ -4,7 +4,7 @@ import { CartService } from 'src/app/service/cart.service';
 import { ProductService } from 'src/app/service/product.service';
 import { UserService } from 'src/app/service/user.service';
 import { environment } from 'src/environments/environment';
-
+import { NgToastService } from 'ng-angular-popup';
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',
@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class WishlistComponent implements OnInit {
 
-  constructor(private product:ProductService,private user:UserService,private cartService:CartService,private router:Router) { }
+  constructor(private toastr: NgToastService,private product:ProductService,private user:UserService,private cartService:CartService,private router:Router) { }
   productdata:any=[]
   user_id!:number
   image_url: string = environment.IMAGE_URL
@@ -40,8 +40,10 @@ export class WishlistComponent implements OnInit {
   addtocart(e:any){
     e.Product_Quantity=1
     e.user_id=this.user_id
+    // console.log(e)
     this.cartService.addtoCart(e).subscribe(data=>{
       if(data['message']){
+        this.toastr.success({detail:'Success!', summary:'Product added successfully!'});
         this.router.navigate(['/cart']);
         }
     });
@@ -50,7 +52,10 @@ export class WishlistComponent implements OnInit {
     this.product.remove_item(this.user_id,id).subscribe(data=>{
       // console.log(data)
       if(data['message']){
+        this.toastr.success({detail:'Success!', summary:'Product remove successfully!'});
         this.get_wishlist()
+      }else{
+        this.toastr.error({detail:'Error!', summary:'Something went wrong!'});
       }
 
     })

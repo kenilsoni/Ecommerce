@@ -7,7 +7,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class UserService {
-
+  //add loader
+  public isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   user_detail: any
   refresh_token_time:any;
   constructor(private httpclient: HttpClient,private router:Router) { }
@@ -124,7 +125,17 @@ export class UserService {
   add_contact(data:any){
     return this.httpclient.post<any>(`${environment.API_URL}/contact/add.php`,data)
   }
-  // generate_otp(user_id:number){
-  //   return this.httpclient.get<any>(`${environment.API_URL}/user/generate_otp.php?user_id=`)
-  // }
+  generate_otp(email:any){
+    return this.httpclient.get<any>(`${environment.API_URL}/user/email_auth.php?email=`+email)
+  }
+  check_otp(email:any,otp:number){
+    return this.httpclient.get<any>(`${environment.API_URL}/user/email_auth.php?email=`+email+'&check_otp='+otp)
+  }
+  //for forgot password
+  update_fgpassword(email:any,password:any){
+    return this.httpclient.get<any>(`${environment.API_URL}/user/update_forgot.php?email=`+email+'&password='+password)
+  }
+  
+
+
 }

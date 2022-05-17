@@ -11,6 +11,10 @@ import { PricePipe } from './pipes/price.pipe';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { AuthGuard } from './interceptor/auth.guard';
+import {NgToastModule} from 'ng-angular-popup';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [
@@ -25,7 +29,12 @@ import { AuthGuard } from './interceptor/auth.guard';
     SiteLayoutModule,
     HttpClientModule,
     ProductModule,
-    NgImageSliderModule
+    NgImageSliderModule,
+    NgToastModule,
+    MatProgressBarModule,
+    BrowserAnimationsModule,
+    CarouselModule
+ 
   ],
   providers: [AuthGuard,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

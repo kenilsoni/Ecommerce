@@ -50,3 +50,12 @@
 .input-placeholder {
   position: relative;
 }
+.loader-container{
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+}
+.otp_check{
+    color: red;
+    cursor: pointer;
+}

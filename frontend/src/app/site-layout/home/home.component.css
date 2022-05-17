@@ -1,3 +1,12 @@
 .cart-button{
     cursor: pointer;
 }
+.owl-carousel 
+{
+    touch-action: manipulation; 
+}
+.testimonial-slider{
+    height: 182px;
+    overflow: hidden;
+    /* width: 800px; */
+}

@@ -15,6 +15,7 @@
     public $Total_Amount;
     public $Product_Name;
     public $Product_Image;
+    public $price_id;
 
     // Constructor with DB
     public function __construct($db) {
@@ -37,7 +38,7 @@
     }
     public function add_item() {
         // Create query
-        $query = "INSERT INTO product_cart (Product_ID, User_ID, Product_Name, Color_ID, Size_ID, Product_Image, Unit_Price, Quantity, Total_Amount, Created_At) VALUES (?,?,?,?,?,?,?,?,?,now())";
+        $query = "INSERT INTO product_cart (Product_ID,User_ID,Product_Name,Color_ID,Size_ID,Product_Image, Unit_Price, Quantity, Total_Amount,Price_ID,Created_At) VALUES (?,?,?,?,?,?,?,?,?,?,now())";
   
         // Prepare statement
         $stmt = $this->conn->prepare($query);
@@ -50,6 +51,7 @@
         $stmt->bindParam(7, $this->Unit_Price);
         $stmt->bindParam(8, $this->Quantity);
         $stmt->bindParam(9, $this->Total_Amount);
+        $stmt->bindParam(10, $this->price_id);
   
         // Execute query
         $stmt->execute();
@@ -147,6 +149,46 @@
   
         return $stmt;
       }
+      public function getcart_final() {
+        // Create query
+   
+        $query = "SELECT Product_ID,Quantity,Color_ID,Size_ID FROM product_cart WHERE User_ID=?";
+  
+        // Prepare statement
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(1, $this->User_ID);
+        // Execute query
+        $stmt->execute();
+  
+        return $stmt;
+      }
+      public function place_order($product,$color,$size,$quantity,$orderid,$pymtid,$total) {
+        // Create query
+   
+        $query = "INSERT INTO order_details (Order_ID,User_ID,Payment_ID,Total,Quantity,Status,Product_ID,Color,Size,Created_At) VALUES (?,?,?,?,?,1,?,?,?,NOW())";
+  
+        // Prepare statement
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(1, $orderid);
+        $stmt->bindParam(2, $this->User_ID);
+        $stmt->bindParam(3, $pymtid);
+        $stmt->bindParam(4, $total);
+        $stmt->bindParam(5, $quantity);
+        $stmt->bindParam(6, $product);
+        $stmt->bindParam(7, $color);
+        $stmt->bindParam(8, $size);
+    
+  
+  
+        // Execute query
+        $stmt->execute();
+  
+        return $stmt;
+      }
+  
+  
 
 
    

@@ -1,11 +1,10 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { Category } from '../interface/category';
 import { ProductService } from '../../service/product.service';
 import { CartService } from 'src/app/service/cart.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/service/user.service';
 import { environment } from 'src/environments/environment';
-import { NativeDateAdapter } from '@angular/material/core';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-header',
@@ -22,6 +21,7 @@ export class HeaderComponent implements OnInit {
   @ViewChildren("update") update!: QueryList<ElementRef>
   @ViewChild("otp") otp!:ElementRef
   @ViewChild("forgot") forgot!:ElementRef
+  @ViewChild("fgpassword") changepassword!:ElementRef
   categorylist: any;
   subcategorylist: any;
   products: any = []
@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit {
   loginval!: FormGroup
   change_password!: FormGroup
   forgot_password!: FormGroup
+  change_password_forgot!: FormGroup
   check_otp!: FormGroup
   islogin!: boolean
   update_success!: boolean
@@ -43,7 +44,7 @@ export class HeaderComponent implements OnInit {
   hide_cpass: boolean = true;
   @ViewChild("myDropdown") dropdown!:ElementRef
   @ViewChild("currency") currency!:ElementRef
-  constructor(private product: ProductService, private cartService: CartService, private formbuilder: FormBuilder, private userservice: UserService) { }
+  constructor(private toastr: NgToastService,private product: ProductService, private cartService: CartService, private formbuilder: FormBuilder, public userservice: UserService) { }
 
   ngOnInit(): void {
     this.getcategory();
@@ -65,7 +66,13 @@ export class HeaderComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]]   
     })
     this.check_otp = this.formbuilder.group({
+      email: ['', [Validators.required, Validators.email]],
       otp: ['', [Validators.required, Validators.minLength(6)]]   
+    })
+    this.change_password_forgot = this.formbuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      new_password: ['', [Validators.required, Validators.minLength(6)]],
+      cpassword: ['', [Validators.required, Validators.minLength(6)]],  
     })
   }
 
@@ -139,6 +146,8 @@ export class HeaderComponent implements OnInit {
       })
     }
   }
+
+ 
   unset_user() {
     this.userservice.unset_user()
     this.islogin = false
@@ -315,13 +324,46 @@ export class HeaderComponent implements OnInit {
   eye_icon_cpass(){
     this.hide_cpass = !this.hide_cpass;
   }
+  expirationCounter!: string;
+  resend_otp!:any
+  startTimer(secsToStart:number,email:any): void {
+      var start: number = secsToStart;
+      var h: number;
+      var m: number;
+      var s: number;
+      var temp: number;
+      var timer: any = setInterval(() =>
+      {
+          h = Math.floor(start / 60 / 60)
+          // remove the hours
+          temp = start - h * 60 * 60;
+          m = Math.floor(temp / 60);
+          // remove the minuets
+          temp = temp - m * 60;
+          // what left is the seconds
+          s = temp;
+  
+          // add leading zeros for aesthetics
+          var hour = h < 10 ? "0" + h : h;
+          var minute = m < 10 ? "0" + m : m;
+          var second = s < 10 ? "0" + s : s;
+  
+          this.expirationCounter = "otp is valid till "+minute + ":" + second ;
+  
+          if (start <= 0) {
+              // Time elapsed
+              clearInterval(timer);
+              this.expirationCounter = "otp was expired";
+              this.resend_otp=email
+          }
+          start--;
+      }, 1000)
+  }
   password_forgot(){
     if(this.forgot_password.valid){
       this.userservice.check_email(this.forgot_password.value.email).subscribe(data=>{
         if(data['success']){
-          this.otp.nativeElement.style.display='block'
-          this.forgot.nativeElement.style.display='none'
-          
+          this.generete_otp(this.forgot_password.value.email) 
           }else{
           this.login_error=true
           setTimeout(() => {
@@ -331,11 +373,44 @@ export class HeaderComponent implements OnInit {
       })
     }
   }
+  generete_otp(email:any){
+    this.resend_otp=''
+    this.userservice.generate_otp(email).subscribe(res=>{
+      if(res['message']){
+        this.check_otp.patchValue({email:email})
+        this.otp.nativeElement.style.display='block'
+        this.forgot.nativeElement.style.display='none'
+        this.startTimer(300,email);
+      }
+    })
+  }
   close_otp(){
     this.otp.nativeElement.style.display='none'
   }
   submit_otp(){
-    this.check_otp.controls['otp'].setErrors({ 'wrong_otp': true});
+    if(this.check_otp.valid){
+      this.userservice.check_otp(this.check_otp.value.email,this.check_otp.value.otp).subscribe(res=>{
+        if(res['message']){
+          this.changepassword.nativeElement.style.display='block'
+          this.otp.nativeElement.style.display='none'
+          this.change_password_forgot.patchValue({email:this.check_otp.value.email})
+        }else{
+          this.check_otp.controls['otp'].setErrors({'wrong_otp': true});
+        }
+      })
+    }
+  }
+  change_fgpassword(){
+    if(this.change_password_forgot.valid){
+      this.userservice.update_fgpassword(this.change_password_forgot.value.email,this.change_password_forgot.value.cpassword).subscribe(res=>{
+        if(res['message']){
+        this.changepassword.nativeElement.style.display='none'
+        this.toastr.success({detail:'Success!', summary:'Password change successfully!'});
+        }else{
+          this.toastr.success({detail:'Error!', summary:'Something went wrong!'});
+        }
+      })
+    }
   }
   INR_convert(){
     this.product.set_currency('INR')

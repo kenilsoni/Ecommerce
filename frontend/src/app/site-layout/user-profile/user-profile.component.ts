@@ -1,7 +1,7 @@
 import { asNativeElements, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/service/user.service';
-
+import { NgToastService } from 'ng-angular-popup';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -30,7 +30,7 @@ export class UserProfileComponent implements OnInit{
   @ViewChild("country_check") country_check!: ElementRef;
   @ViewChild("street_check") street_check!: ElementRef;
   @ViewChild("sameas") sameas!: ElementRef;
-  constructor(private formbuilder: FormBuilder,private userservice:UserService) { 
+  constructor(private toastr: NgToastService,private formbuilder: FormBuilder,private userservice:UserService) { 
     this.get_user()
     this.get_country()
   }
@@ -209,9 +209,10 @@ export class UserProfileComponent implements OnInit{
       this.userservice.update_user(this.profileval.value).subscribe(res=>{
         if(res['success']){
           this.update=true
-          
+          this.toastr.success({detail:'Success!', summary:'Profile updated successfully!'});
         }else{
           this.update=false
+          this.toastr.error({detail:'Error!', summary:'Product is not updated!'});
         }
       })
     }

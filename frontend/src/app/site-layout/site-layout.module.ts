@@ -11,7 +11,8 @@ import { CartComponent } from './product/cart/cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AppRoutingModule } from '../app-routing.module';
-
+import { OrderStatusComponent } from './order-status/order-status.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -19,7 +20,8 @@ import { AppRoutingModule } from '../app-routing.module';
     AboutComponent,
     ContactUsComponent,
     UserRegisterComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    OrderStatusComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { AppRoutingModule } from '../app-routing.module';
     NgxSliderModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatProgressBarModule
   ],
   exports: [
     HeaderComponent,

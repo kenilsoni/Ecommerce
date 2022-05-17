@@ -2,7 +2,7 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, catchError, filter, Observable, switchMap, take, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, filter, finalize, Observable, switchMap, take, throwError } from 'rxjs';
 import { UserService } from '../service/user.service';
 
 
@@ -15,7 +15,16 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private userservice:UserService, private router:Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    
+    this.userservice.isLoading.next(true);
+
+    return next.handle(req).pipe(
+      finalize(
+        () => {
+          this.userservice.isLoading.next(false);
+        }
+      )
+    );
+
     let access_token = this.userservice.getAccessToken();
     let new_req = req;
     

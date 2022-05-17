@@ -23,8 +23,8 @@
                         <div class="page-breadcrumb">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Orders</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Completed Order </li>
+                                    <li class="breadcrumb-item"><a href="?controller=Admin&function=completed_order" class="breadcrumb-link">Orders</a></li>
+                                    <li class="breadcrumb-item active page_name" aria-current="page">Complete Order </li>
                                 </ol>
                             </nav>
                         </div>
@@ -38,66 +38,24 @@
                 <!-- All products  -->
                 <!-- ============================================================== -->
 
-                <div class="col-12">
+                <div class="col-12 table_data">
                     <div class="card">
-                        <h5 class="card-header">Completed Order</h5>
+                        <h5 class="card-header">Complete Order</h5>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered first">
+                                <table class="table table-striped table-bordered " id="complete_order_table">
                                     <thead>
                                         <tr>
                                             <th>Order ID</th>
                                             <th>Date</th>
-                                            <th>Product ID</th>
-                                            <th>Quantity</th>
                                             <th>Customer Name</th>
                                             <th>Address</th>
-                                            <th>Total</th>
+                                            <th>Total Payment</th>
+                                            <th>View Details</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>id000001 </td>
-                                            <td>2/2/22</td>
-                                            <td>id000001 </td>
-                                            <td>20</td>
-                                            <td>ABC </td>
-                                            <td>street 123</td>
-                                            <td>20</td>
-
-
-                                            <td><a href="#" class="btn btn-rounded btn-success">Completed</a> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>id000001 </td>
-                                            <td>2/2/22</td>
-                                            <td>id000001 </td>
-                                            <td>20</td>
-                                            <td>ABC </td>
-                                            <td>street 123</td>
-                                            <td>20</td>
-
-                                            <td><a href="#" class="btn btn-rounded btn-success">Completed</a> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>id000001 </td>
-                                            <td>2/2/22</td>
-                                            <td>id000001 </td>
-                                            <td>20</td>
-                                            <td>ABC </td>
-                                            <td>street 123</td>
-                                            <td>20</td>
-
-                                            <td><a href="#" class="btn btn-rounded btn-success">Completed</a> </td>
-                                        </tr>
-
-
-                                    </tbody>
-
-
                                 </table>
-
                             </div>
                         </div>
                     </div>
@@ -106,8 +64,32 @@
                 <!-- end product  -->
 
             </div>
+            <div class="row d-flex justify-content-center view_data" style="display:none!important">
+                
+            <div class="col-12">
+                    <div class="card">
+                        <h5 class="card-header">View Details</h5>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered first" id="details_product">
+                                    <thead>
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th>Quantity</th>
+                                            <th>Color</th>
+                                            <th>Size</th>
+                                            <th>Unit Price</th> 
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <?php include("footer.php"); ?>
+<script src="./assets/js/complete_order.js"></script>

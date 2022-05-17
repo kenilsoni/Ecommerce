@@ -8,7 +8,7 @@ class AddressController
         require './php_api/api/checkout/stripe-php-master/init.php';
         $this->stripe = new \Stripe\StripeClient(
             'sk_test_51KxNo9SJ5Q50OIO5VnFcjevn1wRbzTfYFTuxvZ05BIf1jMdKOQVNiMtQKzE21DsCZqQkSDYu8UQXo4K8cMIOub1j00ehZHuEns'
-          );
+        );
     }
     public function test_input($data)
     {
@@ -276,27 +276,29 @@ class AddressController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $cid = $_POST['cid'];
             $sid = $_POST['state'];
-            $tax=$_POST['tax'];
-
-            $tax=$this->stripe->taxRates->create([
-                'display_name' => 'VAT',
-                'country' => 'US',
-                'state' => 'DE',
+            $tax = $_POST['tax'];
+            $state = $this->test_input($_POST['scode']);
+            $countryid = $this->test_input($_POST['ccode']);
+            $tax_stripe = $this->stripe->taxRates->create([
+                'display_name' => 'tax',
+                'country' => $countryid,
+                'state' => $state,
                 'percentage' =>  $tax,
                 'inclusive' => false,
-              ]);
+            ]);
             // print_r($tax);die();
+            if ($tax_stripe->active) {
+                session_start();
+                if ($tax != "") {
+                    $success = $this->model->add_taxdb($cid, $sid, $tax.$tax_stripe->id);
+                    if ($success == 1) {
 
-            session_start();
-            if ($tax != "") {
-                $success = $this->model->add_taxdb($cid, $sid, $tax);
-                if ($success == 1) {
-
-                    $_SESSION['addtax_token'] = true;
-                    header("location:?controller=Admin&function=service_tax");
-                } else {
-                    $_SESSION['addtax_token'] = false;
-                    header("location:?controller=Admin&function=service_tax");
+                        $_SESSION['addtax_token'] = true;
+                        header("location:?controller=Admin&function=service_tax");
+                    } else {
+                        $_SESSION['addtax_token'] = false;
+                        header("location:?controller=Admin&function=service_tax");
+                    }
                 }
             } else {
                 $_SESSION['addtax_token'] = false;

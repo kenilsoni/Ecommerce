@@ -22,8 +22,10 @@
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
     "json-server": "^0.17.0",
+    "ng-angular-popup": "^0.1.2",
     "ng-image-slider": "^2.8.0",
     "ngx-owl-carousel-o": "^7.0.2",
+    "ngx-toastr": "^14.3.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.4.0",
     "zone.js": "~0.11.4"

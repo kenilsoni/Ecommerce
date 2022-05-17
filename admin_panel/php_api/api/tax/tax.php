@@ -47,7 +47,42 @@ if (isset($_GET['id'])) {
             array('message' => 'No tax Found')
         );
     }
-} else {
+}else if(isset($_GET['ship_id'])){
+    // tax read query
+    $result = $tax->getshipping($_GET['ship_id']);
+
+    // Get row count
+    $num = $result->rowCount();
+
+    // Check if any tax
+    if ($num > 0) {
+        // tax array
+        $tax_arr = array();
+        $tax_arr['data'] = array();
+
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+
+            $tax_item = array(
+                'tax' => $tax_stripe, 
+            );
+
+            // Push to "data"
+            array_push($tax_arr['data'], $tax_item);
+        }
+
+        // Turn to JSON & output
+        echo json_encode($tax_arr);
+    } else {
+        // No tax
+        echo json_encode(
+            array('message' => 'No tax Found')
+        );
+    }
+}
+
+
+else {
     // tax read query
     $result = $tax->country();
 

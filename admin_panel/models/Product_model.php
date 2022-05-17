@@ -121,7 +121,7 @@ class ProductModel
     }
     public function add_productdb($data)
     {
-        $sql = "INSERT INTO product (Stripe_ID,Product_Name,Product_Description,Product_Price,Product_Quantity,Product_Color_ID,Product_Size,Category_ID,Subcategory_ID,IsTrending) VALUES (:stripe_id,:product_name,:product_desc,:price,:quantity,:color,:size,:category,:subcategory,:trend)";
+        $sql = "INSERT INTO product (Stripe_ID,Product_Name,Product_Description,Product_Price,Product_Quantity,Product_Color_ID,Product_Size,Category_ID,Subcategory_ID,IsTrending,Price_ID) VALUES (:stripe_id,:product_name,:product_desc,:price,:quantity,:color,:size,:category,:subcategory,:trend,:price_id)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute($data);
         $LAST_ID = $this->conn->lastInsertId();
@@ -179,4 +179,83 @@ class ProductModel
         $success = $stmt->execute([$id]);
         return $success;
     }
+    //get pending order
+    public function get_pending_order()
+    {
+        $sql = "SELECT * FROM order_details WHERE Status=1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
+    public function get_orderid($orderid)
+    {
+        $sql = "SELECT * FROM order_details WHERE Order_ID=$orderid";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
+   
+    public function get_address($userid)
+    {
+        $sql = "SELECT Street,Country,City,State FROM user_address as uadd LEFT JOIN country as cty ON uadd.Country_ID=cty.ID LEFT JOIN city as cy ON uadd.City_ID=cy.ID LEFT JOIN state as st ON uadd.State_ID=st.ID
+        WHERE uadd.User_ID=? AND uadd.Address_Type='Shipping'";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$userid]);
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
+    public function user_detail($id)
+    {
+        $sql = "SELECT CONCAT(u.FirstName,' ',u.LastName) as Fullname
+        FROM user as u WHERE ID=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$id]);
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
+    public function get_details_pdt($id)
+    {
+        $sql = "SELECT Product_Name,Product_Price FROM product WHERE ID=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$id]);
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
+    public function get_clr($id)
+    {
+        $sql = "SELECT Product_Color FROM product_color WHERE ID=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$id]);
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
+
+    public function get_size($id)
+    {
+        $sql = "SELECT Product_Size FROM product_size WHERE ID=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$id]);
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
+    public function update_status($id)
+    {
+        $sql = "UPDATE order_details SET Status=2 WHERE ID=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$id]);
+        return $stmt;
+    }
+    //get complete order
+    public function get_complete_order()
+    {
+        $sql = "SELECT * FROM order_details WHERE Status=2";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
+
+
 }

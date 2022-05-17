@@ -1,4 +1,8 @@
 <header class="header">
+    
+    <div  class="loader-container" *ngIf="userservice.isLoading | async">
+        <mat-progress-bar mode="indeterminate" ></mat-progress-bar>
+    </div>
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="row">
@@ -23,6 +27,7 @@
                         id="bs-example-navbar-collapse-1">
                         <nav class="nav is-fixed">
                             <div class="nav-container clearfix">
+
                                 <ul class="nav-menu menu clearfix">
                                     <li class="menu-item"><a routerLink="home"
                                             class="menu-link" title="Home">Home</a></li>
@@ -128,7 +133,7 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button"
-                                                    class="close" 
+                                                    class="close" id="cls"
                                                     data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -293,11 +298,7 @@
                                                      <div
                                                          *ngIf="forgot_password.controls['email']?.invalid">
                                                          <span
-                                                             *ngIf="forgot_password.controls['email']?.errors?.['email']
-                                                             &&
-                                                             (forgot_password.controls['email']?.touched
-                                                             ||
-                                                             ngForm.submitted)"class="text-danger">
+                                                             *ngIf="forgot_password.controls['email']?.errors?.['required'] &&  (forgot_password.controls['email']?.touched || ngForm.submitted)" class="text-danger">
                                                              Email is
                                                              required
                                                          </span>
@@ -353,7 +354,7 @@
                                                              class="form-control"
                                                              formControlName="otp"
                                                              placeholder="Enter your otp">
-                                                             
+                                                            
                                                              
                                                          <div
                                                              *ngIf="check_otp.controls['otp']?.invalid">
@@ -377,6 +378,8 @@
                                                             Invalid OTP
                                                          </span>
                                                      </div>
+                                                     <div class="otp_check">{{expirationCounter}}</div>
+                                                     <div *ngIf="resend_otp" class="otp_check"><span (click)="generete_otp(resend_otp)">Resend OTP</span></div>
                                                      </div>
                                                      <div class="form-group
                                                          clearfix
@@ -558,6 +561,120 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                
+                            </div>
+                            <!-- forgot password page final -->
+                            <div class="modal" id="change_fgpassword"  #fgpassword
+                            tabindex="-1"
+                            role="dialog" style="display: none;">
+
+                            <div class="modal-dialog"
+                                role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button"
+                                            class="close" 
+                                            data-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <div class="text-center"
+                                            style="font-size:23px">Change
+                                            Password</div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="loginform"
+                                            [formGroup]="change_password_forgot"
+                                            #ngForm="ngForm"
+                                            (ngSubmit)="change_fgpassword()">
+
+                                            <div class="form-group">
+                                                <label
+                                                    class="form-label">New
+                                                    Password</label>
+                                                    <span class="input-placeholder">
+                                                <input
+                                                [type]="hide_newpass ? 'password' : 'text'" 
+                                                    class="form-control"
+                                                    formControlName="new_password"
+                                                    placeholder="Enter New Password">
+                                                  <i class="fa fa-eye placeholder" *ngIf="!hide_newpass"  (click)="eye_icon_newpass()"></i><i class="fa fa-eye-slash placeholder" *ngIf="hide_newpass" (click)="eye_icon_newpass()" aria-hidden="true"></i>
+                                                    </span>
+                                                <div
+                                                    *ngIf="change_password_forgot.controls['new_password']?.invalid">
+                                                    <span
+                                                        *ngIf="change_password_forgot.controls['new_password']?.errors?.['required']
+                                                        &&
+                                                        (change_password_forgot.controls['new_password']?.touched
+                                                        ||
+                                                        ngForm.submitted)"class="text-danger">
+                                                        New password is
+                                                        required
+                                                    </span>
+                                                    <span
+                                                        *ngIf="change_password_forgot.controls['new_password']?.errors?.['minlength']
+                                                        &&
+                                                        (change_password_forgot.controls['new_password']?.touched
+                                                        ||
+                                                        ngForm.submitted)"class="text-danger">
+                                                        Password
+                                                        must be 6
+                                                        character
+                                                        long
+                                                    </span>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label
+                                                    class="form-label">Confirm
+                                                    Password</label>
+                                                    <span class="input-placeholder">
+                                                <input
+                                                [type]="hide_cpass ? 'password' : 'text'" 
+                                                    class="form-control"
+                                                    formControlName="cpassword"
+                                                    placeholder="Enter Confirm Password">
+                                                   <i class="fa fa-eye placeholder" *ngIf="!hide_cpass"  (click)="eye_icon_cpass()"></i><i class="fa fa-eye-slash placeholder" *ngIf="hide_cpass" (click)="eye_icon_cpass()" aria-hidden="true"></i>
+                                                </span>
+                                                <div
+                                                    *ngIf="change_password_forgot.controls['cpassword']?.invalid">
+                                                    <span
+                                                        *ngIf="change_password_forgot.controls['cpassword']?.errors?.['required']
+                                                        &&
+                                                        (change_password_forgot.controls['cpassword']?.touched
+                                                        ||
+                                                        ngForm.submitted)"class="text-danger">
+                                                        Confirm password is
+                                                        required
+                                                    </span>
+                                                    <span
+                                                        *ngIf="change_password_forgot.controls['cpassword']?.errors?.['minlength']
+                                                        &&
+                                                        (change_password_forgot.controls['cpassword']?.touched
+                                                        ||
+                                                        ngForm.submitted)"class="text-danger">
+                                                        Password
+                                                        must be 6
+                                                        character
+                                                        long
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group
+                                                clearfix
+                                                login-options">
+                                                <button 
+                                                    type="submit"
+                                                    class="btn-secondary">Change Password</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                             </div>
 
                                 <li class="cart-outer">
