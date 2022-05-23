@@ -19,6 +19,7 @@ if ($product->order == 1) {
     $product->order = "Created_At DESC";
 }
 $product->Category_ID = isset($_GET['cat_id']) ? $_GET['cat_id'] : '';
+$product->Product_Name = isset($_GET['name']) ? $_GET['name'] : '';
 $product->load = isset($_GET['load']) ? $_GET['load'] : '';
 
 $product->Product_Color_ID = isset($_GET['clr_id']) ? $_GET['clr_id'] : "";
@@ -89,7 +90,7 @@ if ($num > 0) {
             'Category_name' => $Category_Name,
             'Subcategory_name' => $Subcategory_Name,
             'Size_id' => $size_id,
-            'price_id'=>$Price_ID
+            'currency'=>''
 
         );
         $result2 = $product->getsingle_image($ID);

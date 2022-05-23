@@ -81,7 +81,7 @@
                                                         routerLink="/profile"
                                                         title="Profile">Profile</a></li>
                                                 <li class="padding"><a
-                                                        routerLink="/profile"
+                                                        routerLink="/orderdetail"
                                                         title="Orders">Orders</a></li>
                                                 <li class="padding"><a href="#"
                                                         data-toggle="modal"
@@ -129,6 +129,7 @@
                                 <div class="modal fade" id="Login-popup"
                                     tabindex="-1"
                                     role="dialog" aria-hidden="true">
+                                   
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -247,9 +248,12 @@
                                  <div class="modal fade" id="forgot_password" #forgot
                                  tabindex="-1"
                                  role="dialog" aria-hidden="true">
- 
+                                   
                                  <div class="modal-dialog"
                                      role="document">
+                                     <div  class="loader-container" *ngIf="userservice.isLoading | async">
+                                        <mat-progress-bar mode="indeterminate" ></mat-progress-bar>
+                                    </div>
                                      <div class="modal-content">
                                          <div class="modal-header">
                                              <button type="button"
@@ -263,6 +267,7 @@
                                                  Password</div>
                                          </div>
                                          <div class="modal-body">
+                                            
                                              <form class="loginform"
                                                  [formGroup]="forgot_password"
                                                  #ngForm="ngForm"
@@ -327,6 +332,9 @@
      
                                      <div class="modal-dialog"
                                          role="document">
+                                         <div  class="loader-container" *ngIf="userservice.isLoading | async">
+                                            <mat-progress-bar mode="indeterminate" ></mat-progress-bar>
+                                        </div>
                                          <div class="modal-content">
                                              <div class="modal-header">
                                                  <button type="button" (click)="close_otp()"
@@ -367,10 +375,6 @@
                                                                  otp is
                                                                  required
                                                              </span>
-                                                             <span *ngIf="(check_otp.controls['otp']?.errors?.['minlength']) && (check_otp.controls['otp']?.touched || ngForm.submitted)" class="text-danger">
-                                                             otp must be 6 character long
-                                                         </span>
-                                                            
                                                          </div>
                                                          <div
                                                          *ngIf="check_otp.controls['otp']?.errors?.['wrong_otp']">
@@ -400,6 +404,9 @@
 
                                 <div class="modal-dialog"
                                     role="document">
+                                    <div  class="loader-container" *ngIf="userservice.isLoading | async">
+                                        <mat-progress-bar mode="indeterminate" ></mat-progress-bar>
+                                    </div>
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button"
@@ -571,11 +578,14 @@
 
                             <div class="modal-dialog"
                                 role="document">
+                                <div  class="loader-container" *ngIf="userservice.isLoading | async">
+                                    <mat-progress-bar mode="indeterminate" ></mat-progress-bar>
+                                </div>
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button"
                                             class="close" 
-                                            data-dismiss="modal"
+                                            data-dismiss="modal" (click)="close_modal()"
                                             aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -787,8 +797,8 @@
                                 <li class="search-link-wrap">
                                     <div class="search-link-outer">
                                         <div class="search-link clearfix">
-                                            <input type="text"
-                                                class="form-control"
+                                            <input type="text" #event
+                                                class="form-control" (keyup)="global_search(event)"
                                                 placeholder="Search">
                                             <a href="#" title="Search"><i><img
                                                         src="/assets/images/search.svg"

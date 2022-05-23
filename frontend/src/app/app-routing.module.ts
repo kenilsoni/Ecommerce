@@ -13,6 +13,8 @@ import { TitleComponent } from './site-layout/product/Title/title.component';
 import { WishlistComponent } from './site-layout/product/wishlist/wishlist.component';
 import { UserProfileComponent } from './site-layout/user-profile/user-profile.component';
 import { UserRegisterComponent } from './site-layout/user-register/user-register.component';
+import { OrderDetailsComponent } from './site-layout/order-details/order-details.component';
+import { SearchComponent } from './site-layout/product/search/search.component';
 
 const routes: Routes = [
  
@@ -28,8 +30,11 @@ const routes: Routes = [
   {path:'home/registration',component:UserRegisterComponent},
   {path:'cart',component:CartComponent,canActivate:[AuthGuard]},
   {path:'wishlist',component:WishlistComponent},
+  {path:'search/:name',component:SearchComponent},
   {path:'coupan',component:CoupanComponent,canActivate:[AuthGuard]},
-  {path:'status/:id',component:OrderStatusComponent,canActivate:[AuthGuard]}
+  {path:'status/:id',component:OrderStatusComponent,canActivate:[AuthGuard]},
+  {path:'orderdetail',component:OrderDetailsComponent,canActivate:[AuthGuard]},
+  {path:'**',redirectTo:'home',pathMatch:'full'}
 ];
 
 @NgModule({

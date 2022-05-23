@@ -1,0 +1,181 @@
+<div class="title-block-outer">
+    <img src="/assets/images/inner-banner.jpg" alt="Banner-image"
+        class="img-responsive">
+    <div class="container title-block-container">
+        <h2>Product</h2>
+    </div>
+</div>
+<div class="breadcrumb-panel">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a routerLink='/home' title="Home">Home</a></li>
+            <li><a title="All Product">All Product</a></li>
+
+        </ol>
+    </div>
+</div>
+<section class="product_listing content">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-panel">
+
+                    <h3>Filter By</h3>
+                    <div class="filter-option">
+                        <div class="title" data-toggle="collapse"
+                            href="#collapse1"
+                            aria-expanded="false">
+                            Categories
+                        </div>
+                        <div class="filter-option-inner collapse in"
+                            id="collapse1">
+                            <ul>
+                                <li class="custom-check" *ngFor="let cat of
+                                    cat_data">
+                                    <label>
+                                        <input type="hidden" value="{{cat.ID}}">
+                                        <input type="checkbox" #subcat_checkbox
+                                            id="{{cat.ID}}"
+                                            class="icheck"
+                                            (change)="allproduct_id()"
+                                            [checked]="ischeck"
+                                            [attr.disabled]="ischeck"
+                                            value="{{cat.ID}}">
+                                            {{cat.Subcategory_Name |titlecase}}<span>({{cat.total_item}})</span>
+                                    </label>
+                                </li>
+                                <li><button title="Reset" class="btn reset"
+                                        (click)="reset_catbtn()">Reset</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="filter-option">
+                        <div class="title" data-toggle="collapse"
+                            href="#collapse2"
+                            aria-expanded="false">Colour</div>
+                        <div class="filter-option-inner collapse in"
+                            id="collapse2">
+                            <ul class="colour_family_list clearfix">
+                                <li *ngFor="let data of color">
+                                    <a title={{data.Product_Color}}> <span
+                                            [style.background-color]=data.Color_Code></span>
+                                        <!-- -->
+                                        <input type="radio"
+                                            name="color_radio" class="color_btn"
+                                            [(ngModel)]="color_radio"
+                                            #getcolorval
+                                            (click)="allproduct_id()"
+                                            id="{{data.ID}}"
+                                            value="{{data.ID}}">
+                                        <label for="{{data.ID}}">{{data.Product_Color|titlecase}}</label>&nbsp;<i>({{data.total_item}})</i></a>
+                                </li>
+                                <li><button title="Reset" class="btn reset"
+                                        (click)="reset_radiobtn()">Reset</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="filter-option">
+                        <div class="title" data-toggle="collapse"
+                            href="#collapse3"
+                            aria-expanded="false">Price</div>
+                        <ngx-slider [(value)]="minValue"
+                            (userChangeEnd)="sliderEvent($event)"
+                            [(highValue)]="maxValue" [options]="options"></ngx-slider>
+                    </div>
+                    <div class="filter-option">
+                        <div class="title" data-toggle="collapse"
+                            href="#collapse4"
+                            aria-expanded="false">Size</div>
+                        <div class="filter-option-inner size-filter collapse in"
+                            id="collapse4">
+                            <ul>
+                                <li class="custom-check" *ngFor="let data of
+                                    size">
+                                    <label>
+                                        <input type="checkbox" class="icheck"
+                                            #size_checkbox
+                                            (change)="allproduct_id()"
+                                            id="{{data.ID}}"
+                                            value="{{data.ID}}">
+                                        {{data.Product_Size}}
+                                        <span>({{data.total_item}})</span>
+                                    </label>
+                                </li>
+                                <!-- <span>{{this.checkval.}}</span> -->
+                                <li><button title="Reset" class="btn reset"
+                                        (click)="reset_sizebtn()">Reset</button></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="add-block">
+                        <a href="product.html" title="Promotion"><img
+                                src="assets/images/promo2.jpg"
+                                alt="" class="img-responsive"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="toolbar clearfix">
+
+                    <div class="pager_right">
+                        <div class="sort-by">
+                            <label>Sort By</label>&nbsp;
+                            <div class="form-group">
+                                <select class="custom-dropdown" #order
+                                    (change)="sortby($event)">
+                                    <option value="1" selected>Latest</option>
+                                    <option value="Product_Name">Name</option>
+                                    <option value="Product_Price">Price</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-content">
+                    <div class="grid row" *ngIf="productdata.length> 0;else
+                        nodata">
+                        <div class="col-sm-4 col-xs-6" *ngFor="let product of
+                            productdata">
+                            <figure class="effect-goliath">
+                                <div class="thumb-outer">
+                                    <a routerLink="/product/{{product.ID}}"
+                                        title="{{product.Product_Name}}"
+                                        class="thumb-image">
+                                        <img style="width:262px;height:328px"
+                                            src="{{image_url}}/{{product.Image_path}}"
+                                            alt="thumb"></a>
+                                    <a (click)="addtocart(product)" title="Add
+                                        to Cart" class="cart-button">Add to Cart</a>
+                                </div>
+                                <figcaption>
+                                    <a routerLink="/product/{{product.ID}}"
+                                        title={{product.Product_Name}}
+                                        class="heading">{{product.Product_Name}}</a>
+                                    <span>{{convertWithCurrencyRate(product.Product_Price,
+                                        selectedCurrency)
+                                        | currency:selectedCurrency:true}}</span>
+                                </figcaption>
+                            </figure>
+                        </div>
+
+                    </div>
+                    <ng-template #nodata>
+                        <div class="grid row record">
+                            <div class="col-12 msg">Record Not Found!!!</div>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="col-sm-12 col-xs-12" *ngIf="productdata.length >=9
+                    && product_count;">
+                    <span class="button-outer text-center">
+                        <a
+                            class="btn-tertiary"
+                            (click)="loadmore_product(load_product)"
+                            title="More Products">More Products</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

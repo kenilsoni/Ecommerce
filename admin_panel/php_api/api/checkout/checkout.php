@@ -17,10 +17,17 @@ if ($jsonObj) {
   $line_items_array = [];
   foreach ($jsonObj as $obj) {
     $line_items_array[] = array(
-      'price' =>  $obj->price_id,
-      'quantity' => $obj->Quantity,
-      'tax_rates' => [$obj->tax],
-    );
+      'price_data' => [
+        'product_data' => [
+            'name' =>  $obj->Product_Name,
+            'description' => 'Nice Product',
+        ],
+        'unit_amount' => $obj->currency=='INR'? $obj->Unit_Price*100: $obj->Unit_Price,
+        'currency' => $obj->currency,
+    ],
+    'quantity' => $obj->Quantity,
+    'tax_rates' => [$obj->tax]
+);
   }
   // print_r($line_items_array);die();
   if (count($line_items_array) > 0) {
@@ -40,7 +47,11 @@ if ($jsonObj) {
 
 
 // Retrieve JSON from POST body 
-
+// $line_items_array[] = array(
+//   'price' =>  $obj->price_id,
+//   'quantity' => $obj->Quantity,
+//   'tax_rates' => [$obj->tax],
+// );
 // // echo json_encode($jsonObj);
 // $token = $jsonObj->id; // Token ID
 // if($token){

@@ -14,52 +14,99 @@ $color = new Color($db);
 
 if (isset($_GET['cid'])) {
   // Instantiate color object
-
-  $color->Category_ID = $_GET['cid'];
-  // color read query
-  $result = $color->read();
-
-  // Get row count
-  $num = $result->rowCount();
-
-  // Check if any color
-  if ($num > 0) {
-    // Cat array
-    $col_arr = array();
-    $col_arr['main'] = array();
-
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-      extract($row);
-
-      $col_item = array(
-        'ID' => $ID,
-        'Product_Color' => $Product_Color,
-        'Color_Code' => $Color_Code
-      );
-      $result2 = $color->total_item($ID);
-      while ($row = $result2->fetch(PDO::FETCH_ASSOC)) {
+  if($_GET['cid']=='search'){
+    // color read query
+    $result = $color->read();
+  
+    // Get row count
+    $num = $result->rowCount();
+  
+    // Check if any color
+    if ($num > 0) {
+      // Cat array
+      $col_arr = array();
+      $col_arr['main'] = array();
+  
+      while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
-
-        $product_item = array(
-          'total_item' => $total_item
+  
+        $col_item = array(
+          'ID' => $ID,
+          'Product_Color' => $Product_Color,
+          'Color_Code' => $Color_Code
         );
-
+        $result2 = $color->total_item1($ID);
+        while ($row = $result2->fetch(PDO::FETCH_ASSOC)) {
+          extract($row);
+  
+          $product_item = array(
+            'total_item' => $total_item
+          );
+  
+          // Push to "data"
+          $new_data = array_merge($col_item, $product_item);
+          array_push($col_arr['main'], $new_data);
+        }
         // Push to "data"
-        $new_data = array_merge($col_item, $product_item);
-        array_push($col_arr['main'], $new_data);
+        // array_push($col_arr['data'], $col_item);
       }
-      // Push to "data"
-      // array_push($col_arr['data'], $col_item);
+  
+      // Turn to JSON & output
+      echo json_encode($col_arr);
+    } else {
+      // No color
+      echo json_encode(
+        array('message' => 'No color Found')
+      );
     }
-
-    // Turn to JSON & output
-    echo json_encode($col_arr);
-  } else {
-    // No color
-    echo json_encode(
-      array('message' => 'No color Found')
-    );
+  }else{
+    $color->Category_ID = $_GET['cid'];
+    // color read query
+    $result = $color->read();
+  
+    // Get row count
+    $num = $result->rowCount();
+  
+    // Check if any color
+    if ($num > 0) {
+      // Cat array
+      $col_arr = array();
+      $col_arr['main'] = array();
+  
+      while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        extract($row);
+  
+        $col_item = array(
+          'ID' => $ID,
+          'Product_Color' => $Product_Color,
+          'Color_Code' => $Color_Code
+        );
+        $result2 = $color->total_item($ID);
+        while ($row = $result2->fetch(PDO::FETCH_ASSOC)) {
+          extract($row);
+  
+          $product_item = array(
+            'total_item' => $total_item
+          );
+  
+          // Push to "data"
+          $new_data = array_merge($col_item, $product_item);
+          array_push($col_arr['main'], $new_data);
+        }
+        // Push to "data"
+        // array_push($col_arr['data'], $col_item);
+      }
+  
+      // Turn to JSON & output
+      echo json_encode($col_arr);
+    } else {
+      // No color
+      echo json_encode(
+        array('message' => 'No color Found')
+      );
+    }
   }
+  
 }else if (isset($_GET['product_id'])) {
   $color->Product_ID = $_GET['product_id'];
   $result = $color->colorby_product();

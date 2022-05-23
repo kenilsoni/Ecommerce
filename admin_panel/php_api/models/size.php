@@ -77,5 +77,20 @@
     $stmt->execute();
     return $stmt;
   }
+  public function total_item1($id)
+  {
+    // Create query
+    $query = 'SELECT COUNT(*) AS total_item FROM product WHERE Product_Size =' . $id;
+
+    //Prepare statement
+    $stmt = $this->conn->prepare($query);
+
+
+
+    // Execute query
+    $stmt->execute();
+    return $stmt;
+  }
+
 
 }

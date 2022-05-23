@@ -5,10 +5,7 @@ class AdminController
     {
         include('models/Event.php');
         include('models/stripe.php');
-        $this->model = new EventModel();
-        $stripe_key = new Stripe();
-        $this->stripe=$stripe_key->stripe_key();
-     
+        $this->model = new EventModel();  
     }
     public function test_input($data)
     {
@@ -104,6 +101,18 @@ class AdminController
     public function add_contact()
     {
         include("./views/add_contact.php");
+    }
+    public function product_review()
+    {
+        include("./views/product_review.php");
+    }
+    public function all_newsletter()
+    {
+        include("./views/all_newsletter.php");
+    }
+    public function user_newsletter()
+    {
+        include("./views/user_newsletter.php");
     }
     public function gettotal_user()
     {
@@ -449,6 +458,112 @@ class AdminController
                 $_SESSION['sendreply_token'] = false;
                 header("location:?controller=Admin&function=add_contact");
             }
+        }
+    }
+    //pending order count
+    public function pending_count()
+    {
+        $success = $this->model->pending_count();
+        if ($success) {
+            echo json_encode($success);
+        } else {
+            echo json_encode("empty");
+        }
+    }
+    //complete order count
+    public function complete_count()
+    {
+        $success = $this->model->complete_count();
+        if ($success) {
+            echo json_encode($success);
+        } else {
+            echo json_encode("empty");
+        }
+    }
+    //product review
+    public function get_productrv()
+    {
+        $success = $this->model->get_productrv();
+        if ($success) {
+            echo json_encode($success);
+        } else {
+            echo json_encode("empty");
+        }
+    }
+    public function delete_rv()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id_rv = $_POST['id'];
+            session_start();
+            $success = $this->model->remove_rv($id_rv);
+            if ($success) {
+                $_SESSION['delete_rv'] = true;
+            } else {
+                $_SESSION['delete_rv'] = false;
+            }
+        } else {
+            $_SESSION['delete_rv'] = false;
+        }
+    }
+    //news letter
+    public function get_newsletter()
+    {
+        $success = $this->model->get_newsletter();
+        if ($success) {
+            echo json_encode($success);
+        } else {
+            echo json_encode("empty");
+        }
+    }
+    public function add_newsletterdata()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $title = $this->test_input($_POST['title']);
+            $desc = $this->test_input($_POST['desc']);
+            session_start();
+
+            $success = $this->model->send_newsletter($title, $desc);
+            if ($success) {
+                $data = array(
+                    'title' => $title,
+                    'desc' => $desc
+                );
+                $save = $this->model->save_newsletter($data);
+                if ($save) {
+                    $_SESSION['add_token'] = true;
+                    header("location:?controller=Admin&function=all_newsletter");
+                } else {
+                    $_SESSION['add_token'] = false;
+                    header("location:?controller=Admin&function=all_newsletter");
+                }
+            } else {
+                $_SESSION['add_token'] = false;
+                header("location:?controller=Admin&function=all_newsletter");
+            }
+        }
+    }
+    public function get_newsletteruser()
+    {
+        $success = $this->model->get_newsletteruser();
+        if ($success) {
+            echo json_encode($success);
+        } else {
+            echo json_encode("empty");
+        }
+    }
+    public function delete_newsletter()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id_nl = $_POST['id'];
+            session_start();
+            $success = $this->model->remove_nl($id_nl);
+            if ($success) {
+                $_SESSION['delete_nl'] = true;
+            } else {
+                $_SESSION['delete_nl'] = false;
+            }
+        } else {
+            $_SESSION['delete_nl'] = false;
         }
     }
 }

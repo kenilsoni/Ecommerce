@@ -48,7 +48,7 @@ if ($num > 0) {
       'Color_name' => $Product_Color,
       'Size_Name' => $Product_Size,
       'Size_id' => $size_id,
-      'price_id'=>$Price_ID
+      'currency'=>''
 
     );
     $result2 = $product->getsingle_image($ID);

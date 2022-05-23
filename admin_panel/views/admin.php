@@ -48,7 +48,7 @@
                                     <h5 class="text-muted">Pending Order</h5>
                                 </a>
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">5</h1>
+                                    <h1 class="mb-1"  id="pending_count"></h1>
                                 </div>
 
                             </div>
@@ -67,7 +67,7 @@
                                     <h5 class="text-muted">Completed Order</h5>
                                 </a>
                                 <div class="metric-value d-inline-block">
-                                    <h1 class="mb-1">2</h1>
+                                    <h1 class="mb-1"  id="complete_count"></h1>
                                 </div>
 
                             </div>

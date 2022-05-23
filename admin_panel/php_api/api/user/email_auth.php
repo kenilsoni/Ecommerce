@@ -31,10 +31,10 @@ if (isset($_GET['check_otp']) && isset($_GET['email'])) {
     $diff = $abc->diff($abcd);
     $time_difference = $diff->i;
     $time_hour = $diff->h;
-    if ($time_difference < 5 && $time_hour==0) {
+    if ($time_difference < 1 && $time_hour==0) {
       $modify = $user->modify_otp($_GET['email'], $_GET['check_otp']);
       echo json_encode(["message" => true]);
-    }else if($time_difference > 5){
+    }else if($time_difference > 1){
       $modify = $user->modify_otp($_GET['email'], $_GET['check_otp']);
       echo json_encode(["message" => false]);
     } else {

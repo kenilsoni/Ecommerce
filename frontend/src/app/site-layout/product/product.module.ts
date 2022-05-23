@@ -14,6 +14,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { CoupanComponent } from './coupan/coupan.component';
+import { SearchComponent } from './search/search.component';
 // import { NgImageSliderModule } from 'ng-image-slider';
 
 
@@ -25,7 +26,8 @@ import { CoupanComponent } from './coupan/coupan.component';
     ProductDataComponent,
     CartComponent,
     WishlistComponent,
-    CoupanComponent
+    CoupanComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,

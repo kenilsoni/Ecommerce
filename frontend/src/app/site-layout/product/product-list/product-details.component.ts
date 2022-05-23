@@ -62,6 +62,9 @@ export class ProductDetailsComponent implements OnInit,AfterViewInit {
     ceil: 0,
   };
   ngOnInit(): void {
+    // this.product.global_search.subscribe(data=>{
+    //   console.log(data)
+    // })
     this.route.params.subscribe(data => {
       this.cat_id = data['cid'];
       this.subcat_id = data['sid']
@@ -78,12 +81,15 @@ export class ProductDetailsComponent implements OnInit,AfterViewInit {
   }
   selectedCurrency:any
   get_currency(){
-    if(this.product.get_currencyval()){
-      let currency_val=this.product.get_currencyval()
-      this.selectedCurrency=currency_val
-    }else{
-      this.selectedCurrency='INR'
-    }
+    this.product.set_currency.subscribe(data=>{
+      if(data.length>0){
+        this.selectedCurrency = data
+        this.getproductby_cat()
+        this.getcount()
+      }else{
+        this.selectedCurrency = 'INR'
+      }
+    })
   }
   getproductby_cat() {
     this.product.getproductbycat_id(this.cat_id, this.load_product).subscribe(data => {
@@ -177,6 +183,7 @@ export class ProductDetailsComponent implements OnInit,AfterViewInit {
     this.allproduct_id()
   }
   addtocart(e: any) {
+    if(this.user_id){
     e.Product_Quantity=1
     e.user_id=this.user_id
     this.cartService.addtoCart(e).subscribe(data=>{
@@ -184,7 +191,10 @@ export class ProductDetailsComponent implements OnInit,AfterViewInit {
         this.router.navigate(['/cart']);
         this.toastr.success({detail:'Success!', summary:'Product added successfully!'});
         }
-    });
+    });}
+    else{
+      this.toastr.error({detail:'Error!', summary:'Please Login First!'});
+    }
   }
   getuser_id(){
     let data=this.cartService.get_id()
@@ -220,7 +230,7 @@ export class ProductDetailsComponent implements OnInit,AfterViewInit {
       this.slider_arr[0] = this.minValue
       this.slider_arr[1] = this.maxValue
     }
-    this.product.all_product_filter(this.order_arr, this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_arr, this.size_arr).subscribe(data => {
+    this.product.all_product_filter(this.order_arr, this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_arr, this.size_arr,"").subscribe(data => {
       if (data['data'] !== undefined) {
         this.productdata = data['data']
         if (this.initial) {
@@ -234,13 +244,7 @@ export class ProductDetailsComponent implements OnInit,AfterViewInit {
       }
     })
   }
-  convertWithCurrencyRate(value: number, currency: string){
-    if(currency=='USD'){
-      return value/75;
-    }else if(currency=='INR'){
-      return value;
-    }else{
-      return value;
-    }
-  }
+  convertWithCurrencyRate(value: number, currency: string) {
+    return this.product.convertWithCurrencyRate(value,currency)
+   }
 }

@@ -18,3 +18,16 @@
 .container{
     margin-bottom: 140px;
 }
+.success{
+    text-align: center;
+    margin-top: 10px;
+}
+.success i{
+    color: #9ABC66;
+    font-size: 100px;
+    line-height: 200px;
+    margin-left: -15px;
+}
+.payment_dtl{
+    text-align: center;
+}

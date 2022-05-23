@@ -7,7 +7,8 @@ export const environment = {
   API_URL:"http://localhost/ecommerce/admin_panel/php_api/api",
   IMAGE_URL:"http://localhost/ecommerce/admin_panel/assets/uploads",
   PUBLISHER_KEY:"pk_test_51KxNo9SJ5Q50OIO5yrzakAllPW0Bylht9AGS4fRd8dGOLy954fMBIafsUrgjnlRfBcxZIAPoYARnFx8gJSuEOty400VLE9g7yw",
-  load_product:9
+  load_product:9,
+  SET_TIME_FORGOT:60
 };
 
 /*

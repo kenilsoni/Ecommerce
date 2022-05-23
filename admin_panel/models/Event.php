@@ -3,7 +3,7 @@ class EventModel
 {
     function __construct()
     {
-
+       
         try {
             /* Properties */
             $dsn = 'mysql:dbname=ecommerce;host=localhost';
@@ -138,14 +138,13 @@ class EventModel
     }
     public function send_reply($reply,$email_user){
         require "vendor/autoload.php";
-        require "stripe.php";
-        $sendgrid = new Stripe();
+        include "stripe.php";
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom("comicbykenil@gmail.com", "Ecommerce");
         $email->setSubject("Response to your query !!!");
         $email->addTo($email_user);
         $email->addContent("text/html","<p>$reply</p>");
-        $sendgrid = new \SendGrid($sendgrid->sendgrid_api());
+        $sendgrid = new \SendGrid($sendgrid_key);
         $success=$sendgrid->send($email);
         if($success){
             return true;
@@ -160,5 +159,86 @@ class EventModel
         $success=$stmt->execute($data);
         return $success;
     }
-    
+    //pending order count
+    public function pending_count()
+    {
+        $sql = "SELECT count(*) AS pending_count FROM order_details WHERE Status=1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
+    //complete order count
+    public function complete_count()
+    {
+        $sql = "SELECT count(*) AS complete_count FROM order_details WHERE Status=2";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
+      //product review start
+      public function get_productrv(){
+        $sql = "SELECT pr.*,CONCAT(user.FirstName,' ',user.LastName) AS FullName,product.Product_Name FROM product_review as pr LEFT JOIN user ON pr.User_ID=user.ID LEFT JOIN product ON pr.Product_ID=product.ID";
+        $stmt = $this->conn->prepare($sql);
+        $success=$stmt->execute();
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
+    public function remove_rv($id){
+        $sql = "DELETE FROM product_review WHERE ID=?";
+        $stmt = $this->conn->prepare($sql);
+        $success=$stmt->execute([$id]);
+        return $success;
+    }
+    //newsletter start
+    public function get_newsletter(){
+        $sql = "SELECT * FROM all_newsletter";
+        $stmt = $this->conn->prepare($sql);
+        $success=$stmt->execute();
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
+    public function send_newsletter($title,$desc){
+        $sql = "SELECT Email FROM user_newsletter";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        require "vendor/autoload.php";
+        include "stripe.php";
+        foreach($success as $val){
+            $email = new \SendGrid\Mail\Mail();
+            $email->setFrom("comicbykenil@gmail.com", "Ecommerce");
+            $email->setSubject($title);
+            $email->addTo($val['Email']);
+            $email->addContent("text/html","<p>$desc</p>");
+            $sendgrid = new \SendGrid($sendgrid_key);
+            $success=$sendgrid->send($email);
+            
+        }  
+        if($success){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function save_newsletter($data){
+        $sql = "INSERT INTO all_newsletter (Title,Description,Created_At) VALUES (:title,:desc,NOW())";
+        $stmt = $this->conn->prepare($sql);
+        $success=$stmt->execute($data);
+        return $success;
+    }
+    public function get_newsletteruser(){
+        $sql = "SELECT * FROM user_newsletter";
+        $stmt = $this->conn->prepare($sql);
+        $success=$stmt->execute();
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
+    public function remove_nl($id){
+        $sql = "DELETE FROM all_newsletter WHERE ID=?";
+        $stmt = $this->conn->prepare($sql);
+        $success=$stmt->execute([$id]);
+        return $success;
+    }
 }

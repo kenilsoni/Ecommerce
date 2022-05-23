@@ -17,14 +17,6 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.userservice.isLoading.next(true);
 
-    return next.handle(req).pipe(
-      finalize(
-        () => {
-          this.userservice.isLoading.next(false);
-        }
-      )
-    );
-
     let access_token = this.userservice.getAccessToken();
     let new_req = req;
     
@@ -41,7 +33,14 @@ export class AuthInterceptor implements HttpInterceptor {
         }
       }
       return throwError(error);
-    }));
+    }),
+       finalize(
+        () => {
+          this.userservice.isLoading.next(false);
+        }
+      )
+    
+    );
   }
   addToken(req:HttpRequest<any>, token:string){
     return req.clone({

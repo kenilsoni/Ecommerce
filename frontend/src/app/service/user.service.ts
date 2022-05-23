@@ -135,7 +135,14 @@ export class UserService {
   update_fgpassword(email:any,password:any){
     return this.httpclient.get<any>(`${environment.API_URL}/user/update_forgot.php?email=`+email+'&password='+password)
   }
-  
+  //for newsletter
+  checkEmail_nl(email:any){
+    return this.httpclient.get<any>(`${environment.API_URL}/newsletter/check.php?email=`+email)
+  }
+  addEmail_nl(email:any){
+    return this.httpclient.get<any>(`${environment.API_URL}/newsletter/add.php?email=`+email)
+  }
+
 
 
 }

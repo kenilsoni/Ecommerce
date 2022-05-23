@@ -49,8 +49,39 @@ class Subcategory
     $stmt->execute();
     return $stmt;
   }
+   // Get all Category
+   public function read_all()
+   {
+     // Create query
+     $query = 'SELECT  ID,Subcategory_Name,Subcategory_desc,Category_ID FROM  ' . $this->table . '';
+ 
+     //Prepare statement
+     $stmt = $this->conn->prepare($query);
+ 
+     // Bind ID
+     $stmt->bindParam(1, $this->Category_ID);
+ 
+     // Execute query
+     $stmt->execute();
+     return $stmt;
+   }
   // get total number of items
-  public function total_item($id)
+  public function total_item($sid,$cid)
+  {
+    // Create query
+    $query = 'SELECT COUNT(*) AS total_item,ct.Category_Name FROM product LEFT JOIN product_category as ct ON product.Category_ID=ct.ID WHERE Category_ID='.$cid.' AND Subcategory_ID=' . $sid;
+
+    //Prepare statement
+    $stmt = $this->conn->prepare($query);
+
+    // $stmt->bindParam(2, $this->ID);
+
+    // Execute query
+    $stmt->execute();
+    return $stmt;
+  }
+  // get total number of items
+  public function total_item2($id)
   {
     // Create query
     $query = 'SELECT COUNT(*) AS total_item FROM product WHERE Category_ID=? AND Subcategory_ID=' . $id;

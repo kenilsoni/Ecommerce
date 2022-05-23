@@ -13,6 +13,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { OrderStatusComponent } from './order-status/order-status.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { OrderDetailsComponent } from './order-details/order-details.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -21,7 +23,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     ContactUsComponent,
     UserRegisterComponent,
     UserProfileComponent,
-    OrderStatusComponent
+    OrderStatusComponent,
+    OrderDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +33,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     HeaderComponent,

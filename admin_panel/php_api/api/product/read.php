@@ -14,15 +14,27 @@
   $product = new Product($db);
 
   // Get ID
-  $product->cat_id = isset($_GET['cat_id']) ? $_GET['cat_id'] : die();
-  $product->load = isset($_GET['limit']) ? $_GET['limit'] : die();
-  if(isset($_GET['subcat_id'])){
-    $product->subcat_id = isset($_GET['subcat_id']) ? $_GET['subcat_id'] : die();
-  }
-
-
-  // product read query
+  if(isset($_GET['cat_id'])){
+    $product->load = isset($_GET['limit']) ? $_GET['limit'] : die();
+    $product->cat_id = isset($_GET['cat_id']) ? $_GET['cat_id'] : die();
+    if(isset($_GET['subcat_id'])){
+      $product->subcat_id = isset($_GET['subcat_id']) ? $_GET['subcat_id'] : die();
+    }
+      // product read query
   $result = $product->read();
+  }else if(isset($_GET['name'])){
+      // product read query
+  $product->load = isset($_GET['limit']) ? $_GET['limit'] : die();
+  $result = $product->read_name($_GET['name']);
+  }
+  // $product->cat_id = isset($_GET['cat_id']) ? $_GET['cat_id'] : die();
+
+  // if(isset($_GET['subcat_id'])){
+  //   $product->subcat_id = isset($_GET['subcat_id']) ? $_GET['subcat_id'] : die();
+  // }
+
+
+
 
   
   // Get row count
@@ -53,7 +65,7 @@
             'Subcategory_name'=>$Subcategory_Name,
             'Color_name'=>$Product_Color,
             'Size_id' => $size_id,
-            'price_id'=>$Price_ID
+            'currency'=>''
             
           );
           $result2 = $product->getsingle_image($ID);
@@ -80,7 +92,7 @@
   } else {
         // No product
         echo json_encode(
-          array('message' => 'No product Found')
+          array('data' => false)
         );
   }
   

@@ -47,7 +47,7 @@
             'Color_Name' => $Product_Color,
             'Size_Name' => $Product_Size,
             'Product_Image'=>$Product_Image,
-            'price_id'=>$Price_ID
+            'currency'=>''
           );
 
           // Push to "data"

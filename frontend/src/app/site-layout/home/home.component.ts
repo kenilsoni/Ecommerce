@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
-    dots: true,
+    dots: false,
     navSpeed: 500,
     navText: ['', ''],
     responsive: {
@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
         items: 1
       },
     },
-    nav: true
+    // nav: true
   }
 
   getproduct_trend(){
@@ -73,6 +73,7 @@ export class HomeComponent implements OnInit {
    
   }
   addtocart(e:any){
+    if(this.user_id){
     e.Product_Quantity=1
     e.user_id=this.user_id
     this.cartService.addtoCart(e).subscribe(data=>{
@@ -81,13 +82,10 @@ export class HomeComponent implements OnInit {
       this.toastr.success({detail:'Success!', summary:'Product added successfully!'});
       }
 
-    });
-  
-    // this.addtocart_alert=true
-    // setTimeout(() => {
-    //   this.addtocart_alert=false
-    // }, 4000);
-    console.log(e)
+    });}
+    else{
+      this.toastr.error({detail:'Error!', summary:'Please Login First!'});
+    }
   }
   getslider(){
     this.product.get_slider().subscribe((data:any)=>{
@@ -104,21 +102,15 @@ export class HomeComponent implements OnInit {
   }
   selectedCurrency:any
   get_currency(){
-    if(this.product.get_currencyval()){
-      let currency_val=this.product.get_currencyval()
-      this.selectedCurrency=currency_val
-    }else{
-      this.selectedCurrency='INR'
-    }
+    this.product.set_currency.subscribe(data=>{
+      if(data.length>0){
+        this.selectedCurrency = data
+      }else{
+        this.selectedCurrency = 'INR'
+      }
+    })
   }
-  convertWithCurrencyRate(value: number, currency: string){
-    if(currency=='USD'){
-      return value/75;
-    }else if(currency=='INR'){
-      return value;
-    }else{
-      return value;
-    }
-  }
-
+  convertWithCurrencyRate(value: number, currency: string) {
+    return this.product.convertWithCurrencyRate(value,currency)
+   }
 }

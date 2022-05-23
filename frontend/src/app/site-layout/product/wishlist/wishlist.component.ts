@@ -62,21 +62,17 @@ export class WishlistComponent implements OnInit {
   }
   selectedCurrency:any
   get_currency(){
-    if(this.product.get_currencyval()){
-      let currency_val=this.product.get_currencyval()
-      this.selectedCurrency=currency_val
-    }else{
-      this.selectedCurrency='INR'
-    }
+    this.product.set_currency.subscribe(data=>{
+      if(data.length>0){
+        this.selectedCurrency = data
+        this.get_wishlist()
+      }else{
+        this.selectedCurrency = 'INR'
+      }
+    })
   }
-  convertWithCurrencyRate(value: number, currency: string){
-    if(currency=='USD'){
-      return value/75;
-    }else if(currency=='INR'){
-      return value;
-    }else{
-      return value;
-    }
-  }
+  convertWithCurrencyRate(value: number, currency: string) {
+    return this.product.convertWithCurrencyRate(value,currency)
+   }
 
 }

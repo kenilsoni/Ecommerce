@@ -255,13 +255,12 @@ class User
     {
         require "../../../models/vendor/autoload.php";
         require "../../../models/stripe.php";
-        $sendgrid = new Stripe();
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom("comicbykenil@gmail.com", "Ecommerce");
         $email->setSubject("Forgot password otp!!!");
         $email->addTo($email_user);
         $email->addContent("text/html", "<h2>Your OTP IS</h2> &nbsp;<strong>$random</strong>");
-        $sendgrid = new \SendGrid($sendgrid->sendgrid_api());
+        $sendgrid = new \SendGrid($sendgrid_key);
         $success = $sendgrid->send($email);
         if ($success) {
             return true;
@@ -312,5 +311,22 @@ class User
         $stmt->bindParam(1, $email);
         $stmt->execute();
         return $stmt;
+    }
+    //newsletter
+    public function check_nl($email)
+    {
+        $query = 'SELECT * FROM user_newsletter WHERE Email=?';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $email);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function add_nl($email)
+    {
+        $query = 'INSERT INTO user_newsletter (Email,Created_At) VALUES (?,NOW())';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $email);
+        $success=$stmt->execute();
+        return $success;
     }
 }

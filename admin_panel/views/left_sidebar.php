@@ -88,7 +88,26 @@
                             <li class="nav-item ">
                                 <a class="nav-link active" href="?controller=Admin&function=add_contact"><i class="fa fa-fw fa-user-circle"></i>Contact</a>
                             </li>
-                            
+                            <li class="nav-item ">
+                                <a class="nav-link active" href="?controller=Admin&function=product_review"><i class="fa fa-fw fa-user-circle"></i>Product Review</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-7" aria-controls="submenu-6"><i class="fa fa-solid fa-address-book"></i>NewsLetter </a>
+                                <div id="submenu-7" class="collapse submenu">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <ul class="nav flex-column">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="?controller=Admin&function=all_newsletter">All NewsLetter</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="?controller=Admin&function=user_newsletter">Users</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </nav>

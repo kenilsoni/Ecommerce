@@ -4,13 +4,30 @@
     <div class="container">
         <div class="clearfix">
             <div class="footer-content">
-                <form>
+                <form [formGroup]="checkinput" #ngForm="ngForm"
+                (ngSubmit)="subscribe()">
                     <div class="form-group">
-                        <label>Subscribe for Newsletter</label>
-                        <p class="thankyou-msg">Thank you for your subscription.</p>
-                        <input type="text" class="form-control" placeholder="Enter your email address">
+                        <div class="mb"><label>Subscribe for Newsletter</label></div>
+                        <div class="thankyou-msg" *ngIf="isSubscribe">Thank you for your subscription.</div>
+                        <input type="email" class="form-control mb" formControlName="email" placeholder="Enter your email address">
+                        <div *ngIf="email_exist">
+                            <span class="text-danger">Email is already exist</span>
+                        </div>
+                        <div *ngIf="checkinput.controls['email']?.invalid ">
+                          
+                            <span *ngIf="checkinput.controls['email']?.errors?.['required'] && (checkinput.controls['email']?.touched || ngForm.submitted) "  class="text-danger">
+                                Email is required
+                            </span>
+                            <span class="text-danger" *ngIf="
+                            checkinput.controls['email']?.errors?.['email']">Email is invalid</span>
+                            
+                        </div>
+                        <div>
+                            <button type="submit" class="sign-up">Subscribe</button>
+                        </div>
                     </div>
-                    <button type="button" class="sign-up">sign up</button>
+                    
+                       
                 </form>
                 <ul class="footer-links">
                     <li><a routerLink="/home" title="Home">Home</a></li>
@@ -18,7 +35,7 @@
                     <li *ngIf="isShow"><a routerLink="home/registration" title="Register">Register</a></li>
                     <li><a routerLink="home/contactus" title="Contact us">Contact us</a></li>
                 </ul>
-                <p class="copyright">&copy; 2017 eShopper online store. All rights reserved.</p>
+                <p class="copyright">&copy; {{year}} eShopper online store. All rights reserved.</p>
             </div>
         </div>
     </div>

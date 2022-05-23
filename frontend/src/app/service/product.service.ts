@@ -5,12 +5,14 @@ import {environment} from '../../environments/environment'
 import { color } from '../site-layout/interface/color';
 import { size } from '../site-layout/interface/size';
 import { product } from '../site-layout/interface/product';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-
+  //set currency
+  public set_currency: BehaviorSubject<string> = new BehaviorSubject<string>("");
   constructor(private httpclient:HttpClient) { }
   // getcategory
   getcategory(){
@@ -21,23 +23,27 @@ export class ProductService {
     return this.httpclient.get<Category>(`${environment.API_URL}/subcategory/read.php`)
   }
    // get subcategory and totalcount
-  getcategory_id(id:number){
+  getcategory_id(id:any){
     return this.httpclient.get<Category>(`${environment.API_URL}/subcategory/read.php/?cid=`+id)
   }
   // get color & totalcount
-  getcolor(id:number){
+  getcolor(id:any){
     return this.httpclient.get<color>(`${environment.API_URL}/color/read.php?cid=`+id)
   }
   // get size & totalcount
-  getsize(id:number){
+  getsize(id:any){
     return this.httpclient.get<size>(`${environment.API_URL}/size/read.php?cid=`+id)
   }
   // get price count
   getprice(){
     return this.httpclient.get<size>(`${environment.API_URL}/product/getprice.php`)
   }
+   // get product by name
+   getproductby_name(name:string,load_product:number,order:string=''){
+    return this.httpclient.get<size>(`${environment.API_URL}/product/read.php?name=`+name+'&limit='+load_product+'&order'+order)
+  }
   //get product by category id
-  getproductbycat_id(cat_id:number,load_product:number,order:string=''){
+  getproductbycat_id(cat_id:any,load_product:number,order:string=''){
     return this.httpclient.get<product>(`${environment.API_URL}/product/read.php?cat_id=`+cat_id+'&limit='+load_product+'&order'+order)
   }
   //get product by subcategory id
@@ -53,8 +59,8 @@ export class ProductService {
     return this.httpclient.get<product>(`${environment.API_URL}/product/trending.php?load=`+load+'&trend='+trend)
   }
   //all product filter
-  all_product_filter(order:any,from:number,to:number,load:number,cat_id:number,subcat_id:any,clr_id:any,size_id:any){
-    return this.httpclient.get<product>(`${environment.API_URL}/product/filter.php?from=`+from+'&to='+to+'&load='+load+'&order='+order+'&cat_id='+cat_id+'&clr_id='+clr_id+'&subcat_id='+subcat_id+'&size_id='+size_id)
+  all_product_filter(order:any,from:number,to:number,load:number,cat_id:any,subcat_id:any,clr_id:any,size_id:any,name:any){
+    return this.httpclient.get<product>(`${environment.API_URL}/product/filter.php?from=`+from+'&to='+to+'&load='+load+'&order='+order+'&cat_id='+cat_id+'&clr_id='+clr_id+'&subcat_id='+subcat_id+'&size_id='+size_id+'&name='+name)
   }
   //get wishlist
   get_wishlist(user_id:number){
@@ -80,11 +86,14 @@ export class ProductService {
     return this.httpclient.get(`${environment.API_URL}/testimonial/testimonial.php`)
   }
   //set currnecy
-  set_currency(val:any){
-    localStorage.setItem("currency_val",val)
-  }
-  get_currencyval(){
-    return localStorage.getItem('currency_val')
+  convertWithCurrencyRate(value: number, currency: string) {
+    if (currency == 'USD') {
+      return value / 100;
+    } else if (currency == 'INR') {
+      return value;
+    } else {
+      return value;
+    }
   }
   //get coupan
   get_coupan(){
@@ -99,6 +108,25 @@ export class ProductService {
   }
   addto_db_product(user_id:any,payment_id:any,total:any){
     return this.httpclient.get(`${environment.API_URL}/checkout/place_order.php?user_id=`+user_id+'&payment_id='+payment_id+'&total='+total)
+  }
+  //get order history
+  get_order_history(load_order:any,user_id:any){
+    return this.httpclient.get(`${environment.API_URL}/order/get.php?user_id=`+user_id+'&load='+load_order)
+  }
+  filter_order_history(load_order:any,user_id:any,status:any,time:any,name:any){
+    return this.httpclient.get(`${environment.API_URL}/order/filter.php?status=`+status+'&time='+time+'&name='+name+'&user_id='+user_id+'&load='+load_order)
+  }
+  //review
+  add_review_data(edit:any,delete_review:any,add:any,userid:any,pid:any,review:any,rate:any){
+    return this.httpclient.get(`${environment.API_URL}/product/add_review.php?userid=`+userid+'&pid='+pid+'&review='+review+'&rate='+rate+'&add='+add+'&delete='+delete_review+'&edit='+edit)
+  }
+  //review by product id
+  get_reviewid(pid:any,load:number){
+    return this.httpclient.get(`${environment.API_URL}/product/get_review.php?pid=`+pid+'&load='+load)
+  }
+  //check already review
+  check_review(pid:any,userid:number){
+    return this.httpclient.get(`${environment.API_URL}/product/get_review.php?pid=`+pid+'&userid='+userid)
   }
   
 

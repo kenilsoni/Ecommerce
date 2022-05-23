@@ -4,10 +4,7 @@ class ProductController
     function __construct()
     {
         include('models/Product_model.php');
-        include('models/stripe.php');
         $this->model = new ProductModel();
-        $stripe_key = new Stripe();
-        $this->stripe = $stripe_key->stripe_key();
     }
     public function test_input($data)
     {
@@ -252,17 +249,6 @@ class ProductController
             $color_string = implode(",", $color);
             $size_string = implode(",", $size);
 
-
-            $product_stripe = $this->stripe->products->create([
-                'name' => $product,
-                'description' => $product_desc
-            ]);
-            $price_stripe = $this->stripe->prices->create([
-                'unit_amount' => $price * 100,
-                'currency' => 'inr',
-                'product' =>  $product_stripe->id,
-            ]);
-
             session_start();
             if (($product &&  $product_desc &&  $price &&  $quantity && $category &&  $subcategory &&   $color &&  $size) != '') {
                 $image_name = [];
@@ -294,9 +280,8 @@ class ProductController
                     'subcategory' => $subcategory,
                     'color' => $color_string,
                     'size' => $size_string,
-                    'trend' => $trend,
-                    'stripe_id' => $product_stripe->id,
-                    'price_id' => $price_stripe->id
+                    'trend' => $trend
+
                 );
                 $success = $this->model->add_productdb($data);
                 if ($success) {

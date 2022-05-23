@@ -38,7 +38,7 @@
     }
     public function add_item() {
         // Create query
-        $query = "INSERT INTO product_cart (Product_ID,User_ID,Product_Name,Color_ID,Size_ID,Product_Image, Unit_Price, Quantity, Total_Amount,Price_ID,Created_At) VALUES (?,?,?,?,?,?,?,?,?,?,now())";
+        $query = "INSERT INTO product_cart (Product_ID,User_ID,Product_Name,Color_ID,Size_ID,Product_Image, Unit_Price, Quantity, Total_Amount,Created_At) VALUES (?,?,?,?,?,?,?,?,?,now())";
   
         // Prepare statement
         $stmt = $this->conn->prepare($query);
@@ -51,7 +51,6 @@
         $stmt->bindParam(7, $this->Unit_Price);
         $stmt->bindParam(8, $this->Quantity);
         $stmt->bindParam(9, $this->Total_Amount);
-        $stmt->bindParam(10, $this->price_id);
   
         // Execute query
         $stmt->execute();

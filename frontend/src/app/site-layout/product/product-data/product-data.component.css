@@ -1,3 +1,28 @@
 .link-wishlist{
     cursor: pointer;
 }
+.review-open{
+    display: none;
+}
+.review-tag{
+    cursor: pointer;
+}
+.rating-list li {
+    float: right;
+    color: #ddd;
+    padding: 10px 5px;
+  
+  }
+  
+  .rating-list li:hover,
+  .rating-list li:hover ~ li, .rating-list li.selected {
+    color: #ffd700;
+  }
+  
+  .rating-list {
+    display: inline-block;
+    list-style: none;
+  }
+  .msg{
+      text-align: center;
+  }

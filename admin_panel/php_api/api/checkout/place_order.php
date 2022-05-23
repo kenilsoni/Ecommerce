@@ -14,7 +14,7 @@ $db = $database->connect();
 // Instantiate cart object
 $cart = new Cart($db);
 
-
+if($_SERVER['REQUEST_METHOD']=='GET'){
 if (isset($_GET['user_id']) && isset($_GET['payment_id'])  && isset($_GET['total'])) {
     $cart->User_ID = $_GET['user_id'];
     $result = $cart->getcart_final($_GET['user_id']);
@@ -43,20 +43,21 @@ if (isset($_GET['user_id']) && isset($_GET['payment_id'])  && isset($_GET['total
 
             // No Categories
             echo json_encode(
-                array('data' => true)
+                array(['data' => true,'order_id'=>$oid])
             );
         } else {
 
             // No Categories
             echo json_encode(
-                array('data' => false)
+              false
             );
         }
     } else {
 
         // No Categories
         echo json_encode(
-            array('data' => false)
+          false
         );
     }
+}
 }

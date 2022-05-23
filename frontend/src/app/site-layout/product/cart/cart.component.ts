@@ -64,6 +64,9 @@ export class CartComponent implements OnInit {
         this.products = data['data'];
         this.final_amount = this.get_total()
         this.grandTotal = this.get_total()
+        this.products.forEach((element:any)=>{
+          element.currency=this.selectedCurrency
+        })
         console.log(this.products)
       } else {
         this.products = []
@@ -125,6 +128,7 @@ export class CartComponent implements OnInit {
     this.hide_dropdown()
     this.display_text()
     this.getcart_data()
+    this.get_shippingadd()  
     this.service_tax = 0
     this.state.nativeElement.value = ''
     this.country.nativeElement.value = ''
@@ -272,6 +276,7 @@ export class CartComponent implements OnInit {
     })
   }
   pay() {
+   
     console.log(this.products);
     var stripe = (<any>window).Stripe(environment.PUBLISHER_KEY)
     this.productservice.checkout_product(this.products).subscribe((data: any) => {
@@ -297,20 +302,17 @@ export class CartComponent implements OnInit {
   }
   selectedCurrency: any
   get_currency() {
-    if (this.productservice.get_currencyval()) {
-      let currency_val = this.productservice.get_currencyval()
-      this.selectedCurrency = currency_val
-    } else {
-      this.selectedCurrency = 'INR'
-    }
+    this.productservice.set_currency.subscribe(data=>{
+      if(data.length>0){
+        this.selectedCurrency = data
+        this.getcart_data()
+        this.get_shippingadd()    
+      }else{
+        this.selectedCurrency = 'INR'
+      }
+    })
   }
   convertWithCurrencyRate(value: number, currency: string) {
-    if (currency == 'USD') {
-      return value / 75;
-    } else if (currency == 'INR') {
-      return value;
-    } else {
-      return value;
-    }
+   return this.productservice.convertWithCurrencyRate(value,currency)
   }
 }
