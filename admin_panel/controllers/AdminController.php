@@ -6,6 +6,10 @@ class AdminController
         include('models/Event.php');
         include('models/stripe.php');
         $this->model = new EventModel();  
+         require './php_api/api/checkout/stripe-php-master/init.php';
+        $this->stripe = new \Stripe\StripeClient(
+            $stripe_secret
+        );
     }
     public function test_input($data)
     {
@@ -213,7 +217,7 @@ class AdminController
             $Expiry = date('Y-m-d', strtotime($date . ' + ' . $duration . ' months'));
 
             // echo $newDate;die();
-
+           
             $coupan = $this->stripe->coupons->create([
                 'percent_off' => $percent,
                 'duration' => 'repeating',
@@ -223,6 +227,7 @@ class AdminController
                 'coupon' => $coupan->id,
               ]);
             $data = array(
+                'stripe_id'=>$coupan->id,
                 'coupan' => $promocode->code,
                 'expiry' => $Expiry,
                 'discount' => $percent
@@ -254,9 +259,8 @@ class AdminController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $id = $_POST['id'];
-
-
             $delete = $this->stripe->coupons->delete($id, []);
+            // print_r($delete);die();
             if ($delete->deleted) {
                 session_start();
                 $success = $this->model->remove_coupan($id);

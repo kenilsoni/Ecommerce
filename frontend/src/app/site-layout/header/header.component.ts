@@ -12,8 +12,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-
-
 export class HeaderComponent implements OnInit {
   @ViewChildren("quantity") quantity!: QueryList<ElementRef>
   @ViewChildren("quantity_text") quantity_text!: QueryList<ElementRef>
@@ -45,7 +43,7 @@ export class HeaderComponent implements OnInit {
   hide_cpass: boolean = true;
   @ViewChild("myDropdown") dropdown!: ElementRef
   @ViewChild("currency") currency!: ElementRef
-  constructor(private toastr: NgToastService, private product: ProductService, private cartService: CartService, private formbuilder: FormBuilder, public userservice: UserService,private route:Router) { }
+  constructor(private toastr: NgToastService, private product: ProductService, private cartService: CartService, private formbuilder: FormBuilder, public userservice: UserService, private route: Router) { }
 
   ngOnInit(): void {
     this.getcategory();
@@ -62,6 +60,8 @@ export class HeaderComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       new_password: ['', [Validators.required, Validators.minLength(6)]],
       cpassword: ['', [Validators.required, Validators.minLength(6)]],
+    }, {
+      validators: this.mustMatch('new_password', 'cpassword')
     })
     this.forgot_password = this.formbuilder.group({
       email: ['', [Validators.required, Validators.email]]
@@ -74,6 +74,8 @@ export class HeaderComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       new_password: ['', [Validators.required, Validators.minLength(6)]],
       cpassword: ['', [Validators.required, Validators.minLength(6)]],
+    }, {
+      validators: this.mustMatch('new_password', 'cpassword')
     })
   }
   is_loogedin() {
@@ -152,7 +154,7 @@ export class HeaderComponent implements OnInit {
   }
   close_modal() {
     document.getElementById('cls')?.click()
-    this.changepassword.nativeElement.style.display="none"
+    this.changepassword.nativeElement.style.display = "none"
     this.loginval.reset()
   }
   edit_product(cart_id: number, Product_ID: number) {
@@ -348,6 +350,8 @@ export class HeaderComponent implements OnInit {
       this.userservice.check_email(this.forgot_password.value.email).subscribe(data => {
         if (data['success']) {
           this.generete_otp(this.forgot_password.value.email)
+          this.forgot_password.reset()
+          this.forgot_password.controls['email'].setErrors(null)
         } else {
           this.login_error = true
           setTimeout(() => {
@@ -364,7 +368,7 @@ export class HeaderComponent implements OnInit {
         this.check_otp.patchValue({ email: email })
         this.otp.nativeElement.style.display = 'block'
         this.forgot.nativeElement.style.display = 'none'
-        this.startTimer(environment.SET_TIME_FORGOT,email);
+        this.startTimer(environment.SET_TIME_FORGOT, email);
       }
     })
   }
@@ -378,6 +382,9 @@ export class HeaderComponent implements OnInit {
           this.changepassword.nativeElement.style.display = 'block'
           this.otp.nativeElement.style.display = 'none'
           this.change_password_forgot.patchValue({ email: this.check_otp.value.email })
+          this.check_otp.reset()
+          this.check_otp.controls['otp'].setErrors(null)
+          this.check_otp.controls['email'].setErrors(null)
         } else {
           this.check_otp.controls['otp'].setErrors({ 'wrong_otp': true });
         }
@@ -389,12 +396,35 @@ export class HeaderComponent implements OnInit {
       this.userservice.update_fgpassword(this.change_password_forgot.value.email, this.change_password_forgot.value.cpassword).subscribe(res => {
         if (res['message']) {
           this.changepassword.nativeElement.style.display = 'none'
+          this.change_password_forgot.reset()
+          this.change_password_forgot.controls['new_password'].setErrors(null)
+          this.change_password_forgot.controls['cpassword'].setErrors(null)
+          this.change_password_forgot.controls['email'].setErrors(null)
           this.toastr.success({ detail: 'Success!', summary: 'Password change successfully!' });
         } else {
           this.toastr.success({ detail: 'Error!', summary: 'Something went wrong!' });
         }
       })
     }
+  }
+  mustMatch(controlName: string, matchingControlName: string) {
+
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+
+      if (matchingControl.errors && !matchingControl.errors['mustMatch']) {
+        return;
+      }
+
+      // set error on matchingControl if validation fails
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ mustMatch: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+      return null;
+    };
   }
   INR_convert() {
     this.product.set_currency.next('INR')
@@ -404,19 +434,18 @@ export class HeaderComponent implements OnInit {
   }
   selectedCurrency: any
   get_currency() {
-    this.product.set_currency.subscribe(data=>{
-      if(data.length>0){
+    this.product.set_currency.subscribe(data => {
+      if (data.length > 0) {
         this.selectedCurrency = data
-      }else{
+      } else {
         this.selectedCurrency = 'INR'
       }
     })
   }
   convertWithCurrencyRate(value: number, currency: string) {
-    return this.product.convertWithCurrencyRate(value,currency)
-   }
-  global_search(e:any){
-    // console.log(e.value)
-    this.route.navigate(['/search/'+e.value+'']);
+    return this.product.convertWithCurrencyRate(value, currency)
+  }
+  global_search(e: any) {
+    this.route.navigate(['/search/' + e.value + '']);
   }
 }

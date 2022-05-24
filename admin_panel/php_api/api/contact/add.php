@@ -10,7 +10,6 @@ include_once '../user/auth.php';
 // Instantiate DB & connect
 $database = new Database();
 $db = $database->connect();
-
 // Instantiate contact object
 $contact = new Contact($db);
 $data = json_decode(file_get_contents("php://input"));
@@ -21,8 +20,6 @@ if ($data) {
     $contact->message = $data->message;
     // contact read query
     $result = $contact->add_contact();
-
-
     // Check if any contact
     if ($result) {
         // contact array

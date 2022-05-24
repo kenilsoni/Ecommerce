@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2022 at 04:39 PM
+-- Generation Time: May 24, 2022 at 02:46 PM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `about` (
   `ID` int(11) NOT NULL,
-  `data` varchar(255) NOT NULL,
+  `data` text NOT NULL,
   `Modified_At` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -39,7 +39,7 @@ CREATE TABLE `about` (
 --
 
 INSERT INTO `about` (`ID`, `data`, `Modified_At`) VALUES
-(1, '.<p>&nbsp;</p>\r\n\r\n<p><img alt=\"\" src=\"https://i0.wp.com/css-tricks.com/wp-content/uploads/2020/03/cover.jpg?fit=1200%2C600&amp;ssl=1\" />dvdsdwew</p>\r\n.', '2022-05-17 07:00:14');
+(1, '.<p>&nbsp;</p>\r\n\r\n<div class=\"row\">\r\n<div class=\"about-us col-sm-9\">\r\n<h1>&lt;h1&gt; display style&nbsp;</h1>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n\r\n<h2>&lt;h2&gt; display style</h2>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>\r\n\r\n<div class=\"row\">\r\n<div class=\"col-sm-6\">\r\n<div class=\"img-block\"><img alt=\"\" src=\"http://localhost/ecommerce/admin_panel/assets/uploads/cms-img1.jpg\" /></div>\r\n\r\n<div class=\"content-block\">\r\n<h3>&lt;h3&gt; display style</h3>\r\n\r\n<ul>\r\n	<li>Listing 1</li>\r\n	<li>Listing 2</li>\r\n	<li>Listing 3</li>\r\n	<li>Listing 4</li>\r\n</ul>\r\n</div>\r\n</div>\r\n\r\n<div class=\"col-sm-6\">\r\n<div class=\"img-block\"><img alt=\"\" src=\"http://localhost/ecommerce/admin_panel/assets/uploads/cms-img2.jpg\" /></div>\r\n\r\n<div class=\"content-block\">\r\n<h3>&lt;h3&gt; display style</h3>\r\n\r\n<ul>\r\n	<li>Listing 1</li>\r\n	<li>Listing 2</li>\r\n	<li>Listing 3</li>\r\n	<li>Listing 4</li>\r\n</ul>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<h2>&lt;h2&gt; display style</h2>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>\r\n\r\n<div class=\"row\">\r\n<div class=\"col-sm-4\">\r\n<div class=\"img-block\"><img alt=\"\" src=\"http://localhost/ecommerce/admin_panel/assets/uploads/cms-img3.jpg\" /></div>\r\n\r\n<div class=\"text-block\">\r\n<h4>&lt;h4&gt; display style</h4>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</p>\r\n</div>\r\n</div>\r\n\r\n<div class=\"col-sm-4\">\r\n<div class=\"img-block\"><img alt=\"\" src=\"http://localhost/ecommerce/admin_panel/assets/uploads/cms-img4.jpg\" /></div>\r\n\r\n<div class=\"text-block\">\r\n<h4>&lt;h4&gt; display style</h4>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</p>\r\n</div>\r\n</div>\r\n\r\n<div class=\"col-sm-4\">\r\n<div class=\"img-block\"><img alt=\"\" src=\"http://localhost/ecommerce/admin_panel/assets/uploads/cms-img5.jpg\" /></div>\r\n\r\n<div class=\"text-block\">\r\n<h4>&lt;h4&gt; display style</h4>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</p>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<h2>&lt;h2&gt; display style</h2>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>\r\n\r\n<div class=\"row\">\r\n<div class=\"col-sm-6\">\r\n<div class=\"img-block\"><img alt=\"\" src=\"http://localhost/ecommerce/admin_panel/assets/uploads/cms-img6.jpg\" /></div>\r\n\r\n<div class=\"content-block\">\r\n<h5>&lt;h5&gt; display style</h5>\r\n\r\n<ol>\r\n	<li>Listing 1</li>\r\n	<li>Listing 2</li>\r\n	<li>Listing 3</li>\r\n	<li>Listing 4</li>\r\n</ol>\r\n</div>\r\n</div>\r\n\r\n<div class=\"col-sm-6\">\r\n<div class=\"img-block\"><img alt=\"\" src=\"http://localhost/ecommerce/admin_panel/assets/uploads/cms-img7.jpg\" /></div>\r\n\r\n<div class=\"content-block\">\r\n<h6>&lt;h6&gt; display style</h6>\r\n\r\n<ol>\r\n	<li>Listing 1</li>\r\n	<li>Listing 2</li>\r\n	<li>Listing 3</li>\r\n	<li>Listing 4</li>\r\n</ol>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n\r\n<div class=\"col-sm-3\">\r\n<div class=\"promo-block\"><a href=\"product.html\" title=\"Promotion\"><img alt=\"promo1.jpg\" class=\"img-responsive\" src=\"http://localhost/ecommerce/admin_panel/assets/uploads/promo1.jpg\" /> </a></div>\r\n\r\n<div class=\"promo-block\"><a href=\"product.html\" title=\"Promotion\"><img alt=\"promo1.jpg\" class=\"img-responsive\" src=\"http://localhost/ecommerce/admin_panel/assets/uploads/promo2.jpg\" /> </a></div>\r\n</div>\r\n</div>\r\n\r\n<p>.</p>\r\n.', '2022-05-24 06:00:08');
 
 -- --------------------------------------------------------
 
@@ -62,6 +62,28 @@ CREATE TABLE `admin_details` (
 
 INSERT INTO `admin_details` (`ID`, `UserName`, `Password`, `Email`, `Modified_at`, `Created_at`) VALUES
 (1, 'Admin', '$2y$10$XdoEAwY0QqtxL.RyNqSOQ.I31QQVpR6HhKHnAKNyuc/6deOiSWsAW', 'admin@gmail.com', '2022-04-05 00:00:00', '2022-04-05 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `all_newsletter`
+--
+
+CREATE TABLE `all_newsletter` (
+  `ID` int(11) NOT NULL,
+  `Title` varchar(50) NOT NULL,
+  `Description` varchar(255) NOT NULL,
+  `Created_At` timestamp NOT NULL DEFAULT current_timestamp(),
+  `Modified_At` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `all_newsletter`
+--
+
+INSERT INTO `all_newsletter` (`ID`, `Title`, `Description`, `Created_At`, `Modified_At`) VALUES
+(1, 'About new arrival', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printe', '2022-05-23 09:43:54', '2022-05-23 09:43:54'),
+(2, 'new product', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printe', '2022-05-23 10:00:44', '2022-05-23 10:00:44');
 
 -- --------------------------------------------------------
 
@@ -111,9 +133,10 @@ CREATE TABLE `contact` (
 
 INSERT INTO `contact` (`ID`, `Name`, `Email`, `Subject`, `Message`, `Reply`, `Created_At`, `Modified_At`) VALUES
 (1, 'kenil', 'jay@yopmail.com', 'abc', 'change ui', 'change successfully', '2022-05-13 05:44:29', '2022-05-13 07:09:56'),
-(2, 'kenil', 'abcd@yopmail.com', 'change abc', 'change abc', '', '2022-05-17 07:14:38', '2022-05-17 07:14:38'),
+(2, 'kenil', 'abcd@yopmail.com', 'change abc', 'change abc', 'ok', '2022-05-17 07:14:38', '2022-05-23 13:47:09'),
 (3, 'kps', 'kenil@yopmail.com', 'ok', 'ok', '', '2022-05-17 07:17:42', '2022-05-17 07:17:42'),
-(5, 'sss', 'jay@dfsdfs', 'sss', 'sss', '', '2022-05-17 14:37:58', '2022-05-17 14:37:58');
+(6, 'kenil', 'devarsh@yopmail.com', 'check data', 'add data', '', '2022-05-24 11:55:05', '2022-05-24 11:55:05'),
+(7, 'kenil', 'devarsh@yopmail.com', 'check data', 'add data', '', '2022-05-24 11:55:05', '2022-05-24 11:55:05');
 
 -- --------------------------------------------------------
 
@@ -160,13 +183,18 @@ CREATE TABLE `forgot_password` (
 INSERT INTO `forgot_password` (`ID`, `Email`, `OTP`, `IsExpire`, `Created_At`) VALUES
 (1, 'jay@yopmail.com', 10181, 1, '2022-05-17 09:37:54'),
 (2, 'jay@yopmail.com', 20306, 1, '2022-05-17 10:00:01'),
-(3, 'jay@yopmail.com', 17728, 1, '2022-05-17 09:31:21'),
 (6, 'jay@yopmail.com', 66206, 1, '2022-05-17 12:03:43'),
-(7, 'jay@yopmail.com', 60366, 1, '2022-05-17 12:08:12'),
-(8, 'jay@yopmail.com', 44815, 1, '2022-05-17 13:41:00'),
-(9, 'jay@yopmail.com', 23232, 1, '2022-05-17 14:23:30'),
 (10, 'jay@yopmail.com', 24731, 1, '2022-05-17 14:26:16'),
-(11, 'jay@yopmail.com', 75078, 0, '2022-05-17 14:35:56');
+(18, 'jay@yopmail.com', 61093, 1, '2022-05-20 13:38:03'),
+(19, 'jay@yopmail.com', 95291, 1, '2022-05-20 13:52:24'),
+(28, 'jay@yopmail.com', 82890, 1, '2022-05-24 06:31:11'),
+(29, 'jay@yopmail.com', 29078, 1, '2022-05-24 06:32:19'),
+(30, 'jay@yopmail.com', 34824, 1, '2022-05-24 06:32:51'),
+(31, 'jay@yopmail.com', 37283, 1, '2022-05-24 06:35:25'),
+(32, 'jay@yopmail.com', 56685, 1, '2022-05-24 06:36:37'),
+(33, 'jay@yopmail.com', 69218, 1, '2022-05-24 06:37:51'),
+(34, 'jay@yopmail.com', 37491, 1, '2022-05-24 06:45:14'),
+(35, 'jay@yopmail.com', 80330, 1, '2022-05-24 08:11:58');
 
 -- --------------------------------------------------------
 
@@ -201,7 +229,7 @@ CREATE TABLE `order_details` (
   `Size` varchar(100) NOT NULL,
   `Total` float NOT NULL,
   `Payment_ID` varchar(255) NOT NULL,
-  `Status` int(11) NOT NULL,
+  `Status` int(11) NOT NULL COMMENT '1 for pending 2 for complete',
   `Created_At` timestamp NOT NULL DEFAULT current_timestamp(),
   `Modified_At` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -211,10 +239,14 @@ CREATE TABLE `order_details` (
 --
 
 INSERT INTO `order_details` (`ID`, `Order_ID`, `User_ID`, `Product_ID`, `Quantity`, `Color`, `Size`, `Total`, `Payment_ID`, `Status`, `Created_At`, `Modified_At`) VALUES
-(5, 36210, 36, '39,38', '1,2', '7,3', '6,1', 5066.04, 'pi_3KzzyWSJ5Q50OIO50FbhOV6b', 2, '2022-05-16 09:13:05', '2022-05-16 09:13:05'),
-(7, 49652, 36, '31,27', '1,1', '3,2', '1,6', 2962.59, 'pi_3L001PSJ5Q50OIO50O9OYkzE', 1, '2022-05-16 09:15:55', '2022-05-16 09:15:55'),
+(5, 36210, 36, '39,38', '1,2', '7,3', '6,1', 5066.04, 'pi_3KzzyWSJ5Q50OIO50FbhOV6b', 2, '2021-05-16 09:13:05', '2022-05-16 09:13:05'),
+(7, 49652, 36, '31,27', '1,1', '3,2', '1,6', 2962.59, 'pi_3L001PSJ5Q50OIO50O9OYkzE', 1, '2022-04-18 09:15:55', '2022-05-16 09:15:55'),
 (9, 56883, 36, '31,40', '1,1', '3,2', '1,1', 4149.18, 'pi_3L005tSJ5Q50OIO51nHR7OOc', 1, '2022-05-16 09:20:38', '2022-05-16 09:20:38'),
-(12, 77367, 36, '27', '1', '2', '6', 1616.16, 'pi_3L0I8XSJ5Q50OIO50WKROpv2', 1, '2022-05-17 04:36:37', '2022-05-17 04:36:37');
+(12, 77367, 36, '27', '1', '2', '6', 1616.16, 'pi_3L0I8XSJ5Q50OIO50WKROpv2', 1, '2022-05-17 04:36:37', '2022-05-17 04:36:37'),
+(13, 23392, 36, '27,40', '2,1', '2,2', '6,1', 6035.07, 'pi_3L1SbPSJ5Q50OIO50mNyzUOh', 1, '2022-05-20 09:59:10', '2022-05-20 09:59:10'),
+(15, 12375, 36, '25', '2', '2', '6', 11100, 'pi_3L1Sm8SJ5Q50OIO50TVtMErR', 1, '2022-05-20 10:10:11', '2022-05-20 10:10:11'),
+(34, 92941, 36, '25,31', '1,1', '2,3', '6,1', 6896.43, 'pi_3L1Up6SJ5Q50OIO51RuotLXi', 1, '2022-05-20 12:21:18', '2022-05-20 12:21:18'),
+(39, 43621, 36, '41', '1', '3', '6', 2804.97, 'pi_3L2S5iSJ5Q50OIO50V6wVvvu', 1, '2022-05-23 03:38:38', '2022-05-23 03:38:38');
 
 -- --------------------------------------------------------
 
@@ -224,8 +256,6 @@ INSERT INTO `order_details` (`ID`, `Order_ID`, `User_ID`, `Product_ID`, `Quantit
 
 CREATE TABLE `product` (
   `ID` int(10) NOT NULL,
-  `Stripe_ID` varchar(255) NOT NULL,
-  `Price_ID` varchar(255) NOT NULL,
   `Product_Name` varchar(100) NOT NULL,
   `Product_Description` varchar(255) NOT NULL,
   `Product_Price` int(10) NOT NULL,
@@ -244,27 +274,27 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`ID`, `Stripe_ID`, `Price_ID`, `Product_Name`, `Product_Description`, `Product_Price`, `Product_Quantity`, `Product_Color_ID`, `IsTrending`, `Product_Size`, `Category_ID`, `Subcategory_ID`, `SKU`, `Created_At`, `Modified_At`) VALUES
-(23, 'prod_LgJPIVMMfFiFmD', 'price_1KywmJSJ5Q50OIO514Eexqqm', 'product2 kids tshirt', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected', 1000, 1, '7', 0, '1', 53, 14, NULL, '2022-04-13 06:51:01', '2022-04-25 07:33:44'),
-(24, 'prod_LgJO2Ps8GeXsLj', 'price_1KywloSJ5Q50OIO5m4Y5EliT', 'product3 men shirt', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected', 2000, 2, '3', 1, '1', 9, 4, NULL, '2022-04-13 06:54:28', '2022-04-25 09:03:50'),
-(25, 'prod_LgJORh7ibswcSU', 'price_1KywlFSJ5Q50OIO5fZKDS1YR', 'product1 women jeans', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected', 5000, 11, '2', 1, '6', 10, 6, NULL, '2022-04-13 07:38:58', '2022-04-13 07:38:58'),
-(26, 'prod_LgJNdDqRQcXnot', 'price_1KywkfSJ5Q50OIO5z2dtqs41', 'product4 accessories wallet', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected', 2556, 12, '3', 0, '1', 69, 15, NULL, '2022-04-18 09:45:08', '2022-04-18 09:45:08'),
-(27, 'prod_LgJM48ADd8UzGV', 'price_1Kywk6SJ5Q50OIO5QEq1NgVM', 'product8 men shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 1456, 12, '2', 1, '6', 9, 4, NULL, '2022-04-19 03:44:38', '2022-04-19 03:44:38'),
-(28, 'prod_LgJFQMxuyC5hKb', 'price_1Kywd1SJ5Q50OIO57hz9vkVd', 'product9 man t-shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2554, 14, '7', 0, '6', 9, 12, NULL, '2022-04-19 03:52:40', '2022-05-05 09:46:57'),
-(29, 'prod_LgJGFJaXkxMiTv', 'price_1KywdpSJ5Q50OIO5CS1rjdJg', 'product9 men jeans', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 4444, 44, '2', 0, '1', 9, 16, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
-(30, 'prod_LgJG1mMJVe0yGV', 'price_1KyweSSJ5Q50OIO5cUoDKrh0', 'product10 men shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 1212, 11, '2', 0, '1', 9, 4, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
-(31, 'prod_LgJHFAc2Dh1Sbl', 'price_1Kywf7SJ5Q50OIO5KXeh3USy', 'product11 men shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 1213, 22, '3', 1, '1', 9, 4, NULL, '2022-04-19 03:52:40', '2022-04-25 06:00:03'),
-(32, 'prod_LgJILuyc64nj9s', 'price_1KywgHSJ5Q50OIO5AJMmBnem', 'product 12 men shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2121, 11, '3', 0, '6', 9, 4, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
-(33, 'prod_LgJJLaa5p2ZV5f', 'price_1KywgvSJ5Q50OIO5LsHJGMMg', 'product 13 men shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2131, 12, '2', 1, '1', 9, 4, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
-(34, 'prod_LgJKC7TwQ47uNE', 'price_1KywhcSJ5Q50OIO5dId6bbqA', 'product 14 women  jeans', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2154, 12, '2', 0, '6', 10, 6, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
-(35, 'prod_LgJKpgoHXDt7Pt', 'price_1KywiGSJ5Q50OIO5Pkj4KXmT', 'product 15 women jeans', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2563, 12, '3', 0, '1', 10, 6, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
-(36, 'prod_LgJLF1WmM30UB6', 'price_1KywirSJ5Q50OIO5K025cLke', 'product 16 women tshirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 1232, 12, '7', 1, '1', 10, 18, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
-(37, 'prod_LgJMzGSgadtb17', 'price_1KywjQSJ5Q50OIO5Fv3v3IDG', 'product 17  women tshirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2563, 21, '2', 0, '6', 10, 18, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
-(38, 'prod_LgJDubOjbaQvRF', 'price_1KywbVSJ5Q50OIO5VAOHDgpJ', 'product 20 women jeans', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 1000, 12, '3', 1, '1', 10, 6, NULL, '2022-04-19 03:56:28', '2022-04-19 03:56:28'),
-(39, 'prod_LgJE4dv6o4Zqf1', 'price_1KywcKSJ5Q50OIO5YyrmKjO4', 'product 22 women tshirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2564, 11, '7', 0, '6', 10, 18, NULL, '2022-04-19 03:56:28', '2022-04-19 03:56:28'),
-(40, 'prod_LgJBCf2o4kTKpw', 'price_1KywZcSJ5Q50OIO5niOBTR8D', 'product25 men jacket', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2525, 22, '2,3,7', 1, '1,6', 9, 17, NULL, '2022-04-19 04:03:34', '2022-04-19 04:03:34'),
-(41, 'prod_LgJDOkcqIxGP0Z', 'price_1KywagSJ5Q50OIO5yR06ebPR', 'product 29 men jacket', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2527, 14, '3', 1, '6', 9, 17, NULL, '2022-04-19 04:03:34', '2022-04-19 04:03:34'),
-(53, 'prod_LgJAXiJQ8E9Usz', 'price_1KywXvSJ5Q50OIO5xynl0X8m', 'Men\'s Regular Fit T-Shirt', 'The product will be an excellent pick for you. It ensures an easy maintenance.', 1000, 2, '3', 0, '1', 9, 12, NULL, '2022-05-13 11:20:35', '2022-05-13 11:20:35');
+INSERT INTO `product` (`ID`, `Product_Name`, `Product_Description`, `Product_Price`, `Product_Quantity`, `Product_Color_ID`, `IsTrending`, `Product_Size`, `Category_ID`, `Subcategory_ID`, `SKU`, `Created_At`, `Modified_At`) VALUES
+(23, 'product2 kids track', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected', 1000, 1, '7', 0, '1', 53, 14, NULL, '2022-04-13 06:51:01', '2022-04-25 07:33:44'),
+(24, 'product3 men shirt', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected', 2000, 2, '3', 1, '1', 9, 4, NULL, '2022-04-13 06:54:28', '2022-04-25 09:03:50'),
+(25, 'product1 women dress', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected', 5000, 11, '2', 1, '6', 10, 6, NULL, '2022-04-13 07:38:58', '2022-04-13 07:38:58'),
+(26, 'product4 accessories wallet', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected', 2556, 12, '3', 0, '1', 69, 15, NULL, '2022-04-18 09:45:08', '2022-04-18 09:45:08'),
+(27, 'product 8 men shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 1456, 12, '2', 1, '6', 9, 4, NULL, '2022-04-19 03:44:38', '2022-04-19 03:44:38'),
+(28, 'product9 man t-shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2554, 14, '7', 0, '6', 9, 12, NULL, '2022-04-19 03:52:40', '2022-05-05 09:46:57'),
+(29, 'product9 men jeans', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 4444, 44, '2', 0, '1', 9, 16, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
+(30, 'product10 men shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 1212, 11, '2', 0, '1', 9, 4, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
+(31, 'product11 men shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 1213, 22, '3', 1, '1', 9, 4, NULL, '2022-04-19 03:52:40', '2022-04-25 06:00:03'),
+(32, 'product 12 men shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2121, 11, '3', 0, '6', 9, 4, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
+(33, 'product 13 men shirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2131, 12, '2', 1, '1', 9, 4, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
+(34, 'product 14 women  dress', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2154, 12, '2', 0, '6', 10, 6, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
+(35, 'product 15 women dress', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2563, 12, '3', 0, '1', 10, 6, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
+(36, 'product 16 women kurta', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 1232, 12, '7', 1, '1', 10, 18, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
+(37, 'product 17  women kurta', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2563, 21, '2', 0, '6', 10, 18, NULL, '2022-04-19 03:52:40', '2022-04-19 03:52:40'),
+(38, 'product 20 women dress', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 1000, 12, '3', 1, '1', 10, 6, NULL, '2022-04-19 03:56:28', '2022-04-19 03:56:28'),
+(39, 'product 22 women tshirt', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2564, 11, '7', 0, '6', 10, 18, NULL, '2022-04-19 03:56:28', '2022-04-19 03:56:28'),
+(40, 'product25 men jacket', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2525, 22, '2,3,7', 1, '1,6', 9, 17, NULL, '2022-04-19 04:03:34', '2022-04-19 04:03:34'),
+(41, 'product 29 men jacket', 'packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (in', 2527, 14, '3', 1, '6', 9, 17, NULL, '2022-04-19 04:03:34', '2022-04-19 04:03:34'),
+(53, 'Men\'s Regular Fit T-Shirt', 'The product will be an excellent pick for you. It ensures an easy maintenance.', 1000, 2, '3', 0, '1', 9, 12, NULL, '2022-05-13 11:20:35', '2022-05-13 11:20:35');
 
 -- --------------------------------------------------------
 
@@ -287,6 +317,14 @@ CREATE TABLE `product_cart` (
   `Created_At` timestamp NOT NULL DEFAULT current_timestamp(),
   `Modified_At` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `product_cart`
+--
+
+INSERT INTO `product_cart` (`Price_ID`, `ID`, `Product_ID`, `Product_Name`, `Quantity`, `Unit_Price`, `Color_ID`, `Size_ID`, `Product_Image`, `User_ID`, `Total_Amount`, `Created_At`, `Modified_At`) VALUES
+('', 132, 38, 'product 20 women dress', 1, 1000, 3, 1, '1945108368.jpg', 36, 1000, '2022-05-24 03:49:02', '2022-05-24 12:19:26'),
+('', 134, 23, 'product2 kids track', 1, 1000, 7, 1, '345592999.jpg', 36, 1000, '2022-05-24 12:18:14', '2022-05-24 12:18:27');
 
 -- --------------------------------------------------------
 
@@ -343,6 +381,7 @@ INSERT INTO `product_color` (`ID`, `Product_Color`, `Color_Code`, `Created_At`, 
 
 CREATE TABLE `product_coupan` (
   `ID` int(11) NOT NULL,
+  `Stripe_ID` varchar(255) NOT NULL,
   `Coupan_ID` varchar(255) NOT NULL,
   `Discount` varchar(255) NOT NULL,
   `Created_At` date NOT NULL DEFAULT current_timestamp(),
@@ -353,8 +392,8 @@ CREATE TABLE `product_coupan` (
 -- Dumping data for table `product_coupan`
 --
 
-INSERT INTO `product_coupan` (`ID`, `Coupan_ID`, `Discount`, `Created_At`, `Expiry`) VALUES
-(7, 'H3H0G7VE', '10', '2022-05-13', '2022-07-13');
+INSERT INTO `product_coupan` (`ID`, `Stripe_ID`, `Coupan_ID`, `Discount`, `Created_At`, `Expiry`) VALUES
+(7, '3DhCSVy6', 'H3H0G7VE', '10', '2022-05-13', '2022-07-13');
 
 -- --------------------------------------------------------
 
@@ -404,6 +443,32 @@ INSERT INTO `product_image` (`ID`, `Product_ID`, `Image_Path`, `Created_At`, `Mo
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `product_review`
+--
+
+CREATE TABLE `product_review` (
+  `ID` int(11) NOT NULL,
+  `Product_ID` int(11) NOT NULL,
+  `User_ID` int(11) NOT NULL,
+  `Product_Rate` int(11) NOT NULL,
+  `Product_Review` varchar(255) NOT NULL,
+  `Created_At` timestamp NULL DEFAULT current_timestamp(),
+  `Modified_At` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `product_review`
+--
+
+INSERT INTO `product_review` (`ID`, `Product_ID`, `User_ID`, `Product_Rate`, `Product_Review`, `Created_At`, `Modified_At`) VALUES
+(60, 27, 1, 2, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor', '2022-05-20 07:17:49', '2022-05-20 07:17:49'),
+(70, 27, 36, 3, 'addd', '2022-05-20 09:55:00', '2022-05-20 09:55:00'),
+(71, 36, 36, 4, 'nice product', '2022-05-24 04:06:21', '2022-05-24 04:06:21'),
+(72, 38, 36, 3, 'ewewewew', '2022-05-24 09:52:03', '2022-05-24 09:52:03');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product_size`
 --
 
@@ -442,14 +507,14 @@ CREATE TABLE `product_subcategory` (
 --
 
 INSERT INTO `product_subcategory` (`ID`, `Category_ID`, `Subcategory_Name`, `Subcategory_desc`, `Created_At`, `Modified_At`) VALUES
-(4, 9, 'Shirt', 'bg', '2022-04-08 08:32:02', '2022-04-13 10:09:50'),
-(6, 10, 'JEANS', 'dd', '2022-04-08 10:43:18', '2022-04-08 10:43:18'),
-(12, 9, 'T-shirt', 'abcd', '2022-04-12 05:50:25', '2022-04-12 05:50:25'),
-(14, 53, 'T-shirt', 'aws', '2022-04-15 04:18:06', '2022-04-15 04:18:06'),
+(4, 9, 'Shirt', 'bg', '2022-04-08 08:32:02', '2022-05-23 07:27:01'),
+(6, 10, 'Dress', 'dd', '2022-04-08 10:43:18', '2022-05-23 07:30:32'),
+(12, 9, 'Tshirt', 'abcd', '2022-04-12 05:50:25', '2022-05-23 07:27:28'),
+(14, 53, 'Track', 'aws', '2022-04-15 04:18:06', '2022-05-23 07:34:18'),
 (15, 69, 'WALLET', 'Abc', '2022-04-15 04:23:43', '2022-04-15 04:23:43'),
-(16, 9, 'JEANS', 'aa', '2022-04-18 14:42:41', '2022-04-18 14:42:41'),
-(17, 9, 'Jacket', 'dd', '2022-04-18 14:43:53', '2022-04-18 14:43:53'),
-(18, 10, 'T-shirt', 'aa', '2022-04-18 14:44:26', '2022-04-18 14:44:26');
+(16, 9, 'Jeans', 'aa', '2022-04-18 14:42:41', '2022-05-23 07:28:53'),
+(17, 9, 'Jacket', 'dd', '2022-04-18 14:43:53', '2022-05-23 07:29:03'),
+(18, 10, 'Kurta', 'aa', '2022-04-18 14:44:26', '2022-05-23 07:32:12');
 
 -- --------------------------------------------------------
 
@@ -461,7 +526,6 @@ CREATE TABLE `product_wishlist` (
   `ID` int(11) NOT NULL,
   `Product_ID` int(11) NOT NULL,
   `User_ID` int(11) NOT NULL,
-  `Price_ID` varchar(255) NOT NULL,
   `Created_At` timestamp NOT NULL DEFAULT current_timestamp(),
   `Modified_At` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -470,8 +534,10 @@ CREATE TABLE `product_wishlist` (
 -- Dumping data for table `product_wishlist`
 --
 
-INSERT INTO `product_wishlist` (`ID`, `Product_ID`, `User_ID`, `Price_ID`, `Created_At`, `Modified_At`) VALUES
-(76, 27, 36, 'price_1Kywk6SJ5Q50OIO5QEq1NgVM', '2022-05-16 14:06:07', '2022-05-16 14:06:07');
+INSERT INTO `product_wishlist` (`ID`, `Product_ID`, `User_ID`, `Created_At`, `Modified_At`) VALUES
+(76, 27, 36, '2022-05-16 14:06:07', '2022-05-16 14:06:07'),
+(82, 26, 36, '2022-05-24 03:50:29', '2022-05-24 03:50:29'),
+(88, 31, 36, '2022-05-24 04:03:04', '2022-05-24 04:03:04');
 
 -- --------------------------------------------------------
 
@@ -597,10 +663,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`ID`, `UserName`, `FirstName`, `LastName`, `Email`, `Password`, `Gender`, `Phone`, `Mobile`, `Intrest`, `Created_At`, `Modified_At`, `Status`) VALUES
-(1, 'kps', 'kenil', 'soni', 'abcss@gmail.com', 'an7oiltGds/I9oXIguqGAw==', 'M', '11111111', '11111111', NULL, '2022-04-13 12:00:00', '2022-04-13 12:00:00', 1),
-(2, 'aaa', 'kenil', 'soni', 'abc@gmail.com', 'an7oiltGds/I9oXIguqGAw==', 'M', '1111111111', '5478965478', NULL, '2022-04-13 12:00:00', '2022-04-13 12:00:00', 1),
-(35, 'kenilll', 'kenilll', 'soni', 'andd@gmskf.vom', 'an7oiltGds/I9oXIguqGAw==', 'M', '3333333333', '2323232323', 'NULL', '2022-04-25 10:05:34', '2022-04-25 10:05:34', 1),
-(36, 'kenil1111', 'kenil', 'soni', 'jay@yopmail.com', 'an7oiltGds/I9oXIguqGAw==', 'F', '2222222223', '5555555555', 'NULL', '2022-04-28 12:25:15', '2022-05-17 19:56:38', 1);
+(1, 'kps', 'test1', 'soni', 'abcss@gmail.com', 'an7oiltGds/I9oXIguqGAw==', 'M', '11111111', '11111111', NULL, '2022-04-13 12:00:00', '2022-04-13 12:00:00', 1),
+(2, 'aaa', 'test2', 'soni', 'abc@gmail.com', 'an7oiltGds/I9oXIguqGAw==', 'M', '1111111111', '5478965478', NULL, '2022-04-13 12:00:00', '2022-04-13 12:00:00', 1),
+(35, 'kenilll', 'test3', 'soni', 'andd@gmskf.vom', 'an7oiltGds/I9oXIguqGAw==', 'M', '3333333333', '2323232323', 'NULL', '2022-04-25 10:05:34', '2022-04-25 10:05:34', 1),
+(36, 'kenil', 'kenil', 'soni', 'jay@yopmail.com', 'an7oiltGds/I9oXIguqGAw==', 'F', '2222222223', '5555555555', 'NULL', '2022-04-28 12:25:15', '2022-05-24 12:48:24', 1);
 
 -- --------------------------------------------------------
 
@@ -633,6 +699,29 @@ INSERT INTO `user_address` (`ID`, `User_ID`, `Street`, `Country_ID`, `State_ID`,
 (11, 35, 'abcd', 1, 1, 1, 'Billing', '2022-05-02 16:31:32'),
 (12, 2, 'ship2', 1, 1, 1, 'Shipping', '2022-05-03 04:09:30');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_newsletter`
+--
+
+CREATE TABLE `user_newsletter` (
+  `ID` int(11) NOT NULL,
+  `Email` varchar(255) NOT NULL,
+  `Created_At` timestamp NOT NULL DEFAULT current_timestamp(),
+  `Modified_At` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user_newsletter`
+--
+
+INSERT INTO `user_newsletter` (`ID`, `Email`, `Created_At`, `Modified_At`) VALUES
+(1, 'jay@yopmail.com', '2022-05-23 09:44:19', '2022-05-23 09:44:19'),
+(2, 'kenil@yopmail.com', '2022-05-23 09:44:31', '2022-05-23 09:44:31'),
+(5, 'taksh@yopmail.com', '2022-05-23 12:45:09', '2022-05-23 12:45:09'),
+(6, 'devarsh@yopmail.com', '2022-05-23 12:46:04', '2022-05-23 12:46:04');
+
 --
 -- Indexes for dumped tables
 --
@@ -647,6 +736,12 @@ ALTER TABLE `about`
 -- Indexes for table `admin_details`
 --
 ALTER TABLE `admin_details`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `all_newsletter`
+--
+ALTER TABLE `all_newsletter`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -738,6 +833,14 @@ ALTER TABLE `product_image`
   ADD KEY `product_image_ibfk_1` (`Product_ID`);
 
 --
+-- Indexes for table `product_review`
+--
+ALTER TABLE `product_review`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `Product_ID` (`Product_ID`),
+  ADD KEY `User_ID` (`User_ID`);
+
+--
 -- Indexes for table `product_size`
 --
 ALTER TABLE `product_size`
@@ -802,6 +905,12 @@ ALTER TABLE `user_address`
   ADD KEY `City_ID` (`City_ID`);
 
 --
+-- Indexes for table `user_newsletter`
+--
+ALTER TABLE `user_newsletter`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -818,6 +927,12 @@ ALTER TABLE `admin_details`
   MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `all_newsletter`
+--
+ALTER TABLE `all_newsletter`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `city`
 --
 ALTER TABLE `city`
@@ -827,7 +942,7 @@ ALTER TABLE `city`
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `country`
@@ -839,7 +954,7 @@ ALTER TABLE `country`
 -- AUTO_INCREMENT for table `forgot_password`
 --
 ALTER TABLE `forgot_password`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `order_address`
@@ -851,19 +966,19 @@ ALTER TABLE `order_address`
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `product_cart`
 --
 ALTER TABLE `product_cart`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- AUTO_INCREMENT for table `product_category`
@@ -881,13 +996,19 @@ ALTER TABLE `product_color`
 -- AUTO_INCREMENT for table `product_coupan`
 --
 ALTER TABLE `product_coupan`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `product_image`
 --
 ALTER TABLE `product_image`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+
+--
+-- AUTO_INCREMENT for table `product_review`
+--
+ALTER TABLE `product_review`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `product_size`
@@ -905,7 +1026,7 @@ ALTER TABLE `product_subcategory`
 -- AUTO_INCREMENT for table `product_wishlist`
 --
 ALTER TABLE `product_wishlist`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT for table `service_tax`
@@ -942,6 +1063,12 @@ ALTER TABLE `user`
 --
 ALTER TABLE `user_address`
   MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `user_newsletter`
+--
+ALTER TABLE `user_newsletter`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
@@ -988,6 +1115,13 @@ ALTER TABLE `product_cart`
 --
 ALTER TABLE `product_image`
   ADD CONSTRAINT `product_image_ibfk_1` FOREIGN KEY (`Product_ID`) REFERENCES `product` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `product_review`
+--
+ALTER TABLE `product_review`
+  ADD CONSTRAINT `product_review_ibfk_1` FOREIGN KEY (`Product_ID`) REFERENCES `product` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `product_review_ibfk_2` FOREIGN KEY (`User_ID`) REFERENCES `user` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `product_subcategory`

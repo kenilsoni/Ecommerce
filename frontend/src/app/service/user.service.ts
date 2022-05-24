@@ -142,6 +142,10 @@ export class UserService {
   addEmail_nl(email:any){
     return this.httpclient.get<any>(`${environment.API_URL}/newsletter/add.php?email=`+email)
   }
+  //get about
+  get_about(){
+    return this.httpclient.get<any>(`${environment.API_URL}/user/about.php`)
+  }
 
 
 

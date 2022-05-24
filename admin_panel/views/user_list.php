@@ -49,7 +49,8 @@
                                             <th>Full Name</th>
                                             <th>Phone</th>
                                             <th>Email</th>
-                                            <th style="width:200px">Action</th>
+                                            <th>Status</th>
+                                            <th style="width:250px">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

@@ -34,7 +34,6 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService, private userservice: UserService, private productservice: ProductService) { }
 
   ngOnInit(): void {
-
     this.getuser_id()
     this.getcart_data()
     this.get_taxdetails()
@@ -263,9 +262,7 @@ export class CartComponent implements OnInit {
       }
     })
   }
-
   token_checkout!: any
-
   get_shippingadd() {
     this.productservice.get_shipadd(this.user_id).subscribe((data: any) => {
       for (let val of data['data']) {
@@ -276,14 +273,11 @@ export class CartComponent implements OnInit {
     })
   }
   pay() {
-   
-    console.log(this.products);
     var stripe = (<any>window).Stripe(environment.PUBLISHER_KEY)
     this.productservice.checkout_product(this.products).subscribe((data: any) => {
       stripe.redirectToCheckout({ sessionId: data })
     });
   }
-
   loadStripe() {
     if (!window.document.getElementById('stripe-script')) {
       var s = window.document.createElement("script");
@@ -296,7 +290,6 @@ export class CartComponent implements OnInit {
           locale: 'auto',
         });
       }
-
       window.document.body.appendChild(s);
     }
   }

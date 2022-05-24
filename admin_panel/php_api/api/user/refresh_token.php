@@ -7,9 +7,7 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Headers:* ");
 require_once("../../models/JWT.php");
 $jwt = new JWTtoken();
-
 $getdata = file_get_contents("php://input");
-
 if (isset($getdata)) {
     $request = json_decode($getdata);
     if ($request->refreshToken) {
@@ -22,7 +20,6 @@ if (isset($getdata)) {
             $issuedat_claim = time(); // time issued 
             $notbefore_claim = $issuedat_claim + 10;
             $expire_claim = $issuedat_claim + 600;
-
             $token = array(
                 "iss" => $issuer_claim,
                 "aud" => $audience_claim,

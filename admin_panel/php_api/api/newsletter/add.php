@@ -9,16 +9,13 @@ include_once '../user/auth.php';
 // Instantiate DB & connect
 $database = new Database();
 $db = $database->connect();
-
 // Instantiate blog post object
 $user = new User($db);
-
 // Get username
 if (isset($_GET['email'])) {
     $result = $user->add_nl($_GET['email']);
     // Check if any product
     if ($result) {
-
         echo json_encode(
             array('success' => true)
         );

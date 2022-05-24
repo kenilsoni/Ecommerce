@@ -9,10 +9,8 @@ include_once '../user/auth.php';
 // Instantiate DB & connect
 $database = new Database();
 $db = $database->connect();
-
 // Instantiate blog post object
 $user = new User($db);
-
 // Get username
 if (isset($_GET['username'])) {
     $user->UserName = isset($_GET['username']) ? $_GET['username'] : die();
@@ -23,8 +21,6 @@ if (isset($_GET['username'])) {
     $result = $user->check_email();
     $num = $result->rowCount();
 }
-
-
 // Check if any product
 if ($num > 0) {
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {

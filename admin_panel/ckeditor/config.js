@@ -4,6 +4,9 @@
  */
 
 CKEDITOR.editorConfig = function( config ) {
+	config.fillEmptyBlocks = false;
+	config.tabSpaces = 0;
+	config.entities = false;
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';

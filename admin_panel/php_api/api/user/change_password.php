@@ -19,28 +19,24 @@ $user = new User($db);
 $data = json_decode(file_get_contents("php://input"));
 //   print_r($data);die();
 if ($data) {
-    $result=$user->check_password($data->user_id);
+    $result = $user->check_password($data->user_id);
     $num = $result->rowCount();
-    if($num >0){
-        while($row= $result->fetch(PDO::FETCH_ASSOC)){
-            $db_password= openssl_decrypt($row['Password'], "AES-128-ECB", "skp1506");
-            if($db_password===$data->password){
-                $new_password= openssl_encrypt($data->new_password, "AES-128-ECB", "skp1506");
-                $add=$user->update_password($data->user_id,$new_password);
-                if($add){
+    if ($num > 0) {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $db_password = openssl_decrypt($row['Password'], "AES-128-ECB", "skp1506");
+            if ($db_password === $data->password) {
+                $new_password = openssl_encrypt($data->new_password, "AES-128-ECB", "skp1506");
+                $add = $user->update_password($data->user_id, $new_password);
+                if ($add) {
                     echo json_encode(
                         array('success' => true)
                     );
                 }
-            }else{
+            } else {
                 echo json_encode(
                     array('success' => false)
                 );
             }
-            
-            
-
         }
     }
-
 }

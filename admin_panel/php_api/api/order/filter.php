@@ -10,20 +10,11 @@ include_once '../user/auth.php';
 // Instantiate DB & connect
 $database = new Database();
 $db = $database->connect();
-
 // Instantiate order object
 $order = new Order($db);
-
 // Get ID
-
-
 if (!empty($_GET['user_id'])) {
-
-
-    // order read query
-
-
-    $result = $order->read($_GET['user_id'],$_GET['load']);
+    $result = $order->read($_GET['user_id'], $_GET['load']);
     // Get row count
     $num = $result->rowCount();
     // Check if any order
@@ -128,10 +119,7 @@ if (!empty($_GET['user_id'])) {
                     } else if (in_array("lyear", $arr_time)) {
                         $dataa = "YEAR(Created_At) = YEAR(NOW()) - 1";
                     }
-                    // $result = $order->read($userid);
                     $success = $order->check_st($row['Order_ID'], $_GET['status'], $dataa);
-
-
                     if (count($success) > 0) {
                         $final_arr = [];
                         $final_arr['detail'] = [];
@@ -164,7 +152,6 @@ if (!empty($_GET['user_id'])) {
                 } else {
                     //status
                     $success = $order->check_s($row['Order_ID'], $_GET['status']);
-
                     if (count($success) > 0) {
                         $final_arr = [];
                         $final_arr['detail'] = [];

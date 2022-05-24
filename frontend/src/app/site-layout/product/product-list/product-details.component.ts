@@ -13,12 +13,12 @@ import { NgToastService } from 'ng-angular-popup';
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
-export class ProductDetailsComponent implements OnInit,AfterViewInit {
+export class ProductDetailsComponent implements OnInit, AfterViewInit {
   [x: string]: any;
   sorted_data: any;
-  user_id!:any
+  user_id!: any
   image_url: string = environment.IMAGE_URL
-  constructor(private toastr: NgToastService,private product: ProductService, public route: ActivatedRoute, private cartService: CartService, private formbuilder: FormBuilder,private router: Router) { }
+  constructor(private toastr: NgToastService, private product: ProductService, public route: ActivatedRoute, private cartService: CartService, private formbuilder: FormBuilder, private router: Router) { }
   ngAfterViewInit(): void {
     this.get_currency()
   }
@@ -79,14 +79,14 @@ export class ProductDetailsComponent implements OnInit,AfterViewInit {
 
     })
   }
-  selectedCurrency:any
-  get_currency(){
-    this.product.set_currency.subscribe(data=>{
-      if(data.length>0){
+  selectedCurrency: any
+  get_currency() {
+    this.product.set_currency.subscribe(data => {
+      if (data.length > 0) {
         this.selectedCurrency = data
         this.getproductby_cat()
         this.getcount()
-      }else{
+      } else {
         this.selectedCurrency = 'INR'
       }
     })
@@ -96,9 +96,8 @@ export class ProductDetailsComponent implements OnInit,AfterViewInit {
       this.productdata = data['data']
       if (this.subcat_id !== undefined) {
         this.getproductbysubcat_id();
-      }      console.log(this.productdata)
+      }
     })
-    // console.log(this.checkBoxValue.ID)
   }
   getproductbysubcat_id() {
     this.product.getproductbysubcat_id(this.subcat_id, this.cat_id, this.load_product).subscribe(data => {
@@ -116,23 +115,21 @@ export class ProductDetailsComponent implements OnInit,AfterViewInit {
   }
   getcount() {
     this.product.getprice().subscribe(data => {
-      // this.price = data['data'] 
       for (let val of data['data']) {
-        let min=Math.round(this.convertWithCurrencyRate(val.min,this.selectedCurrency))
-        let max=Math.round(this.convertWithCurrencyRate(val.max,this.selectedCurrency))
+        let min = Math.round(this.convertWithCurrencyRate(val.min, this.selectedCurrency))
+        let max = Math.round(this.convertWithCurrencyRate(val.max, this.selectedCurrency))
         this.options = {
-          floor:min,
-          ceil:max 
+          floor: min,
+          ceil: max
         }
-        this.maxValue =max,
-        this.minValue =min
+        this.maxValue = max,
+          this.minValue = min
       }
     })
   }
   getsubcategory() {
     this.product.getcategory_id(this.cat_id).subscribe(data => {
       this.cat_data = data['main']
-      // console.log(this.cat_data)
     })
   }
   getsize() {
@@ -179,29 +176,34 @@ export class ProductDetailsComponent implements OnInit,AfterViewInit {
   }
   sliderEvent(e: any) {
     this.slider_arr = []
-    this.slider_arr.push(e.value, e.highValue)
+    if(this.selectedCurrency=='USD'){
+      this.slider_arr.push(e.value*100, e.highValue*100)
+    }else{
+      this.slider_arr.push(e.value, e.highValue)
+    }
     this.allproduct_id()
   }
   addtocart(e: any) {
-    if(this.user_id){
-    e.Product_Quantity=1
-    e.user_id=this.user_id
-    this.cartService.addtoCart(e).subscribe(data=>{
-      if(data['message']){
-        this.router.navigate(['/cart']);
-        this.toastr.success({detail:'Success!', summary:'Product added successfully!'});
+    if (this.user_id) {
+      e.Product_Quantity = 1
+      e.user_id = this.user_id
+      this.cartService.addtoCart(e).subscribe(data => {
+        if (data['message']) {
+          this.router.navigate(['/cart']);
+          this.toastr.success({ detail: 'Success!', summary: 'Product added successfully!' });
         }
-    });}
-    else{
-      this.toastr.error({detail:'Error!', summary:'Please Login First!'});
+      });
+    }
+    else {
+      this.toastr.error({ detail: 'Error!', summary: 'Please Login First!' });
     }
   }
-  getuser_id(){
-    let data=this.cartService.get_id()
-    if(data){
-      this.user_id=data['id']
+  getuser_id() {
+    let data = this.cartService.get_id()
+    if (data) {
+      this.user_id = data['id']
     }
-   
+
   }
   allproduct_id() {
     this.size_arr = []
@@ -230,7 +232,7 @@ export class ProductDetailsComponent implements OnInit,AfterViewInit {
       this.slider_arr[0] = this.minValue
       this.slider_arr[1] = this.maxValue
     }
-    this.product.all_product_filter(this.order_arr, this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_arr, this.size_arr,"").subscribe(data => {
+    this.product.all_product_filter(this.order_arr, this.slider_arr[0], this.slider_arr[1], this.load_product, this.cat_id, this.subcat_arr, this.clr_arr, this.size_arr, "").subscribe(data => {
       if (data['data'] !== undefined) {
         this.productdata = data['data']
         if (this.initial) {
@@ -245,6 +247,6 @@ export class ProductDetailsComponent implements OnInit,AfterViewInit {
     })
   }
   convertWithCurrencyRate(value: number, currency: string) {
-    return this.product.convertWithCurrencyRate(value,currency)
-   }
+    return this.product.convertWithCurrencyRate(value, currency)
+  }
 }

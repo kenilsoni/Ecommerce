@@ -220,7 +220,5 @@ export class SearchComponent implements OnInit {
   }
   convertWithCurrencyRate(value: number, currency: string) {
     return this.product.convertWithCurrencyRate(value,currency)
-   }
-  
-
+  }
 }

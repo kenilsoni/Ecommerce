@@ -87,7 +87,7 @@
                             </td>
                             <td>
                                 <!-- {{item.Product_Quantity}} -->
-                                <input type="text" value="{{item.Quantity}}" title="Qty" id="{{item.ID}}" class="form-control qty" (keyup)="change_quantity($event)" #quantity >
+                                <input type="number" value="{{item.Quantity}}" title="Qty" id="{{item.ID}}" class="form-control qty" onKeyDown="return false" (change)="change_quantity($event)" #quantity min="1">
                             </td>
                             <td>
                                

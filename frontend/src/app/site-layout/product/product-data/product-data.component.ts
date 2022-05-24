@@ -53,13 +53,11 @@ export class ProductDataComponent implements OnInit {
           alt: 'Image 1',
         })
       }
-
     })
   }
   get_size(id: number) {
     this.cartService.getsizeby_id(id).subscribe(data => {
       this.size_details = data
-
     })
   }
   getuser_id() {
@@ -67,7 +65,6 @@ export class ProductDataComponent implements OnInit {
     if (data) {
       this.user_id = data['id']
     }
-
   }
   addtocart(e: any) {
     if (this.user_id) {
@@ -95,7 +92,6 @@ export class ProductDataComponent implements OnInit {
   add_wishlist(id: number, price_id: any) {
     if (this.user_id) {
       this.product.add_wishlist(this.user_id, id, price_id).subscribe(data => {
-        console.log(id)
         if (data['message']) {
           this.toastr.success({ detail: 'Success!', summary: 'Product added successfully!' });
         } else {
@@ -124,10 +120,8 @@ export class ProductDataComponent implements OnInit {
   //review
   stars: number[] = [1, 2, 3, 4, 5];
   selectedValue!: number;
-
   countStar(star: any) {
     this.selectedValue = star;
-    console.log('Value of star', star);
     this.reviewval.controls['star'].setErrors(null)
   }
   review() {
@@ -136,7 +130,6 @@ export class ProductDataComponent implements OnInit {
     } else {
       this.review_window.nativeElement.style.display = 'block'
     }
-
   }
   review_details: any = []
   submit_review: boolean = true
@@ -216,7 +209,6 @@ export class ProductDataComponent implements OnInit {
     this.initial = this.review_details.length
     this.get_review()
   }
-
   add_review() {
     if (this.user_id) {
       if (this.reviewval.valid) {
@@ -237,6 +229,5 @@ export class ProductDataComponent implements OnInit {
     } else {
       this.toastr.error({ detail: 'Error!', summary: 'Please Login First!' });
     }
-
   }
 }

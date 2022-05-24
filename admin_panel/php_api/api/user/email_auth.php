@@ -14,9 +14,7 @@ $db = $database->connect();
 
 // Instantiate blog post object
 $user = new User($db);
-
 // Get raw posted data
-
 if (isset($_GET['check_otp']) && isset($_GET['email'])) {
   $result = $user->check_otp($_GET['email'], $_GET['check_otp']);
   $num=$result->rowCount();
@@ -43,7 +41,6 @@ if (isset($_GET['check_otp']) && isset($_GET['email'])) {
   }else{
     echo json_encode(["message" => false]);
   }
- 
 } else {
   $random = rand(10000, 99999);
   $send_mail = $user->send_otp($_GET['email'], $random);

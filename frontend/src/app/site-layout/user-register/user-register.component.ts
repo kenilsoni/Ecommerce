@@ -28,7 +28,6 @@ export class UserRegisterComponent implements OnInit {
         intrest:[''],
         phone: ['', [Validators.required, Validators.pattern('[0-9\/]*'),Validators.maxLength(12),Validators.minLength(10)]]
     })
-  
   }
   get_user(){
     if(this.userservice.get_user()){
@@ -61,7 +60,6 @@ export class UserRegisterComponent implements OnInit {
     this.registerval.reset()
   }
   check_username(e:any){
-    console.log(e.target.value)
     this.userservice.check_username(e.target.value).subscribe(res=>{
       if(res['success']){
         this.username_exist=true
@@ -82,5 +80,4 @@ export class UserRegisterComponent implements OnInit {
       }
     })
   }
-
 }

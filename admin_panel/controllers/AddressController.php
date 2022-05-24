@@ -4,10 +4,11 @@ class AddressController
     function __construct()
     {
         include('models/Address_model.php');
+        include('models/stripe.php');
         $this->model = new AddressModel();
         require './php_api/api/checkout/stripe-php-master/init.php';
         $this->stripe = new \Stripe\StripeClient(
-            'sk_test_51KxNo9SJ5Q50OIO5VnFcjevn1wRbzTfYFTuxvZ05BIf1jMdKOQVNiMtQKzE21DsCZqQkSDYu8UQXo4K8cMIOub1j00ehZHuEns'
+            $stripe_secret
         );
     }
     public function test_input($data)
@@ -279,6 +280,7 @@ class AddressController
             $tax = $_POST['tax'];
             $state = $this->test_input($_POST['scode']);
             $countryid = $this->test_input($_POST['ccode']);
+            
             $tax_stripe = $this->stripe->taxRates->create([
                 'display_name' => 'tax',
                 'country' => $countryid,

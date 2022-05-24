@@ -15,29 +15,23 @@ $state = new State($db);
 if (isset($_GET['id'])) {
   // state read query
   $result = $state->read($_GET['id']);
-
   // Get row count
   $num = $result->rowCount();
-
   // Check if any state
   if ($num > 0) {
     // state array
     $state_arr = array();
     $state_arr['data'] = array();
-
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
       extract($row);
-
       $state_item = array(
         'ID' => $ID,
         'State' => $State,
         'Country_ID' => $Country_ID
       );
-
       // Push to "data"
       array_push($state_arr['data'], $state_item);
     }
-
     // Turn to JSON & output
     echo json_encode($state_arr);
   } else {

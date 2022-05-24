@@ -68,9 +68,7 @@ export class HomeComponent implements OnInit {
     let data=this.cartService.get_id()
     if(data){
       this.user_id=data['id']
-      // console.log(this.user_id)
     }
-   
   }
   addtocart(e:any){
     if(this.user_id){
@@ -81,7 +79,6 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/cart']);
       this.toastr.success({detail:'Success!', summary:'Product added successfully!'});
       }
-
     });}
     else{
       this.toastr.error({detail:'Error!', summary:'Please Login First!'});
@@ -89,7 +86,6 @@ export class HomeComponent implements OnInit {
   }
   getslider(){
     this.product.get_slider().subscribe((data:any)=>{
-
       for(let res of data['data']){
         this.imgCollection.push({
           image: this.image_url+'/'+res.Image_Path,
@@ -97,7 +93,6 @@ export class HomeComponent implements OnInit {
           alt: 'Image 1',
         })
       }
-      
     })
   }
   selectedCurrency:any

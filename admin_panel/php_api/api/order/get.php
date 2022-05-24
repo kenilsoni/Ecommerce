@@ -10,24 +10,18 @@ include_once '../user/auth.php';
 // Instantiate DB & connect
 $database = new Database();
 $db = $database->connect();
-
 // Instantiate order object
 $order = new Order($db);
-
 // Get ID
 $userid = isset($_GET['user_id']) ? $_GET['user_id'] : die();
 $orderid = isset($_GET['load']) ? $_GET['load'] : die();
-
-
 // order read query
-$result = $order->read($userid,$orderid );
-
-
+$result = $order->read($userid, $orderid);
 // Get row count
 $num = $result->rowCount();
 // Check if any order
 if ($num > 0) {
-    $final_as=[];
+    $final_as = [];
     // order array
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $order_item = array(
@@ -70,15 +64,12 @@ if ($num > 0) {
             foreach ($qty as $q) {
                 array_push($final_arr['qty'], $q);
             }
-         $final[]=array_merge($final_as,$final_arr);
+            $final[] = array_merge($final_as, $final_arr);
         }
     }
-//    echo "<pre>";
-//             print_r($final);
     echo json_encode(
         $final
     );
-
 } else {
     // No order
     echo json_encode(

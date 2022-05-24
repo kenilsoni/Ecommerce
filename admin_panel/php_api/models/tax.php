@@ -50,7 +50,7 @@ class Tax
   public function getshipping($id)
   {
     // Create query
-    $query = 'SELECT st.tax_stripe FROM user_address as user LEFT JOIN service_tax as st ON user.Country_ID=st.Country_ID AND user.State_ID=st.State_ID WHERE user.User_ID='.$id.' AND user.Address_Type="Shipping"';
+    $query = 'SELECT st.tax_stripe FROM user_address as user LEFT JOIN service_tax as st ON user.Country_ID=st.Country_ID AND user.State_ID=st.State_ID WHERE user.User_ID=' . $id . ' AND user.Address_Type="Shipping"';
 
     // Prepare statement
     $stmt = $this->conn->prepare($query);

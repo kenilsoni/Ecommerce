@@ -60,7 +60,7 @@ class EventModel
         return $success;
     }
     public function add_coupan_db($data){
-        $sql = "INSERT INTO product_coupan (Discount,Created_At,Coupan_ID,Expiry) VALUES (:discount,NOW(),:coupan,:expiry)";
+        $sql = "INSERT INTO product_coupan (Stripe_ID,Discount,Created_At,Coupan_ID,Expiry) VALUES (:stripe_id,:discount,NOW(),:coupan,:expiry)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute($data);
         return $stmt;
@@ -74,7 +74,7 @@ class EventModel
         return $success;
     }
     public function remove_coupan($id){
-        $sql = "DELETE FROM product_coupan WHERE Coupan_ID=?";
+        $sql = "DELETE FROM product_coupan WHERE Stripe_ID=?";
         $stmt = $this->conn->prepare($sql);
         $success=$stmt->execute([$id]);
         return $success;

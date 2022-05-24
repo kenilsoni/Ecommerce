@@ -15,7 +15,7 @@ $(document).ready(function () {
                         var number = i + 1;
                         mytable.row.add($(`
                      <tr>
-                     <input type=hidden value="${obj[i].Coupan_ID}" class="coupan_id">
+                     <input type=hidden value="${obj[i].Stripe_ID}" class="coupan_id">
                      <td >${number} </td>
                      <td class="name_table">${obj[i].Coupan_ID} </td>
                      <td>${obj[i].Discount} </td>

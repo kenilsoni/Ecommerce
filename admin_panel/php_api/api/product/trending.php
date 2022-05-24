@@ -27,10 +27,8 @@ if ($num > 0) {
   // product array
   $product_arr = array();
   $product_arr['data'] = array();
-
   while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
     extract($row);
-
     $product_item1 = array(
       'ID' => $ID,
       'Product_Name' => $Product_Name,
@@ -48,25 +46,20 @@ if ($num > 0) {
       'Color_name' => $Product_Color,
       'Size_Name' => $Product_Size,
       'Size_id' => $size_id,
-      'currency'=>''
-
+      'currency' => ''
     );
     $result2 = $product->getsingle_image($ID);
     while ($row = $result2->fetch(PDO::FETCH_ASSOC)) {
       extract($row);
-
       $product_item2 = array(
         'Image_path' => $Image_Path
       );
-
       // merge to "data"
       $newdata = array_merge($product_item1, $product_item2);
     }
     // Push to "data"
     array_push($product_arr['data'], $newdata);
   }
-
-
   // Turn to JSON & output
   echo json_encode($product_arr);
 } else {

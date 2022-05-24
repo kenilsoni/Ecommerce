@@ -34,7 +34,6 @@ export class UserProfileComponent implements OnInit{
     this.get_user()
     this.get_country()
   }
- 
   ngOnInit(): void {
     this.profileval = this.formbuilder.group({
       id: [''],
@@ -59,9 +58,7 @@ export class UserProfileComponent implements OnInit{
       }),
       phone: ['', [Validators.required, Validators.pattern('[0-9\/]*'),Validators.maxLength(12),Validators.minLength(10)]],
     })
- 
   }
- 
   get_user(){
     this.user_id=this.userservice.get_user()
     this.userservice.get_userdetails(this.user_id['id']).subscribe(res=>{
@@ -100,8 +97,7 @@ export class UserProfileComponent implements OnInit{
           city_bill:this.address_billing['City_ID'],
         }
       })
-    }
-    
+    } 
   }
   getstateby_id(id:number){
     this.userservice.get_state(id).subscribe(res=>{
@@ -161,7 +157,6 @@ export class UserProfileComponent implements OnInit{
         }
       })
     }
-    
   }
   get_country(){
     this.userservice.get_country().subscribe(res=>{
@@ -217,7 +212,4 @@ export class UserProfileComponent implements OnInit{
       })
     }
   }
- 
-
-
 }

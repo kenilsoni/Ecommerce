@@ -31,24 +31,21 @@ if (isset($_GET['username']) && isset($_GET['password'])) {
     $user->Password = isset($_GET['password']) ? $_GET['password'] : die();
     $result = $user->check_login();
     $num = $result->rowCount();
-
     // Check if any product
     if ($num > 0) {
-
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $firstname = $row['FirstName'];
             $ID = $row['ID'];
             $Password = $row['Password'];
         }
-        $plain_password = openssl_decrypt($Password, "AES-128-ECB",'skp1506');
-        if ($plain_password==$_GET['password']) {
+        $plain_password = openssl_decrypt($Password, "AES-128-ECB", 'skp1506');
+        if ($plain_password == $_GET['password']) {
             $secret_key = "skp1506";
             $issuer_claim = "localhost";
             $audience_claim = "user_auth";
             $issuedat_claim = time(); // time issued 
             $notbefore_claim = $issuedat_claim + 10;
             $expire_claim = $issuedat_claim + 2000;
-
             $access_token = array(
                 "iss" => $issuer_claim,
                 "aud" => $audience_claim,
@@ -60,7 +57,6 @@ if (isset($_GET['username']) && isset($_GET['password'])) {
                     "firstName" => $firstname
                 )
             );
-
             $refresh_token = array(
                 "iss" => $issuer_claim,
                 "aud" => $audience_claim,
@@ -72,7 +68,6 @@ if (isset($_GET['username']) && isset($_GET['password'])) {
                     "firstName" => $firstname
                 )
             );
-
             $access_jwtValue = $jwt->create_token($access_token, $secret_key, 'HS512');
             $refresh_jwtValue = $jwt->create_token($refresh_token, $secret_key, 'HS512');
             echo json_encode(

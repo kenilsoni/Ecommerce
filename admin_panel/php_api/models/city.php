@@ -1,35 +1,32 @@
 <?php
-  class City {
-    // DB Stuff
-    private $conn;
-    private $table = 'city';
+class City
+{
+  // DB Stuff
+  private $conn;
+  private $table = 'city';
 
-    // Properties
-    public $ID;
-    public $City;
-    public $State_ID;
-    public $Country_ID;
-    
+  // Properties
+  public $ID;
+  public $City;
+  public $State_ID;
+  public $Country_ID;
 
-    // Constructor with DB
-    public function __construct($db) {
-      $this->conn = $db;
-    }
 
-    // Get city
-    public function read($ID) {
-      // Create query
-      $query = 'SELECT ID,City,State_ID,Country_ID FROM  ' . $this->table . ' WHERE State_ID='.$ID.'';
+  // Constructor with DB
+  public function __construct($db)
+  {
+    $this->conn = $db;
+  }
 
-      // Prepare statement
-      $stmt = $this->conn->prepare($query);
-
-      // Execute query
-      $stmt->execute();
-
-      return $stmt;
-    }
-
-  
-
+  // Get city
+  public function read($ID)
+  {
+    // Create query
+    $query = 'SELECT ID,City,State_ID,Country_ID FROM  ' . $this->table . ' WHERE State_ID=' . $ID . '';
+    // Prepare statement
+    $stmt = $this->conn->prepare($query);
+    // Execute query
+    $stmt->execute();
+    return $stmt;
+  }
 }

@@ -88,7 +88,7 @@ class User
     public function check_login()
     {
         // Create Query
-        $query = 'SELECT * FROM user WHERE UserName =:UserName';
+        $query = 'SELECT * FROM user WHERE UserName =:UserName AND Status=1';
         // Prepare Statement
         $stmt = $this->conn->prepare($query);
         // Bind data
@@ -242,7 +242,7 @@ class User
         $stmt->execute();
         return $stmt;
     }
-    public function update_password_email($email,$password)
+    public function update_password_email($email, $password)
     {
         $query = 'UPDATE user SET Password=?,Modified_At=NOW() WHERE Email=?';
         $stmt = $this->conn->prepare($query);
@@ -287,7 +287,7 @@ class User
         return $stmt;
     }
     //set expire otp
-    public function select_datetime($email,$otp)
+    public function select_datetime($email, $otp)
     {
         $query = 'SELECT Created_At FROM forgot_password WHERE Email=? AND OTP= ? AND IsExpire=0';
         $stmt = $this->conn->prepare($query);
@@ -326,7 +326,16 @@ class User
         $query = 'INSERT INTO user_newsletter (Email,Created_At) VALUES (?,NOW())';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $email);
-        $success=$stmt->execute();
+        $success = $stmt->execute();
+        return $success;
+    }
+    //about data
+    public function get_about()
+    {
+        $sql = "SELECT * FROM about";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $success;
     }
 }

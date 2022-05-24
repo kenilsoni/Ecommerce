@@ -21,35 +21,17 @@ export class CartService {
   getProducts(id:number){
     return this.httpclient.get<any>(`${environment.API_URL}/cart/cart.php?user_id=`+id)
   }
-  
-  setProduct(product : any){
-   
-  }
   addtoCart(product : any){
     return this.httpclient.post<any>(`${environment.API_URL}/cart/add.php`, product)
   }
   update_product(product : any){
     return this.httpclient.post<any>(`${environment.API_URL}/cart/update.php`, product)
   }
-  getTotalPrice(){
-   
-  }
   removeCartItem(id: number){
     return this.httpclient.get<any>(`${environment.API_URL}/cart/remove.php?id=`+id)
   }
   removeAllCart(user_id:number){
     return this.httpclient.get<any>(`${environment.API_URL}/cart/remove.php?user_id=`+user_id)
-  }
-  
- 
-  
-  get_total(){
-    // if(localStorage.getItem("cart_total") !== null){
-    //   this.total=localStorage.getItem("cart_total")
-    //   return JSON.parse(this.total)
-    // }else{
-    //   return false
-    // }
   }
   get_country(){
     return this.httpclient.get<any>(`${environment.API_URL}/tax/tax.php`)

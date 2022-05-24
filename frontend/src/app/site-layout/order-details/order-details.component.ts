@@ -31,9 +31,7 @@ export class OrderDetailsComponent implements OnInit {
   get_detail() {
     this.productservice.get_order_history(this.load_order,this.user_id).subscribe((data: any) => {
       this.order_details=data
-      console.log(data)
     })
-
   }
   get_userid() {
     let name = this.userservice.get_user()
@@ -56,7 +54,6 @@ export class OrderDetailsComponent implements OnInit {
   allproduct_id() {
     this.time_arr = []
     this.status_arr = []
-
     this.status.forEach((element) => {
       if (element.nativeElement.checked) {
         this.status_arr.push(element.nativeElement.value)
@@ -70,11 +67,6 @@ export class OrderDetailsComponent implements OnInit {
     this.search.forEach((element) => {
      this.search_arr=element.nativeElement.value;
     });
-    console.log(this.time_arr)
-    console.log(this.status_arr)
-    console.log(this.search_arr)
-    console.log(this.order_details.length)
-
     this.productservice.filter_order_history(this.load_order,this.user_id,this.status_arr, this.time_arr, this.search_arr).subscribe(data => {
       this.order_details=data
       if (this.initial) {
@@ -83,7 +75,6 @@ export class OrderDetailsComponent implements OnInit {
           this.product_count = false
         }
       }
-     console.log(data)
     })
   }
   product_count:boolean=true
@@ -94,5 +85,4 @@ export class OrderDetailsComponent implements OnInit {
     this.initial = this.order_details.length
     this.allproduct_id()
   }
-
 }

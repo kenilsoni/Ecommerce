@@ -270,7 +270,7 @@
                                             
                                              <form class="loginform"
                                                  [formGroup]="forgot_password"
-                                                 #ngForm="ngForm"
+                                                 #ngForm2="ngForm"
                                                  (ngSubmit)="password_forgot()">
                                                  <div class="alert
                                                      alert-dismissible
@@ -303,7 +303,7 @@
                                                      <div
                                                          *ngIf="forgot_password.controls['email']?.invalid">
                                                          <span
-                                                             *ngIf="forgot_password.controls['email']?.errors?.['required'] &&  (forgot_password.controls['email']?.touched || ngForm.submitted)" class="text-danger">
+                                                             *ngIf="forgot_password.controls['email']?.errors?.['required'] &&  (forgot_password.controls['email']?.touched || ngForm2.submitted)" class="text-danger">
                                                              Email is
                                                              required
                                                          </span>
@@ -349,7 +349,7 @@
                                              <div class="modal-body">
                                                  <form class="loginform"
                                                      [formGroup]="check_otp"
-                                                     #ngForm="ngForm"
+                                                     #ngForm3="ngForm"
                                                      (ngSubmit)="submit_otp()">
                                                     
                                                     
@@ -371,7 +371,7 @@
                                                                  &&
                                                                  (check_otp.controls['otp']?.touched
                                                                  ||
-                                                                 ngForm.submitted)"class="text-danger">
+                                                                 ngForm3.submitted)"class="text-danger">
                                                                  otp is
                                                                  required
                                                              </span>
@@ -417,12 +417,13 @@
                                             </button>
                                             <div class="text-center"
                                                 style="font-size:23px">Change
-                                                Password</div>
+                                                Password
+                                            </div>
                                         </div>
                                         <div class="modal-body">
-                                            <form class="loginform"
+                                            <form class=""
                                                 [formGroup]="change_password"
-                                                #ngForm="ngForm"
+                                                #ngForm4="ngForm"
                                                 (ngSubmit)="update_password()">
                                                 <div class="alert
                                                     alert-dismissible
@@ -470,16 +471,27 @@
                                                          <i class="fa fa-eye placeholder" *ngIf="!hide_current"  (click)="eye_icon_current()"></i><i class="fa fa-eye-slash placeholder" *ngIf="hide_current" (click)="eye_icon_current()" aria-hidden="true"></i>
                                                         </span>
                                                     <div
-                                                        *ngIf="loginval.controls['password']?.invalid">
+                                                        *ngIf="change_password.controls['password']?.invalid">
                                                         <span
-                                                            *ngIf="loginval.controls['password']?.errors?.['required']
+                                                            *ngIf="change_password.controls['password']?.errors?.['required']
                                                             &&
-                                                            (loginval.controls['password']?.touched
+                                                            (change_password.controls['password']?.touched
                                                             ||
-                                                            ngForm.submitted)"class="text-danger">
+                                                            ngForm4.submitted)" class="text-danger">
                                                             Curent password is
                                                             required
                                                         </span>
+                                                        <span
+                                                        *ngIf="change_password.controls['password']?.errors?.['minlength']
+                                                        &&
+                                                        (change_password.controls['password']?.touched
+                                                        ||
+                                                        ngForm4.submitted)" class="text-danger">
+                                                        Password
+                                                        must be 6
+                                                        character
+                                                        long
+                                                    </span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -495,22 +507,20 @@
                                                       <i class="fa fa-eye placeholder" *ngIf="!hide_newpass"  (click)="eye_icon_newpass()"></i><i class="fa fa-eye-slash placeholder" *ngIf="hide_newpass" (click)="eye_icon_newpass()" aria-hidden="true"></i>
                                                         </span>
                                                     <div
-                                                        *ngIf="loginval.controls['new_password']?.invalid">
+                                                        *ngIf="change_password.controls['new_password']?.invalid">
                                                         <span
-                                                            *ngIf="loginval.controls['new_password']?.errors?.['required']
+                                                            *ngIf="change_password.controls['new_password']?.errors?.['required']
                                                             &&
-                                                            (loginval.controls['new_password']?.touched
+                                                            (change_password.controls['new_password']?.touched
                                                             ||
-                                                            ngForm.submitted)"class="text-danger">
+                                                            ngForm4.submitted)" class="text-danger">
                                                             New password is
                                                             required
                                                         </span>
                                                         <span
-                                                            *ngIf="loginval.controls['new_password']?.errors?.['minlength']
+                                                            *ngIf="change_password.controls['new_password']?.errors?.['minlength']
                                                             &&
-                                                            (loginval.controls['new_password']?.touched
-                                                            ||
-                                                            ngForm.submitted)"class="text-danger">
+                                                            (change_password.controls['new_password']?.touched || ngForm4.submitted)" class="text-danger">
                                                             Password
                                                             must be 6
                                                             character
@@ -533,22 +543,23 @@
                                                        <i class="fa fa-eye placeholder" *ngIf="!hide_cpass"  (click)="eye_icon_cpass()"></i><i class="fa fa-eye-slash placeholder" *ngIf="hide_cpass" (click)="eye_icon_cpass()" aria-hidden="true"></i>
                                                     </span>
                                                     <div
-                                                        *ngIf="loginval.controls['cpassword']?.invalid">
+                                                        *ngIf="change_password.controls['cpassword']?.invalid">
                                                         <span
-                                                            *ngIf="loginval.controls['cpassword']?.errors?.['required']
+                                                            *ngIf="change_password.controls['cpassword']?.errors?.['required']
                                                             &&
-                                                            (loginval.controls['cpassword']?.touched
-                                                            ||
-                                                            ngForm.submitted)"class="text-danger">
+                                                            (change_password.controls['cpassword']?.touched || ngForm4.submitted)" class="text-danger">
                                                             Confirm password is
                                                             required
                                                         </span>
+                                                        <span class="text-danger"
+                                                            *ngIf="change_password.controls['cpassword']?.errors?.['mustMatch']">Confirm
+                                                            Password is not match
+                                                        </span>
+                                                       
                                                         <span
-                                                            *ngIf="loginval.controls['cpassword']?.errors?.['minlength']
+                                                            *ngIf="change_password.controls['cpassword']?.errors?.['minlength']
                                                             &&
-                                                            (loginval.controls['cpassword']?.touched
-                                                            ||
-                                                            ngForm.submitted)"class="text-danger">
+                                                            (change_password.controls['cpassword']?.touched || ngForm4.submitted)" class="text-danger">
                                                             Password
                                                             must be 6
                                                             character
@@ -568,6 +579,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
 
                                 
                             </div>
@@ -596,7 +608,7 @@
                                     <div class="modal-body">
                                         <form class="loginform"
                                             [formGroup]="change_password_forgot"
-                                            #ngForm="ngForm"
+                                            #ngForm5="ngForm"
                                             (ngSubmit)="change_fgpassword()">
 
                                             <div class="form-group">
@@ -618,7 +630,7 @@
                                                         &&
                                                         (change_password_forgot.controls['new_password']?.touched
                                                         ||
-                                                        ngForm.submitted)"class="text-danger">
+                                                        ngForm5.submitted)"class="text-danger">
                                                         New password is
                                                         required
                                                     </span>
@@ -627,7 +639,7 @@
                                                         &&
                                                         (change_password_forgot.controls['new_password']?.touched
                                                         ||
-                                                        ngForm.submitted)"class="text-danger">
+                                                        ngForm5.submitted)"class="text-danger">
                                                         Password
                                                         must be 6
                                                         character
@@ -656,16 +668,20 @@
                                                         &&
                                                         (change_password_forgot.controls['cpassword']?.touched
                                                         ||
-                                                        ngForm.submitted)"class="text-danger">
+                                                        ngForm5.submitted)"class="text-danger">
                                                         Confirm password is
                                                         required
                                                     </span>
+                                                    <span class="text-danger"
+                                                            *ngIf="change_password_forgot.controls['cpassword']?.errors?.['mustMatch']">Confirm
+                                                            Password is not match
+                                                        </span>
                                                     <span
                                                         *ngIf="change_password_forgot.controls['cpassword']?.errors?.['minlength']
                                                         &&
                                                         (change_password_forgot.controls['cpassword']?.touched
                                                         ||
-                                                        ngForm.submitted)"class="text-danger">
+                                                        ngForm5.submitted)"class="text-danger">
                                                         Password
                                                         must be 6
                                                         character

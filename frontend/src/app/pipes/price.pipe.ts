@@ -5,11 +5,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PricePipe implements PipeTransform {
 
-  transform(value:any): any {
-    const resultarray=[]
-    if(value.length===0){ return value }
-    for(const item of value){
-      
+  transform(value:any,currency:any): any {
+    if (currency == 'USD') {
+      return value / 100;
+    } else if (currency == 'INR') {
+      return value;
+    } else {
+      return value;
     }
   }
 

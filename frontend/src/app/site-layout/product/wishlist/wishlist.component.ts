@@ -28,7 +28,6 @@ export class WishlistComponent implements OnInit {
   }
  
   get_wishlist(){
-   
     this.product.get_wishlist(this.user_id).subscribe(data=>{
       if(data['data']){
         this.productdata=data['data']
@@ -40,7 +39,6 @@ export class WishlistComponent implements OnInit {
   addtocart(e:any){
     e.Product_Quantity=1
     e.user_id=this.user_id
-    // console.log(e)
     this.cartService.addtoCart(e).subscribe(data=>{
       if(data['message']){
         this.toastr.success({detail:'Success!', summary:'Product added successfully!'});
@@ -50,14 +48,12 @@ export class WishlistComponent implements OnInit {
   }
   remove_item(id:number){
     this.product.remove_item(this.user_id,id).subscribe(data=>{
-      // console.log(data)
       if(data['message']){
         this.toastr.success({detail:'Success!', summary:'Product remove successfully!'});
         this.get_wishlist()
       }else{
         this.toastr.error({detail:'Error!', summary:'Something went wrong!'});
       }
-
     })
   }
   selectedCurrency:any
@@ -73,6 +69,5 @@ export class WishlistComponent implements OnInit {
   }
   convertWithCurrencyRate(value: number, currency: string) {
     return this.product.convertWithCurrencyRate(value,currency)
-   }
-
+  }
 }

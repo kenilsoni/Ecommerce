@@ -16,7 +16,7 @@ class JWTtoken
 
     function istoken_expire($token)
     {
-        $token_payload =$this->decode_token($token);
+        $token_payload = $this->decode_token($token);
         $current_time = time();
         $expiry_time = $token_payload->exp;
         if ($current_time >= $expiry_time) {
@@ -27,6 +27,6 @@ class JWTtoken
 
     function decode_token($token)
     {
-        return json_decode(base64_decode(str_replace('_', '/', str_replace('-','+',explode('.', $token)[1]))));
+        return json_decode(base64_decode(str_replace('_', '/', str_replace('-', '+', explode('.', $token)[1]))));
     }
 }

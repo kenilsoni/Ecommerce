@@ -21,7 +21,6 @@ if ($product->order == 1) {
 $product->Category_ID = isset($_GET['cat_id']) ? $_GET['cat_id'] : '';
 $product->Product_Name = isset($_GET['name']) ? $_GET['name'] : '';
 $product->load = isset($_GET['load']) ? $_GET['load'] : '';
-
 $product->Product_Color_ID = isset($_GET['clr_id']) ? $_GET['clr_id'] : "";
 $product->Subcategory_ID = isset($_GET['subcat_id']) ? $_GET['subcat_id'] : '';
 $product->Product_Size = isset($_GET['size_id']) ? $_GET['size_id'] : '';
@@ -47,7 +46,6 @@ if (!empty($product->Product_Color_ID)) {
 } else {
     if (!empty($product->Subcategory_ID) && !empty($product->Product_Size)) {
         //subcat  size 
-
         $result = $product->order_color3();
         $num = $result->rowCount();
     } else if (!empty($product->Product_Size)) {
@@ -64,7 +62,6 @@ if (!empty($product->Product_Color_ID)) {
         $num = $result->rowCount();
     }
 }
-
 // Check if any product
 if ($num > 0) {
     // product array
@@ -72,7 +69,6 @@ if ($num > 0) {
     $product_arr['data'] = array();
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
-
         $product_item1 = array(
             'ID' => $ID,
             'Product_Name' => $Product_Name,
@@ -90,8 +86,7 @@ if ($num > 0) {
             'Category_name' => $Category_Name,
             'Subcategory_name' => $Subcategory_Name,
             'Size_id' => $size_id,
-            'currency'=>''
-
+            'currency' => ''
         );
         $result2 = $product->getsingle_image($ID);
         while ($row = $result2->fetch(PDO::FETCH_ASSOC)) {
@@ -107,7 +102,6 @@ if ($num > 0) {
         // Push to "data"
         array_push($product_arr['data'], $newdata);
     }
-    //    echo "<pre>"; print_r($product_arr);
     // Turn to JSON & output
     echo json_encode($product_arr);
 } else {

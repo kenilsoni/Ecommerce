@@ -9,34 +9,25 @@ include_once '../user/auth.php';
 // Instantiate DB & connect
 $database = new Database();
 $db = $database->connect();
-
 // Instantiate wishlist object
 $wishlist = new Wishlist($db);
-
 // Get ID
-
 if (isset($_GET['user_id']) && isset($_GET['product_id'])) {
     // wishlist read query
-    $check=$wishlist->check_wishlist($_GET['user_id'], $_GET['product_id']);
-    while($row3 = $check->fetch(PDO::FETCH_ASSOC)) {
-        $count_data=$row3['count'];
+    $check = $wishlist->check_wishlist($_GET['user_id'], $_GET['product_id']);
+    while ($row3 = $check->fetch(PDO::FETCH_ASSOC)) {
+        $count_data = $row3['count'];
     }
-    if($count_data>0){
+    if ($count_data == 1) {
         echo json_encode(
             array('message' => false)
         );
-    }else{
-        $result = $wishlist->add_wishlist($_GET['user_id'], $_GET['product_id'],$_GET['price_id']);
+    } else {
+        $result = $wishlist->add_wishlist($_GET['user_id'], $_GET['product_id']);
         // Get row count
         $num = $result->rowCount();
-    
-        // Check if any wishlist
-        // if ($num) {
-            echo json_encode(
-                array('message' => true)
-            );
-        // } 
+        echo json_encode(
+            array('message' => true)
+        );
     }
-
-    
 }

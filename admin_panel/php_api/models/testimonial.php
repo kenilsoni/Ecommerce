@@ -1,29 +1,30 @@
 <?php
-  class Testimonial {
-    // DB Stuff
-    private $conn;
-    private $table = 'testimonial';
+class Testimonial
+{
+  // DB Stuff
+  private $conn;
+  private $table = 'testimonial';
 
-  
 
-    // Constructor with DB
-    public function __construct($db) {
-      $this->conn = $db;
-    }
 
-    // Get size
-    public function read() {
-      // Create query
-      $query = 'SELECT * FROM  ' . $this->table . '';
+  // Constructor with DB
+  public function __construct($db)
+  {
+    $this->conn = $db;
+  }
 
-      // Prepare statement
-      $stmt = $this->conn->prepare($query);
+  // Get size
+  public function read()
+  {
+    // Create query
+    $query = 'SELECT * FROM  ' . $this->table . '';
 
-      // Execute query
-      $stmt->execute();
+    // Prepare statement
+    $stmt = $this->conn->prepare($query);
 
-      return $stmt;
-    }
+    // Execute query
+    $stmt->execute();
 
- 
+    return $stmt;
+  }
 }
