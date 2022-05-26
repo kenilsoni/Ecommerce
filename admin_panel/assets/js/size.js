@@ -15,7 +15,9 @@ $(document).ready(function () {
         $(".size-id").val(size_id);
         $(".size-name").val(size);
     })
-
+    $('#size_detail').DataTable({
+        "order": [[ 2, "desc" ]]
+    });
     function onload() {
         $.ajax({
             type: "GET",

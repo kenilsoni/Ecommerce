@@ -26,3 +26,22 @@
   .msg{
       text-align: center;
   }
+  .avg_rating{
+    float: right;
+    margin-top: 10px;
+  }
+  .review_dl{
+    height: 40px;
+    margin-left: -5px;
+    margin-top: -7px;
+  }
+  .write-review{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .avg_star{
+    margin-bottom: -24px;
+    margin-top: -12px;
+    margin-right: -8px;
+  }

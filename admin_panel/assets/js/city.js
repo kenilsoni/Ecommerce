@@ -4,7 +4,9 @@ $(document).ready(function () {
         $(".add_city").css("display", "block");
         $(".page_name").text("Add City");
     })
-
+    $('#city_table').DataTable({
+        "order": [[ 4, "desc" ]]
+    });
     function onload() {
         $.ajax({
             type: "GET",

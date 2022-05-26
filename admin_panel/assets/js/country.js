@@ -1,5 +1,7 @@
 $(document).ready(function () {
-
+    $('#country_table').DataTable({
+        "order": [[ 2, "desc" ]]
+    });
     function onload() {
         $.ajax({
             type: "GET",

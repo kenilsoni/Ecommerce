@@ -1,5 +1,7 @@
 $(document).ready(function () {
-
+    $('#newsletter_table').DataTable({
+        "order": [[ 3, "desc" ]]
+    });
     function onload() {
         $.ajax({
             type: "GET",

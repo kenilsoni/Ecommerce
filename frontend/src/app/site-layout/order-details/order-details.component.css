@@ -30,16 +30,20 @@
     margin-bottom:20px;
     justify-content: space-evenly;
 }
-.card{
+/* .card{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-}
+} */
 .msg{
     text-align: center;
     margin-top: 100px;
     font-size: 50px;
 }
+/* .set_height{
+    height: 100px;
+    overflow: scroll;
+} */
 
 
 

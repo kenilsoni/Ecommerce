@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Category } from '../site-layout/interface/category';
+import { Category } from '../interface/category';
 import {environment} from '../../environments/environment'
-import { color } from '../site-layout/interface/color';
-import { size } from '../site-layout/interface/size';
-import { product } from '../site-layout/interface/product';
+import { color } from '../interface/color';
+import { size } from '../interface/size';
+import { product } from '../interface/product';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -106,7 +106,7 @@ export class ProductService {
   get_success(cs_id:any){
     return this.httpclient.get(`${environment.API_URL}/checkout/success.php?cs_id=`+cs_id)
   }
-  addto_db_product(user_id:any,payment_id:any,total:any){
+  place_order(user_id:any,payment_id:any,total:any){
     return this.httpclient.get(`${environment.API_URL}/checkout/place_order.php?user_id=`+user_id+'&payment_id='+payment_id+'&total='+total)
   }
   //get order history
@@ -117,17 +117,13 @@ export class ProductService {
     return this.httpclient.get(`${environment.API_URL}/order/filter.php?status=`+status+'&time='+time+'&name='+name+'&user_id='+user_id+'&load='+load_order)
   }
   //review
-  add_review_data(edit:any,delete_review:any,add:any,userid:any,pid:any,review:any,rate:any){
-    return this.httpclient.get(`${environment.API_URL}/product/add_review.php?userid=`+userid+'&pid='+pid+'&review='+review+'&rate='+rate+'&add='+add+'&delete='+delete_review+'&edit='+edit)
+  add_review_data(userid:any,pid:any,review:any,rate:any){
+    return this.httpclient.get(`${environment.API_URL}/product/add_review.php?userid=`+userid+'&pid='+pid+'&review='+review+'&rate='+rate)
   }
   //review by product id
   get_reviewid(pid:any,load:number){
     return this.httpclient.get(`${environment.API_URL}/product/get_review.php?pid=`+pid+'&load='+load)
   }
-  //check already review
-  check_review(pid:any,userid:number){
-    return this.httpclient.get(`${environment.API_URL}/product/get_review.php?pid=`+pid+'&userid='+userid)
-  }
-  
+
 
 }

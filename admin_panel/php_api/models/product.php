@@ -286,7 +286,7 @@ class Product
   public function get_review($productid, $load)
   {
     // Create query
-    $query = "SELECT rv.*,CONCAT(ur.FirstName,' ',ur.LastName) as FullName FROM product_review as rv LEFT JOIN user as ur ON rv.User_ID=ur.ID WHERE rv.Product_ID=? LIMIT $load";
+    $query = "SELECT rv.*,CONCAT(ur.FirstName,' ',ur.LastName) as FullName FROM product_review as rv LEFT JOIN user as ur ON rv.User_ID=ur.ID WHERE rv.Product_ID=? AND IsApprove=1 LIMIT $load";
     //Prepare statement
     $stmt = $this->conn->prepare($query);
     // Bind ID
@@ -296,48 +296,17 @@ class Product
     $stmt->execute();
     return $stmt;
   }
-  public function check_review($productid, $userid)
+  public function get_avg($productid)
   {
     // Create query
-    $query = "SELECT * FROM product_review WHERE Product_ID=? AND User_ID=?";
+    $query = "SELECT avg(Product_Rate) as average FROM product_review WHERE Product_ID=? AND IsApprove=1";
     //Prepare statement
     $stmt = $this->conn->prepare($query);
     // Bind ID
     $stmt->bindParam(1, $productid);
-    $stmt->bindParam(2, $userid);
 
     // Execute query
     $stmt->execute();
     return $stmt;
-  }
-  public function update_review($productid, $userid, $review, $rate)
-  {
-    // Create query
-    $query = "UPDATE product_review SET Product_Review=?,Product_Rate=?,Modified_At=NOW() WHERE Product_ID=? AND User_ID=?";
-    //Prepare statement
-    $stmt = $this->conn->prepare($query);
-    // Bind ID
-    $stmt->bindParam(1, $review);
-    $stmt->bindParam(2, $rate);
-    $stmt->bindParam(3, $productid);
-    $stmt->bindParam(4, $userid);
-
-    // Execute query
-    $success = $stmt->execute();
-    return $success;
-  }
-  public function delete_review($productid, $userid)
-  {
-    // Create query
-    $query = "DELETE FROM product_review WHERE Product_ID=? AND User_ID=?";
-    //Prepare statement
-    $stmt = $this->conn->prepare($query);
-    // Bind ID
-    $stmt->bindParam(1, $productid);
-    $stmt->bindParam(2, $userid);
-
-    // Execute query
-    $success = $stmt->execute();
-    return $success;
   }
 }

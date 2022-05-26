@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { NgToastService } from 'ng-angular-popup';
 import { CartService } from 'src/app/service/cart.service';
 import { ProductService } from 'src/app/service/product.service';
 import { UserService } from 'src/app/service/user.service';
@@ -31,7 +32,7 @@ export class CartComponent implements OnInit {
   @ViewChildren("size_text") size_text!: QueryList<ElementRef>
   handler: any = null;
 
-  constructor(private cartService: CartService, private userservice: UserService, private productservice: ProductService) { }
+  constructor(private toastr: NgToastService,private cartService: CartService, private userservice: UserService, private productservice: ProductService) { }
 
   ngOnInit(): void {
     this.getuser_id()
@@ -73,7 +74,6 @@ export class CartComponent implements OnInit {
         this.final_amount = 0
       }
     })
-
   }
   get_taxdetails() {
     this.cartService.get_country().subscribe(data => {
@@ -82,6 +82,7 @@ export class CartComponent implements OnInit {
   }
   removeItem(cart_id: any) {
     this.cartService.removeCartItem(cart_id).subscribe();
+    this.toastr.success({detail:'Success!', summary:'Product remove successfully!'});
     this.getcart_data()
     this.service_tax = 0
     this.state.nativeElement.value = ''
@@ -91,6 +92,7 @@ export class CartComponent implements OnInit {
   }
   emptycart() {
     this.cartService.removeAllCart(this.user_id).subscribe();
+    this.toastr.success({detail:'Success!', summary:'Product remove successfully!'});
     this.getcart_data()
     this.grandTotal = 0
     this.final_amount = 0
@@ -131,6 +133,7 @@ export class CartComponent implements OnInit {
     this.service_tax = 0
     this.state.nativeElement.value = ''
     this.country.nativeElement.value = ''
+    this.toastr.success({detail:'Success!', summary:'Cart update successfully!'});
 
   }
   find_tax(e: any) {

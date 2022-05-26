@@ -36,6 +36,9 @@
 }
 .padding{
     padding: 3px;
+    cursor: pointer;
+    margin-top: 7px;
+    margin-left: 3px;
 }
 .placeholder{
     position: absolute;
@@ -59,4 +62,13 @@
     color: red;
     cursor: pointer;
 }
+/* .ul_dopdown{
+    padding: 3px;
+    text-align: center;
+} */
 
+.dropdown-content{
+    border: 1px solid rgb(245, 245, 245);
+    /* border-radius: 15%;
+    margin-left: -30px; */
+}

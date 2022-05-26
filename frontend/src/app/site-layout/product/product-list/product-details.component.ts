@@ -62,9 +62,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     ceil: 0,
   };
   ngOnInit(): void {
-    // this.product.global_search.subscribe(data=>{
-    //   console.log(data)
-    // })
     this.route.params.subscribe(data => {
       this.cat_id = data['cid'];
       this.subcat_id = data['sid']
@@ -76,7 +73,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       this.getsize();
       this.getcount();
       this.getuser_id()
-
     })
   }
   selectedCurrency: any
@@ -189,7 +185,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       e.user_id = this.user_id
       this.cartService.addtoCart(e).subscribe(data => {
         if (data['message']) {
-          this.router.navigate(['/cart']);
           this.toastr.success({ detail: 'Success!', summary: 'Product added successfully!' });
         }
       });

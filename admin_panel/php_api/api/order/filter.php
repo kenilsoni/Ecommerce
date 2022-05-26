@@ -14,7 +14,7 @@ $db = $database->connect();
 $order = new Order($db);
 // Get ID
 if (!empty($_GET['user_id'])) {
-    $result = $order->read($_GET['user_id'], $_GET['load']);
+    $result = $order->read($_GET['user_id'],"");
     // Get row count
     $num = $result->rowCount();
     // Check if any order
@@ -40,7 +40,7 @@ if (!empty($_GET['user_id'])) {
                     } else if (in_array("lyear", $arr_time)) {
                         $dataa = "YEAR(Created_At) = YEAR(NOW()) - 1";
                     }
-                    $success = $order->check_st($row['Order_ID'], $_GET['status'], $dataa);
+                    $success = $order->check_st($row['Order_ID'], $_GET['status'], $dataa, $_GET['load']);
                     if (count($success) > 0) {
                         $final_arr = [];
                         $final_arr['detail'] = [];
@@ -77,7 +77,7 @@ if (!empty($_GET['user_id'])) {
                     }
                 } else if (!empty($_GET['name'])) {
                     // status name
-                    $success = $order->check_s($row['Order_ID'], $_GET['status']);
+                    $success = $order->check_s($row['Order_ID'], $_GET['status'], $_GET['load']);
 
                     if (count($success) > 0) {
                         $final_arr = [];
@@ -110,7 +110,6 @@ if (!empty($_GET['user_id'])) {
                     }
                 } else if (!empty($_GET['name'])) {
                     //stays time name
-                    echo "dd";
                     $arr_time = explode(",", $_GET['time']);
                     if (in_array("lweek", $arr_time)) {
                         $dataa = "WEEK(Created_At) = WEEK(NOW()) - 1";
@@ -119,7 +118,7 @@ if (!empty($_GET['user_id'])) {
                     } else if (in_array("lyear", $arr_time)) {
                         $dataa = "YEAR(Created_At) = YEAR(NOW()) - 1";
                     }
-                    $success = $order->check_st($row['Order_ID'], $_GET['status'], $dataa);
+                    $success = $order->check_st($row['Order_ID'], $_GET['status'], $dataa, $_GET['load']);
                     if (count($success) > 0) {
                         $final_arr = [];
                         $final_arr['detail'] = [];
@@ -151,7 +150,7 @@ if (!empty($_GET['user_id'])) {
                     }
                 } else {
                     //status
-                    $success = $order->check_s($row['Order_ID'], $_GET['status']);
+                    $success = $order->check_s($row['Order_ID'], $_GET['status'], $_GET['load']);
                     if (count($success) > 0) {
                         $final_arr = [];
                         $final_arr['detail'] = [];
@@ -199,7 +198,7 @@ if (!empty($_GET['user_id'])) {
                     } else if (in_array("lyear", $arr_time)) {
                         $dataa = "YEAR(Created_At) = YEAR(NOW()) - 1";
                     }
-                    $success = $order->check_t($row['Order_ID'], $dataa);
+                    $success = $order->check_t($row['Order_ID'], $dataa, $_GET['load']);
                     if (count($success) > 0) {
                         $final_arr = [];
                         $final_arr['detail'] = [];
@@ -239,7 +238,7 @@ if (!empty($_GET['user_id'])) {
                     } else if (in_array("lyear", $arr_time)) {
                         $dataa = "YEAR(Created_At) = YEAR(NOW()) - 1";
                     }
-                    $success = $order->check_t($row['Order_ID'], $dataa);
+                    $success = $order->check_t($row['Order_ID'], $dataa, $_GET['load']);
                     if (count($success) > 0) {
                         $final_arr = [];
                         $final_arr['detail'] = [];
@@ -277,7 +276,7 @@ if (!empty($_GET['user_id'])) {
                 }
             } else if (!empty($_GET['name'])) {
                 //name
-                $success = $order->get_orderid($row['Order_ID']);
+                $success = $order->get_orderid($row['Order_ID'], $_GET['load']);
                 if (count($success) > 0) {
                     $final_arr = [];
                     $final_arr['detail'] = [];
@@ -309,7 +308,7 @@ if (!empty($_GET['user_id'])) {
                 }
             } else {
                 //default
-                $success = $order->get_orderid($row['Order_ID']);
+                $success = $order->get_orderid($row['Order_ID'], $_GET['load']);
                 if (count($success) > 0) {
                     $final_arr = [];
                     $final_arr['detail'] = [];

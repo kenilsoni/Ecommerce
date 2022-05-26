@@ -50,13 +50,11 @@ $(document).ready(function () {
         });
     } else {
         alert("Your browser doesn't support to File API")
-    }
-
-    
+    }  
     $(".upload-img").hide();
-    
-  
- 
+    $('#testimonial_table').DataTable({
+        "order": [[ 5, "desc" ]]
+    });
     function onload() {
         $.ajax({
             type: "GET",
@@ -97,11 +95,8 @@ $(document).ready(function () {
         $(".add_testimonial").css("display", "block");
         $(".page_name").text("Add Testimonial");
     })
-
-    
-
     onload();
-    
+
     
     $(document).on('click', '.edit_testimonial', function () {
         $(".testimonial_data").hide();
@@ -109,6 +104,7 @@ $(document).ready(function () {
         $(".page_name").text("Update testimonial");
 
         var testimonialid = $(this).closest('tr').find(".testimonial_id").val();
+        var Image_Path = $(this).closest('tr').find(".image_path").val();
         var name = $(this).closest('tr').find(".name_get").text().trim();
         var desc = $(this).closest('tr').find(".desc_get").text().trim();
         var designation = $(this).closest('tr').find(".designation_get").text().trim();
@@ -117,9 +113,9 @@ $(document).ready(function () {
         $(".name").val(name);
         $(".desc").val(desc);
         $(".designation").val(designation);
+        $(".available_image").append(`<div><img src="./assets/uploads/${Image_Path}" /></div>`);
 
     })
-
 
     $(document).on("click", ".delete_testimonial", function () {
         var testimonial_id = $(this).closest('tr').find(".testimonial_id").val();
@@ -137,4 +133,5 @@ $(document).ready(function () {
         }
 
     })
+  
 })

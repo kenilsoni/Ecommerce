@@ -41,7 +41,6 @@ export class ProductDataComponent implements OnInit {
       review: ['', [Validators.required]],
     })
     this.get_review()
-    this.check_review()
   }
   getproduct() {
     this.product.getproduct_single(this.product_id).subscribe(data => {
@@ -132,67 +131,18 @@ export class ProductDataComponent implements OnInit {
     }
   }
   review_details: any = []
-  submit_review: boolean = true
   review_load: number = 2
   initial!: number
   end!: number
   review_count: boolean = true
-  check_review() {
-    if (this.user_id) {
-      this.product.check_review(this.product_id, this.user_id).subscribe((data: any) => {
-        if (data['message']) {
-          this.reviewval.patchValue({
-            review: data['message'][0].review
-          })
-          this.selectedValue = data['message'][0].rate
-          this.submit_review = false
-        } else {
-          this.reviewval.reset();
-          this.submit_review = true
-          this.selectedValue = 0
-        }
-      })
-    }
-  }
-  edit_review() {
-    if (this.reviewval.valid) {
-      if (this.selectedValue == undefined) {
-        this.reviewval.controls['star'].setErrors({ invalid: true })
-      } else {
-        this.product.add_review_data("edit", "", "", this.user_id, this.product_id, this.reviewval.value.review, this.selectedValue).subscribe((data: any) => {
-          if (data['message']) {
-            this.get_review()
-            this.check_review()
-            this.toastr.success({ detail: 'Success!', summary: 'Product review Updated successfully!' });
-          } else {
-            this.toastr.error({ detail: 'Error!', summary: 'Something went wrong!' });
-          }
-        })
-      }
-    }
-  }
-  delete_review() {
-    if (this.reviewval.valid) {
-      if (this.selectedValue == undefined) {
-        this.reviewval.controls['star'].setErrors({ invalid: true })
-      } else {
-        this.product.add_review_data("", "delete", "", this.user_id, this.product_id, "", "").subscribe((data: any) => {
-          if (data['message']) {
-            this.get_review()
-            this.check_review()
-            this.toastr.success({ detail: 'Success!', summary: 'Product review delete successfully!' });
-          } else {
-            this.toastr.error({ detail: 'Error!', summary: 'Something went wrong!' });
-          }
-        })
-      }
-    }
-  }
+  average_rate:any
+  average_rate_round:any
   get_review() {
     this.product.get_reviewid(this.product_id, this.review_load).subscribe((data: any) => {
       if (data['message']) {
         this.review_details = data['message']
-        console.log(this.review_details)
+        this.average_rate=data['average'][0].avg
+        this.average_rate_round=Math.round(data['average'][0].avg)
       } else {
         this.review_details = []
       }
@@ -215,10 +165,12 @@ export class ProductDataComponent implements OnInit {
         if (this.selectedValue == undefined) {
           this.reviewval.controls['star'].setErrors({ invalid: true })
         } else {
-          this.product.add_review_data("", "", "add", this.user_id, this.product_id, this.reviewval.value.review, this.selectedValue).subscribe((data: any) => {
+          this.product.add_review_data(this.user_id, this.product_id, this.reviewval.value.review, this.selectedValue).subscribe((data: any) => {
             if (data['message']) {
               this.get_review()
-              this.check_review()
+              this.reviewval.reset()
+              this.reviewval.controls['review'].setErrors(null)
+              this.selectedValue=0
               this.toastr.success({ detail: 'Success!', summary: 'Product review added successfully!' });
             } else {
               this.toastr.error({ detail: 'Error!', summary: 'Something went wrong!' });

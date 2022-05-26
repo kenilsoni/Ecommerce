@@ -5,8 +5,8 @@ class AdminController
     {
         include('models/Event.php');
         include('models/stripe.php');
-        $this->model = new EventModel();  
-         require './php_api/api/checkout/stripe-php-master/init.php';
+        $this->model = new EventModel();
+        require './php_api/api/checkout/stripe-php-master/init.php';
         $this->stripe = new \Stripe\StripeClient(
             $stripe_secret
         );
@@ -217,7 +217,7 @@ class AdminController
             $Expiry = date('Y-m-d', strtotime($date . ' + ' . $duration . ' months'));
 
             // echo $newDate;die();
-           
+
             $coupan = $this->stripe->coupons->create([
                 'percent_off' => $percent,
                 'duration' => 'repeating',
@@ -225,9 +225,9 @@ class AdminController
             ]);
             $promocode = $this->stripe->promotionCodes->create([
                 'coupon' => $coupan->id,
-              ]);
+            ]);
             $data = array(
-                'stripe_id'=>$coupan->id,
+                'stripe_id' => $coupan->id,
                 'coupan' => $promocode->code,
                 'expiry' => $Expiry,
                 'discount' => $percent
@@ -339,36 +339,46 @@ class AdminController
             $designation = $_POST['designation'];
             $uploadsDir = "./assets/uploads/";
             $allowedFileType = array('jpg', 'png', 'jpeg');
+            
             session_start();
             if ($description != '') {
+                if ($_FILES['files_image']['error'][0] !== 4) {
+                    foreach ($_FILES['files_image']['name'] as $id => $val) {
+                        $fileName        = $_FILES['files_image']['name'][$id];
+                        $tempLocation    = $_FILES['files_image']['tmp_name'][$id];
+                        $targetFilePath  = $uploadsDir . $fileName;
+                        $fileType        = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
+                        $rand = rand() . '.' . $fileType;
+                        $path = $uploadsDir . $rand;
 
-                foreach ($_FILES['files_image']['name'] as $id => $val) {
-                    $fileName        = $_FILES['files_image']['name'][$id];
-                    $tempLocation    = $_FILES['files_image']['tmp_name'][$id];
-                    $targetFilePath  = $uploadsDir . $fileName;
-                    $fileType        = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
-                    $rand = rand() . '.' . $fileType;
-                    $path = $uploadsDir . $rand;
-
-                    if (in_array($fileType, $allowedFileType)) {
-                        if (move_uploaded_file($tempLocation, $path)) {
-                            $data = array(
-                                'id' => $_POST['id'],
-                                'image_path' => $rand,
-                                'description' => $description,
-                                'name' => $name,
-                                'designation' => $designation
-                            );
+                        if (in_array($fileType, $allowedFileType)) {
+                            if (move_uploaded_file($tempLocation, $path)) {
+                                $data = array(
+                                    'id' => $_POST['id'],
+                                    'image_path' => $rand,
+                                    'description' => $description,
+                                    'name' => $name,
+                                    'designation' => $designation
+                                );
+                            }
                         }
                     }
-                }
-                $data_img = $this->model->get_testimg($_POST['id']);
-                if ($data_img) {
-                    foreach ($data_img as $val) {
+                    $data_img = $this->model->get_testimg($_POST['id']);
+                    if ($data_img) {
+                        foreach ($data_img as $val) {
 
-                        unlink("./assets/uploads/" . $val['Image_Path']);
+                            unlink("./assets/uploads/" . $val['Image_Path']);
+                        }
+                        $success = $this->model->update_testimonial($data, 1);
                     }
-                    $success = $this->model->update_testimonial($data);
+                } else {
+                    $data = array(
+                        'id' => $_POST['id'],
+                        'description' => $description,
+                        'name' => $name,
+                        'designation' => $designation
+                    );
+                    $success = $this->model->update_testimonial($data, 0);
                 }
 
                 if ($success) {
@@ -507,6 +517,21 @@ class AdminController
             }
         } else {
             $_SESSION['delete_rv'] = false;
+        }
+    }
+    public function verify_rv()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id_rv = $_POST['id'];
+            session_start();
+            $success = $this->model->verify_rv($id_rv);
+            if ($success) {
+                $_SESSION['verify_rv'] = true;
+            } else {
+                $_SESSION['verify_rv'] = false;
+            }
+        } else {
+            $_SESSION['verify_rv'] = false;
         }
     }
     //news letter

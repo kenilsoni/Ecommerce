@@ -1,5 +1,6 @@
 
 <div class="grid-content container">
+    <h2>Wishlist Products</h2>
     <div class="grid row" *ngIf="productdata.length> 0;else nodata">
         <div class="col-sm-3 col-xs-6" *ngFor="let product of productdata">
             <figure class="effect-goliath">
@@ -17,7 +18,7 @@
                     <a routerLink="/product/{{product.ID}}"
                         title={{product.Product_Name}} class="heading">{{product.Product_Name}}</a>
                     <span>{{convertWithCurrencyRate(product.Product_Price, selectedCurrency) 
-                        | currency:selectedCurrency:true}}</span>
+                        | currency:selectedCurrency}}</span>
                     <a (click)="remove_item(product.ID)" title="Remove Item"  class="btn-secondary"
                     >Remove Item</a>
                 </figcaption>

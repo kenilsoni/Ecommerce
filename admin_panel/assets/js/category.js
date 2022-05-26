@@ -1,5 +1,7 @@
 $(document).ready(function () {
-
+    $('#category_table').DataTable({
+        "order": [[ 2, "desc" ]]
+    });
     function onload() {
         $.ajax({
             type: "GET",
@@ -32,6 +34,7 @@ $(document).ready(function () {
         })
 
     }
+
     onload();
 
     $(document).on("click", ".delete_category", function () {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ProductService } from '../../service/product.service';
 import { CartService } from 'src/app/service/cart.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -6,6 +6,7 @@ import { UserService } from 'src/app/service/user.service';
 import { environment } from 'src/environments/environment';
 import { NgToastService } from 'ng-angular-popup';
 import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-header',
@@ -31,7 +32,6 @@ export class HeaderComponent implements OnInit {
   change_password_forgot!: FormGroup
   check_otp!: FormGroup
   islogin!: boolean
-  update_success!: boolean
   user_name!: any
   login_error!: boolean
   size_details: any = []
@@ -78,6 +78,7 @@ export class HeaderComponent implements OnInit {
       validators: this.mustMatch('new_password', 'cpassword')
     })
   }
+
   is_loogedin() {
     if (this.userservice.get_user()) {
       let name = this.userservice.get_user()
@@ -94,17 +95,19 @@ export class HeaderComponent implements OnInit {
   }
   getcart_data() {
     let name = this.userservice.get_user()
-    this.cartService.getProducts(name['id']).subscribe(data => {
-      if (data['data']) {
-        this.products = data['data'];
-        this.final_amount = this.get_total()
-        this.grandTotal = this.get_total()
-      } else {
-        this.products = []
-        this.grandTotal = 0
-        this.final_amount = 0
-      }
-    })
+    if (name['id']) {
+      this.cartService.getProducts(name['id']).subscribe(data => {
+        if (data['data']) {
+          this.products = data['data'];
+          this.final_amount = this.get_total()
+          this.grandTotal = this.get_total()
+        } else {
+          this.products = []
+          this.grandTotal = 0
+          this.final_amount = 0
+        }
+      })
+    }
   }
   get_total() {
     let grandTotal = 0;
@@ -125,6 +128,7 @@ export class HeaderComponent implements OnInit {
   }
   removeItem(cart_id: number) {
     this.cartService.removeCartItem(cart_id).subscribe();
+    this.toastr.success({ detail: 'Success!', summary: 'Product remove successfully!' });
     this.getcart_data()
     this.getcart_data()
     this.grandTotal = this.get_total()
@@ -181,6 +185,7 @@ export class HeaderComponent implements OnInit {
     this.hide_dropdownid(id)
     this.display_textid(id)
     this.getcart_data()
+    this.toastr.success({ detail: 'Success!', summary: 'Product update successfully!' });
   }
   hide_dropdownid(id: number) {
     this.size_change.forEach((element) => {
@@ -267,22 +272,46 @@ export class HeaderComponent implements OnInit {
       }
     })
   }
-  manage_dropdown() {
-    if (this.dropdown.nativeElement.style.display == 'block') {
-      this.dropdown.nativeElement.style.display = "none"
+  dp_manage: boolean = false
+  dp_currency: boolean = false
+  @HostListener('document:click')
+  clickOutside() {
+    if (this.islogin) {
+      if (!this.dp_manage) {
+        this.dropdown.nativeElement.style.display = "none"
+      } else {
+        if (this.dp_manage) {
+          this.dropdown.nativeElement.style.display = "block"
+          this.dp_manage = false
+        }
+      }
+      if (!this.dp_currency) {
+        this.currency.nativeElement.style.display = "none"
+      }
+      else if (this.dp_currency) {
+        this.currency.nativeElement.style.display = "block"
+        this.dp_currency = false
+      }
     } else {
-      this.dropdown.nativeElement.style.display = "block"
+      if (!this.dp_currency) {
+        this.currency.nativeElement.style.display = "none"
+      }
+      else if (this.dp_currency) {
+        this.currency.nativeElement.style.display = "block"
+        this.dp_currency = false
+      }
     }
+  }
+  manage_dropdown(e: any) {
+    this.dp_manage = true
+    this.dropdown.nativeElement.style.display = "block"
   }
   close_dropdown() {
     this.dropdown.nativeElement.style.display = "none"
   }
   currency_btn() {
-    if (this.currency.nativeElement.style.display == 'block') {
-      this.currency.nativeElement.style.display = "none"
-    } else {
-      this.currency.nativeElement.style.display = "block"
-    }
+    this.dp_currency = true
+    this.currency.nativeElement.style.display = "block"
   }
   currency_dropdown() {
     this.currency.nativeElement.style.display = "none"
@@ -295,10 +324,8 @@ export class HeaderComponent implements OnInit {
       })
       this.userservice.update_password(this.change_password.value).subscribe(data => {
         if (data['success']) {
-          this.update_success = true
-          setTimeout(() => {
-            this.update_success = false
-          }, 4000);
+          this.toastr.success({ detail: 'Success!', summary: 'Password change successfully!' });
+          document.getElementById('close_cp')?.click()
           this.change_password.reset()
         } else {
           this.login_error = true
@@ -408,15 +435,12 @@ export class HeaderComponent implements OnInit {
     }
   }
   mustMatch(controlName: string, matchingControlName: string) {
-
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
-
       if (matchingControl.errors && !matchingControl.errors['mustMatch']) {
         return;
       }
-
       // set error on matchingControl if validation fails
       if (control.value !== matchingControl.value) {
         matchingControl.setErrors({ mustMatch: true });

@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     function onload() {
         $.ajax({
             type: "GET",
@@ -20,7 +21,7 @@ $(document).ready(function () {
                      <td>${obj[i][0].Fullname}</td>
                      <td>${obj[i][0].Phone}</td>
                      <td >${obj[i][0].Email} </td>
-                     <td >${obj[i][0].Status == 1 ? '<button type="button" class="btn btn-rounded btn-success view_user">Active</button>':'<button type="button" class="btn btn-rounded btn-danger view_user">Inactive</button>'} </td>
+                     <td >${obj[i][0].Status == 1 ? '<button type="button" class="btn btn-rounded btn-success " >Active</button>':'<button type="button" class="btn btn-rounded btn-danger" >Inactive</button>'} </td>
                      <td><button type="button" class="btn btn-rounded btn-primary view_user">View Detail</button>
                      ${obj[i][0].Status == 0 ? `<button type="button" class="btn btn-rounded btn-success active">Activate</button>` : `<button type="button" class="btn btn-rounded btn-danger deactive">Deactivate</button>`}                
                      </td>

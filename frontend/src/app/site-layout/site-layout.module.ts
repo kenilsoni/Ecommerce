@@ -15,6 +15,7 @@ import { OrderStatusComponent } from './order-status/order-status.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -35,6 +36,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     AppRoutingModule,
     MatProgressBarModule,
     MatProgressSpinnerModule
+
   ],
   exports: [
     HeaderComponent,

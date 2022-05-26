@@ -42,7 +42,6 @@ export class WishlistComponent implements OnInit {
     this.cartService.addtoCart(e).subscribe(data=>{
       if(data['message']){
         this.toastr.success({detail:'Success!', summary:'Product added successfully!'});
-        this.router.navigate(['/cart']);
         }
     });
   }

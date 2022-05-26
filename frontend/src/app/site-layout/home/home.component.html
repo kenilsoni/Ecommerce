@@ -1,5 +1,5 @@
 <div class="banner">
-    <div><ng-image-slider [images]="imgCollection" [imageSize]="{width: 1400,
+    <div><ng-image-slider [images]="imgCollection" [imageSize]="{width: '100%',
             height: 400}"></ng-image-slider></div>
 </div>
 <section class="services-section">
@@ -64,7 +64,7 @@
                                         class="heading">{{product.Product_Name}}</a>
                                     <span>{{convertWithCurrencyRate(product.Product_Price,
                                         selectedCurrency)
-                                        | currency:selectedCurrency:true}}</span>
+                                        | currency:selectedCurrency}}</span>
                                 </figcaption>
                             </figure>
                         </div>
@@ -93,7 +93,7 @@
                     <div class="text01">
                         <span>womens</span> fashion
                     </div>
-                    <a href="product.html" title="Get Exclusive Collection For
+                    <a routerLink="/product/WOMEN/10" title="Get Exclusive Collection For
                         Women" class="btn-secondary">Get Exclusive Collection
                         For Women</a>
                 </div>

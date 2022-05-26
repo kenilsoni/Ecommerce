@@ -32,7 +32,7 @@ export class OrderStatusComponent implements OnInit {
       this.productservice.get_success(this.checkout_id).subscribe((data:any)=>{
         if(data){
           this.order_detail=data
-          this.addto_db()
+          this.place_order()
           this.order=true
         }else{
           this.order_fail=true
@@ -44,10 +44,10 @@ export class OrderStatusComponent implements OnInit {
       this.order_fail=true
     }
   }
-  addto_db(){
+  place_order(){
     let total=(this.order_detail.amount_total)/100
     let pid=this.order_detail.payment_intent
-    this.productservice.addto_db_product(this.user_id,pid,total).subscribe((res:any)=>{
+    this.productservice.place_order(this.user_id,pid,total).subscribe((res:any)=>{
       if(res){
         this.order_id=res[0]['order_id']
         this.toastr.success({detail:'Success!', summary:'Order Placed successfully!'});

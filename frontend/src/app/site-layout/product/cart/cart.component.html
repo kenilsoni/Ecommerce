@@ -92,7 +92,7 @@
                             <td>
                                
                                 <span class="orange-text"> {{convertWithCurrencyRate(item.Quantity*item.Unit_Price, selectedCurrency) 
-                                    | currency:selectedCurrency:true}}</span>
+                                    | currency:selectedCurrency}}</span>
                             </td>
                             <td>
                                 <a style="cursor:pointer" (click)="removeItem(item.ID)" title="Remove item" class="remove-link"><img src="assets/images/cross-dark.svg" alt="delete"></a>

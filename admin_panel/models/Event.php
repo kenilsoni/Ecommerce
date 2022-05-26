@@ -102,8 +102,14 @@ class EventModel
         $stmt->execute($data);
         return $stmt;
     }
-    public function update_testimonial($data){
-        $sql = "UPDATE testimonial SET Name=:name,Image_Path=:image_path,Description=:description,Designation=:designation,Modified_At=NOW() WHERE ID=:id";
+
+    public function update_testimonial($data,$image_set){
+        if($image_set==1){
+            $sql = "UPDATE testimonial SET Name=:name,Image_Path=:image_path,Description=:description,Designation=:designation,Modified_At=NOW() WHERE ID=:id";
+        }else{
+            $sql = "UPDATE testimonial SET Name=:name,Description=:description,Designation=:designation,Modified_At=NOW() WHERE ID=:id";
+        }
+      
         $stmt = $this->conn->prepare($sql);
         $success=$stmt->execute($data);
         return $success;
@@ -187,6 +193,12 @@ class EventModel
     }
     public function remove_rv($id){
         $sql = "DELETE FROM product_review WHERE ID=?";
+        $stmt = $this->conn->prepare($sql);
+        $success=$stmt->execute([$id]);
+        return $success;
+    }
+    public function verify_rv($id){
+        $sql = "UPDATE product_review SET IsApprove=1 WHERE ID=?";
         $stmt = $this->conn->prepare($sql);
         $success=$stmt->execute([$id]);
         return $success;

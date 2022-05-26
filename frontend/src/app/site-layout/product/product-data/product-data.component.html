@@ -55,7 +55,7 @@
                     </div>
                     <div class="price-box">{{convertWithCurrencyRate(data.Product_Price,
                         selectedCurrency)
-                        | currency:selectedCurrency:true}}</div>
+                        | currency:selectedCurrency}}</div>
                     <div class="product-options">
                         <label class="required"><em>*</em> size</label>
                         <p class="required">* Required Fields</p>
@@ -157,33 +157,37 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a
-                            href="#product-des" aria-controls="product-des"
-                            role="tab" data-toggle="tab">Product Description</a></li>
-                    <li role="presentation"><a href="#product-review"
+                            href="#product-review"
                             aria-controls="product-review" role="tab"
                             data-toggle="tab">Product's Review</a></li>
-                    <li role="presentation"><a href="#cms-tab"
-                            aria-controls="cms-tab" role="tab"
-                            data-toggle="tab">CMS tab</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active"
-                        id="product-des">
-                        <p>
-                            <strong>Sample Lorem Ipsum Text</strong>
-                        </p>
-                        <p>{{data.Product_Description}}</p>
-
-
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="product-review">
-                        <p class="write-review">
+                        id="product-review">
+                        <div class="write-review">
                             <a (click)="review()" title="Write a review"
                                 class="review-tag">Write a review</a>
-                        </p>
-                        <form class="review-open" [formGroup]="reviewval" #ngForm="ngForm"
-                        (ngSubmit)="add_review()"
+                            <div class="" *ngIf="average_rate"><div style="text-align:right ;">{{average_rate
+                                | number:
+                                '1.0-1'}}&nbsp; Out Of 5</div>
+                                <div class="avg_star">
+                                <ul class="star-links rating-list"
+                                    *ngFor="let star of stars" style="display:
+                                    inline-block">
+                                    <li (click)="countStar(star)"
+                                        [ngClass]="{'selected': (star <=
+                                        average_rate_round )}">
+                                        <i class="fa fa-star"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                            </div>
+                        </div>
+
+                        <form class="review-open" [formGroup]="reviewval"
+                            #ngForm="ngForm"
+                            (ngSubmit)="add_review()"
                             #review_window>
                             <ul class="star-links rating-list"
                                 *ngFor="let star of stars" style="display:
@@ -194,67 +198,64 @@
                                     <i class="fa fa-star"></i>
                                 </li>
                             </ul>
-                            <div *ngIf="reviewval.controls['star']?.invalid" class="text-danger">
-                                    Star is required                    
+
+                            <div *ngIf="reviewval.controls['star']?.invalid"
+                                class="text-danger">
+                                Star is required
                             </div>
                             <div class="form-group">
                                 <textarea class="form-control"
-                                    placeholder="Write a review" formControlName="review"></textarea>
-                                    <div *ngIf="reviewval.controls['review']?.invalid ">
+                                    placeholder="Write a review"
+                                    formControlName="review"></textarea>
+                                <div
+                                    *ngIf="reviewval.controls['review']?.invalid">
+                                    <span
+                                        *ngIf="reviewval.controls['review']?.errors?.['required']
+                                        &&
+                                        (reviewval.controls['review']?.touched
+                                        || ngForm.submitted)"
+                                        class="text-danger">
+                                        Review is required
+                                    </span>
 
-                                        <span *ngIf="reviewval.controls['review']?.errors?.['required']  && (reviewval.controls['review']?.touched || ngForm.submitted) "  class="text-danger">
-                                            Review is required
-                                        </span>
-                                      
-                                    </div>
+                                </div>
                             </div>
-                            <button *ngIf="submit_review;else second" style="cursor: pointer;" title="Submit" type="submit" class="btn-secondary">Submit</button>
-                            <ng-template #second>
-                                <button  style="cursor: pointer;" title="Submit" type="button" (click)="edit_review()" class="btn-secondary">Update</button>&nbsp;
-                                <button  style="cursor: pointer;" title="Submit" type="button" (click)="delete_review()" class="btn-secondary">Delete</button>
-                            </ng-template>
+                            <button 
+                                style="cursor: pointer;" title="Submit"
+                                type="submit" class="btn-secondary">Submit</button>
+                          
                         </form>
                         <div *ngIf="review_details.length>0;else nodata">
-                        <div class="review-detail" *ngFor="let data of review_details">
-                            <span>{{data.fullname}}, {{data.date}} writes:</span>
-                            <p>{{data.review}}</p>
-                        </div>
+                            <div class="review-detail" *ngFor="let data of
+                                review_details">
+                                <span>{{data.fullname}}, {{data.date}} writes:</span>
+                                <div class="review_dl">
+                                    <ul class="star-links rating-list"
+                                        *ngFor="let star of stars"
+                                        style="display:
+                                        inline-block">
+                                        <li (click)="countStar(star)"
+                                            [ngClass]="{'selected': (star <=
+                                            data.rate)}">
+                                            <i class="fa fa-star"></i>
+                                        </li>
+                                    </ul></div>
+                                <p>{{data.review}}</p>
+                            </div>
                         </div>
                         <ng-template #nodata>
                             <div class="grid row record">
                                 <div class="col-12 msg">No Review Found!!!</div>
                             </div>
                         </ng-template>
-                        <div  *ngIf="review_details.length >=2 && review_count;">
+                        <div *ngIf="review_details.length >=2 && review_count;">
                             <span class="button-outer text-center">
-                                <a
+                                <a  style="cursor: pointer;"
                                     class="btn-tertiary"
                                     (click)="load_review(review_load)"
-                                    title="More Products">More Review</a>
+                                    title="More Products">View More</a>
                             </span>
                         </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="cms-tab">
-                        <p>
-                            Custom Variants and Options let you create product
-                            customization options and fields quickly and easily.
-                            Any product can have custom variants and options –
-                            this can be configured in its product configuration.
-                            Custom variants and options can be created for
-                            products as required or non-required options. They
-                            can affect the total price of the product by a fixed
-                            amount or percentage.
-                        </p>
-                        <p>
-                            Custom Variants and Options let you create product
-                            customization options and fields quickly and easily.
-                            Any product can have custom variants and options –
-                            this can be configured in its product configuration.
-                            Custom variants and options can be created for
-                            products as required or non-required options. They
-                            can affect the total price of the product by a fixed
-                            amount or percentage.
-                        </p>
                     </div>
                 </div>
             </div>

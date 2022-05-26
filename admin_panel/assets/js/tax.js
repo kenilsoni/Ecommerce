@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    $('#tax_table').DataTable({
+        "order": [[ 4, "desc" ]]
+    });
     function onload() {
         $.ajax({
             type: "GET",

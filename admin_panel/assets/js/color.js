@@ -4,6 +4,9 @@ $(document).ready(function () {
         $(".add_color").css("display", "block");
         $(".page_name").text("Add Color");
     })
+    $('#color_detail').DataTable({
+        "order": [[ 3, "desc" ]]
+    });
     $(document).on('click', '.edit_color', function () {
         $(".color_detail").hide();
         $(".update_color").css("display", "block");

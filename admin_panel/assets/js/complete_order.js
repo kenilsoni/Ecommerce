@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    $('#complete_order_table').DataTable({
+        "order": [[ 1, "desc" ]]
+    });
     function onload() {
         $.ajax({
             type: "GET",

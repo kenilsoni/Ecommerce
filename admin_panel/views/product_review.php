@@ -70,6 +70,35 @@
                         <?php }
                             unset($_SESSION['delete_rv']);
                         } ?>
+                        <!-- update alert -->
+                        <?php if (isset($_SESSION['verify_rv'])) {
+                            if ($_SESSION['verify_rv']) { ?>
+                                <script>
+                                    setTimeout(() => {
+                                        document.getElementById("delete").style.display = 'none';
+                                    }, 4000);
+                                </script>
+                                <div class="alert alert-success alert-dismissible fade show" id="delete" role="alert">
+                                    Tax deleted successfully!!.
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </a>
+                                </div>
+                            <?php  } else { ?>
+                                <script>
+                                    setTimeout(() => {
+                                        document.getElementById("err").style.display = 'none';
+                                    }, 4000);
+                                </script>
+                                <div class="alert alert-danger alert-dismissible fade show" id="err" role="alert">
+                                    Something went wrong!!.
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </a>
+                                </div>
+                        <?php }
+                            unset($_SESSION['verify_rv']);
+                        } ?>
                     </div>
                     <div class="card">
                         <h5 class="card-header">Product Reviews</h5>
@@ -83,6 +112,7 @@
                                             <th>Product Name</th>
                                             <th>Rate</th>
                                             <th>Review</th>
+                                            <th>Verify</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>

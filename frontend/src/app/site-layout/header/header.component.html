@@ -49,6 +49,7 @@
                         </nav>
                     </div>
                 </div>
+               
                 <div class="col-sm-6 col-xs-12 search-outer">
                     <form>
                         <ul class="header-right-block clearfix">
@@ -63,7 +64,7 @@
                             </li>
                             
                                 <li *ngIf="islogin">
-                                    <span (click)="manage_dropdown()" style="cursor:
+                                    <span  (click)="manage_dropdown($event)" id="mange_id"  style="cursor:
                                         pointer;">Manage <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="10px" height="10px" viewBox="0 0
@@ -73,10 +74,11 @@
                                                 306.8l137.4-137.4c12.5-12.5
                                                 32.75-12.5 45.25 0s12.5 32.75 0
                                                 45.25l-160 160C208.4 380.9 200.2 384
-                                                192 384z" /></svg></span>
+                                                192 384z" /></svg>
+                                            </span>
                                         <div #myDropdown class="dropdown-content
-                                            myDropdown" (click)="close_dropdown()">
-                                            <ul>
+                                            myDropdown" (click)="close_dropdown()" >
+                                            <ul class="ul_dopdown">
                                                 <li class="padding"><a
                                                         routerLink="/profile"
                                                         title="Profile">Profile</a></li>
@@ -97,7 +99,6 @@
                                             </ul>
                                         </div>
                                     </li>
-    
                                     <li >
                                         <span (click)="currency_btn()" style="cursor:
                                             pointer;">Currency <svg
@@ -112,11 +113,11 @@
                                                     192 384z" /></svg></span>
                                             <div #currency class="dropdown-content
                                                 myDropdown" (click)="currency_dropdown()">
-                                                <ul>
-                                                    <li class="padding"><a (click)="INR_convert()"
+                                                <ul class="ul_dopdown">
+                                                    <li class="padding" (click)="INR_convert()"><a 
                                                             href="#"
                                                             title="INR">INR</a></li>
-                                                    <li class="padding"><a  (click)="USD_convert()" href="#" title="USD">USD</a></li>
+                                                    <li class="padding" (click)="USD_convert()"><a   href="#" title="USD">USD</a></li>
                             
                                                 </ul>
                                             </div>
@@ -410,7 +411,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button"
-                                                class="close" 
+                                                class="close" id="close_cp"
                                                 data-dismiss="modal"
                                                 aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -441,23 +442,6 @@
                                                             alt="error"></i>
                                                    Current Password is Not Match!!
                                                 </div>
-                                                <div class="alert
-                                                    alert-dismissible
-                                                    alert-success"
-                                                    role="alert"
-                                                    *ngIf="update_success">
-                                                    <button
-                                                        type="button"
-                                                        class="close"
-                                                        data-dismiss="alert"
-                                                        aria-label="Close"></button>
-                                                    <i> <img
-                                                            src="assets/images/success.svg"
-                                                            height="15px"
-                                                            alt="success"></i>
-                                                   Password Updated Successfully!!
-                                                </div>
-                                                
                                                 <div class="form-group">
                                                     <label
                                                         class="form-label">Current
@@ -738,18 +722,18 @@
                                                         </a>
                                                         <p class="product-name"><a
                                                                 routerLink="/product/{{item.ID}}">{{item.Product_Name}}</a></p>
-                                                        <p class="price">{{convertWithCurrencyRate(item.Unit_Price, selectedCurrency) 
-                                                            | currency:selectedCurrency:true}}
+                                                        <p class="price">{{convertWithCurrencyRate(item.Quantity*item.Unit_Price, selectedCurrency) 
+                                                            | currency:selectedCurrency}}
                                                         </p>
                                                         <p class="qty-wrapper">
                                                             <span>Qty : </span>
                                                             <span #quantity
                                                                 id="{{item.ID}}">{{item.Quantity}}</span>
-                                                            <input type="text"
+                                                            <input type="number" min="1" onkeydown="return false"
                                                                 class="change_box"
                                                                 #quantity_text
                                                                 id="{{item.ID}}"
-                                                                (keyup)="change_quantity($event)"
+                                                                (change)="change_quantity($event)"
                                                                 />
                                                         </p>
                                                         <div class="size-wrap">
@@ -796,7 +780,7 @@
                                                     <span>Cart Subtotal:</span>
                                                     <span
                                                         class="price">{{convertWithCurrencyRate(grandTotal, selectedCurrency) 
-                                                            | currency:selectedCurrency:true}}</span>
+                                                            | currency:selectedCurrency}}</span>
                                                 </p>
                                             </div>
                                             <div class="cart-action">
@@ -823,6 +807,7 @@
                                     </div>
                                 </li>
                             </ul>
+                            
 
                         </form>
                     </div>

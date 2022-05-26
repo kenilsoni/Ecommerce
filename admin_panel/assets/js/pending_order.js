@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    $('#pending_order_table').DataTable({
+        "order": [[ 1, "desc" ]]
+    });
     function onload() {
         $.ajax({
             type: "GET",
@@ -6,7 +9,6 @@ $(document).ready(function () {
             datatype: "json",
             success: function (data) {
                 obj = JSON.parse(data);
-                console.log(obj);
                 if (typeof obj === "object") {
                     var len = obj.length;
                     // console.log(obj)

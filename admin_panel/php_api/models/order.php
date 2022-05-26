@@ -15,9 +15,12 @@ class Order
     // Get country
     public function read($id, $order)
     {
-        // Create query
-        $query = "SELECT * FROM   $this->table  WHERE User_ID=?  ORDER BY Created_At DESC LIMIT $order";
-
+        if ($order == '') {   // Create query
+            $query = "SELECT * FROM   $this->table  WHERE User_ID=?  ORDER BY Created_At DESC";
+        } else {
+            // Create query
+            $query = "SELECT * FROM   $this->table  WHERE User_ID=?  ORDER BY Created_At DESC  LIMIT $order ";
+        }
         // Prepare statement
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $id);
@@ -51,17 +54,23 @@ class Order
         $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $success;
     }
-    public function get_orderid($orderid)
-    {
-        $sql = "SELECT * FROM order_details WHERE Order_ID=$orderid ";
+    public function get_orderid($orderid, $order)
+    {  
+        if ($order == '') {   // Create query
+            $sql = "SELECT * FROM order_details WHERE Order_ID=$orderid";
+    } else {
+        // Create query
+        $sql = "SELECT * FROM order_details WHERE Order_ID=$orderid LIMIT $order";
+    }
+      
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $success;
     }
-    public function check_st($orderid, $status, $data)
+    public function check_st($orderid, $status, $data, $order)
     {
-        $sql = "SELECT * FROM order_details WHERE Order_ID=$orderid AND Status IN ($status) AND $data";
+        $sql = "SELECT * FROM order_details WHERE Order_ID=$orderid AND Status IN ($status) AND $data LIMIT $order";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -75,17 +84,17 @@ class Order
         $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $success;
     }
-    public function check_s($orderid, $status)
+    public function check_s($orderid, $status, $order)
     {
-        $sql = "SELECT * FROM order_details WHERE Order_ID=$orderid AND Status IN ($status)";
+        $sql = "SELECT * FROM order_details WHERE Order_ID=$orderid AND Status IN ($status) LIMIT $order";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $success;
     }
-    public function check_t($orderid, $data)
+    public function check_t($orderid, $data, $order)
     {
-        $sql = "SELECT * FROM order_details WHERE Order_ID=$orderid AND $data";
+        $sql = "SELECT * FROM order_details WHERE Order_ID=$orderid AND $data LIMIT $order";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $success = $stmt->fetchAll(PDO::FETCH_ASSOC);

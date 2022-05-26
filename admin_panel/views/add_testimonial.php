@@ -14,7 +14,16 @@
         margin-right: 20px;
 
     }
+    .available_image {
+        display: flex;
+    }
 
+    .available_image img {
+        width: 100px;
+        height: 100px;
+        margin-right: 20px;
+
+    }
     .imgGallery {
         display: flex;
     }
@@ -228,6 +237,7 @@
                                 <form  action="?controller=Admin&function=update_testimonialdata" method="post" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <input type="hidden" name="id" class="testimonial_id"/>
+                                        <input type="hidden" name="is_change" class="is_change"/>
                                         <label for="inputText3" class="col-form-label">Name</label><span class="star">*</span>
                                         <input id="inputText3" type="text" class="form-control name" name="name" placeholder="Name" required>
                                     </div>
@@ -241,12 +251,19 @@
                                     </div>
                                     <div class="custom-file mb-3">
                                     <label class="custom-file-label form-control" for="chooseFile">Choose Image</label>
-                                        <input type="file" name="files_image[]" accept=".jpg , .png , .jpeg " class="custom-file-input" id="files_image2" required>
+                                        <input type="file" name="files_image[]" accept=".jpg , .png , .jpeg " class="custom-file-input" id="files_image2" >
                                         
                                     </div>
                                     <div class="mb-2">
                                         <h4 class="upload-img">Uploaded Images</h4>
                                         <div class="imgGallery" style="width:100px;">
+                                            <!-- image preview -->
+                                        </div>
+                                    </div>
+                                    <div class="mb-2" id="image_block">
+                                        <h4>Available Images</h4>
+                                        <div class="available_image" style="width:100px;">
+
                                             <!-- image preview -->
                                         </div>
                                     </div>

@@ -1,5 +1,7 @@
 $(document).ready(function () {
-
+    // $('#contact_table').DataTable({
+    //     "order": [[ 1, "desc" ]]
+    // });
     function onload() {
         $.ajax({
             type: "GET",
