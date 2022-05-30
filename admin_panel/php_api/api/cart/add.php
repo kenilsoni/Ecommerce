@@ -33,21 +33,58 @@ if (isset($data->user_id)) {
     }
     $quantity += 1;
     $total = $quantity * $unit_price;
-    $result = $cart->update_quantity($quantity, $total);
+    $qty = $cart->check_quantity($cart->Product_ID);
+    $qty_count = $qty->rowCount();
+    if ($qty_count > 0) {
+      while ($row = $qty->fetch(PDO::FETCH_ASSOC)) {
+        $quantity_db = $row['Product_Quantity'];
+      }
+      if ($quantity_db < $quantity) {
+        echo json_encode(
+          array('message' => "limit_reach")
+        );
+      } else {
+        $result = $cart->update_quantity($quantity, $total);
+        // Get row count
+        $num = $result->rowCount();
+        // Check if any categories
+        if ($num > 0) {
+          echo json_encode(
+            array('message' => "available")
+          );
+        } else {
+          echo json_encode(
+            array('message' => false)
+          );
+        }
+      }
+    }
   } else {
-    $result = $cart->add_item();
+    $qty = $cart->check_quantity($cart->Product_ID);
+    $qty_count = $qty->rowCount();
+    if ($qty_count > 0) {
+      while ($row = $qty->fetch(PDO::FETCH_ASSOC)) {
+        $quantity_db = $row['Product_Quantity'];
+      }
+      if ($quantity_db < $cart->Quantity) {
+        echo json_encode(
+          array('message' => "limit_reach")
+        );
+      } else {
+        $result = $cart->add_item();
+        // Get row count
+        $num = $result->rowCount();
+        // Check if any categories
+        if ($num > 0) {
+          echo json_encode(
+            array('message' => "available")
+          );
+        } else {
+          echo json_encode(
+            array('message' => false)
+          );
+        }
+      }
+    }
   }
-}
-// Get row count
-$num = $result->rowCount();
-// Check if any categories
-if ($num > 0) {
-  echo json_encode(
-    array('message' => true)
-  );
-} else {
-
-  echo json_encode(
-    array('message' => false)
-  );
 }

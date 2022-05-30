@@ -75,8 +75,12 @@ export class HomeComponent implements OnInit {
     e.Product_Quantity=1
     e.user_id=this.user_id
     this.cartService.addtoCart(e).subscribe(data=>{
-      if(data['message']){
-      this.toastr.success({detail:'Success!', summary:'Product added successfully!'});
+      if (data['message'] == "available") {
+        this.toastr.success({ detail: 'Success!', summary: 'Product added successfully!' });
+      } else if (data['message'] == "limit_reach") {
+        this.toastr.error({ detail: 'Error!', summary: 'No more product available!' });
+      }else{
+        this.toastr.error({ detail: 'Error!', summary: 'Something went wrong!' });
       }
     });}
     else{

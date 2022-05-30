@@ -31,7 +31,7 @@ const routes: Routes = [
   {path:'cart',component:CartComponent,canActivate:[AuthGuard]},
   {path:'wishlist',component:WishlistComponent},
   {path:'search/:name',component:SearchComponent},
-  {path:'coupan',component:CoupanComponent,canActivate:[AuthGuard]},
+  {path:'coupon',component:CoupanComponent,canActivate:[AuthGuard]},
   {path:'status/:id',component:OrderStatusComponent,canActivate:[AuthGuard]},
   {path:'orderdetail',component:OrderDetailsComponent,canActivate:[AuthGuard]},
   {path:'**',redirectTo:'home',pathMatch:'full'}

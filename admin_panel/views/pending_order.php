@@ -79,6 +79,7 @@
                                             <th>Color</th>
                                             <th>Size</th>
                                             <th>Unit Price</th> 
+                                            <th>Sub Total</th> 
                                         </tr>
                                     </thead>
                                 </table>

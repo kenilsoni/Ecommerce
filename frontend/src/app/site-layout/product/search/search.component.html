@@ -145,8 +145,8 @@
                                         <img style="width:262px;height:328px"
                                             src="{{image_url}}/{{product.Image_path}}"
                                             alt="thumb"></a>
-                                    <a (click)="addtocart(product)" title="Add
-                                        to Cart" class="cart-button">Add to Cart</a>
+                                            <a *ngIf="product.Product_Quantity>0;else outstock" (click)="addtocart(product)" title="Add to Cart" class="cart-button">Add to Cart</a>
+                                            <ng-template #outstock><a title="Out Of Stock" class="cart-button">Out Of Stock</a></ng-template>
                                 </div>
                                 <figcaption>
                                     <a routerLink="/product/{{product.ID}}"

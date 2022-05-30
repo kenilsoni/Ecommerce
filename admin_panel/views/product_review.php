@@ -40,7 +40,7 @@
 
                 <div class="col-12 table_data">
                     <div class="mb-2">
-                        
+
                         <!-- delete alert -->
                         <?php if (isset($_SESSION['delete_rv'])) {
                             if ($_SESSION['delete_rv']) { ?>
@@ -70,7 +70,36 @@
                         <?php }
                             unset($_SESSION['delete_rv']);
                         } ?>
-                        <!-- update alert -->
+                        <!-- update hide alert -->
+                        <?php if (isset($_SESSION['hide_rv'])) {
+                            if ($_SESSION['hide_rv']) { ?>
+                                <script>
+                                    setTimeout(() => {
+                                        document.getElementById("delete").style.display = 'none';
+                                    }, 4000);
+                                </script>
+                                <div class="alert alert-success alert-dismissible fade show" id="delete" role="alert">
+                                    Review Is Now Hide!!.
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </a>
+                                </div>
+                            <?php  } else { ?>
+                                <script>
+                                    setTimeout(() => {
+                                        document.getElementById("err").style.display = 'none';
+                                    }, 4000);
+                                </script>
+                                <div class="alert alert-danger alert-dismissible fade show" id="err" role="alert">
+                                    Something went wrong!!.
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </a>
+                                </div>
+                        <?php }
+                            unset($_SESSION['hide_rv']);
+                        } ?>
+                        <!-- update display alert -->
                         <?php if (isset($_SESSION['verify_rv'])) {
                             if ($_SESSION['verify_rv']) { ?>
                                 <script>
@@ -79,7 +108,7 @@
                                     }, 4000);
                                 </script>
                                 <div class="alert alert-success alert-dismissible fade show" id="delete" role="alert">
-                                    Tax deleted successfully!!.
+                                    Review Is Now Display!!.
                                     <a href="#" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">×</span>
                                     </a>

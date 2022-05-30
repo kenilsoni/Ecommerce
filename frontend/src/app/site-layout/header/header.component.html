@@ -79,23 +79,12 @@
                                         <div #myDropdown class="dropdown-content
                                             myDropdown" (click)="close_dropdown()" >
                                             <ul class="ul_dopdown">
-                                                <li class="padding"><a
-                                                        routerLink="/profile"
-                                                        title="Profile">Profile</a></li>
-                                                <li class="padding"><a
-                                                        routerLink="/orderdetail"
-                                                        title="Orders">Orders</a></li>
-                                                <li class="padding"><a href="#"
-                                                        data-toggle="modal"
-                                                        data-target="#change_password"
-                                                        title="Change Password">Change
-                                                        Password</a></li>
-                                                <li class="padding"><a
-                                                        routerLink="/coupan"
-                                                        title="Coupans">Coupans</a></li>
-                                                <li class="padding"><a
-                                                        routerLink="/wishlist"
-                                                        title="Wishlist">Wishlist</a></li>
+                                                <li class="padding" routerLink="/profile"  ><a title="Profile">Profile</a></li>
+                                                <li class="padding" routerLink="/orderdetail" ><a title="Orders">Orders</a></li>
+                                                <li class="padding" data-toggle="modal" 
+                                                data-target="#change_password"><a href="#" title="Change Password">Change Password</a></li>
+                                                <li class="padding" routerLink="/coupon" ><a title="Coupans">Coupans</a></li>
+                                                <li class="padding" routerLink="/wishlist"><a title="Wishlist">Wishlist</a></li>
                                             </ul>
                                         </div>
                                     </li>
@@ -114,11 +103,10 @@
                                             <div #currency class="dropdown-content
                                                 myDropdown" (click)="currency_dropdown()">
                                                 <ul class="ul_dopdown">
-                                                    <li class="padding" (click)="INR_convert()"><a 
+                                                    <li class="padding active_class" (click)="INR_convert(inr,usd)" #inr><a 
                                                             href="#"
                                                             title="INR">INR</a></li>
-                                                    <li class="padding" (click)="USD_convert()"><a   href="#" title="USD">USD</a></li>
-                            
+                                                    <li class="padding" (click)="USD_convert(inr,usd)" #usd><a href="#" title="USD">USD</a></li>
                                                 </ul>
                                             </div>
                                         </li>
@@ -687,10 +675,10 @@
                             </div>
                             </div>
 
-                                <li class="cart-outer">
+                                <li class="cart-outer" >
                                     <a (click)="check_cart()" title="Add to Cart"
-                                        class="add-to-cart"></a>
-                                    <div class="cart-wrap">
+                                        class="add-to-cart" #active></a>
+                                    <div class="cart-wrap" #viewcart>
 
 
                                         <div *ngIf="products.length> 0;else
@@ -783,9 +771,9 @@
                                                             | currency:selectedCurrency}}</span>
                                                 </p>
                                             </div>
-                                            <div class="cart-action">
+                                            <div class="cart-action" >
                                                 <a routerLink="/cart"
-                                                    title="View Cart"
+                                                    title="View Cart" (click)="hide_addtocart(viewcart,active)"
                                                     class="btn-secondary">View
                                                     Cart</a>
                                             </div></div>

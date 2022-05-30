@@ -216,14 +216,14 @@
                                             <option value="" selected>Select</option>
                                         </select>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="inputText21" class="col-form-label">State Code</label><span class="star">*</span>
                                         <input id="inputText21" type="text" class="form-control add-tax" name="scode" placeholder="State Code">
                                     </div>
                                     <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Tax Percent(%)</label><span class="star">*</span>
                                         <input id="inputText3" type="text" class="form-control add-tax" name="tax" placeholder="Tax">
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Tax Percent(%)</label><span class="star">*</span>
                                         <input id="inputText3" type="text" class="form-control add-tax" class="tax" name="tax" placeholder="Tax">

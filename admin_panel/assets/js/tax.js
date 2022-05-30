@@ -155,7 +155,7 @@ $(document).ready(function () {
                 datatype: "json",
 
                 success: function () {
-                    window.location.href = "?controller=Admin&function=service_tax";
+                    // window.location.href = "?controller=Admin&function=service_tax";
                 }
             })
         }

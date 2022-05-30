@@ -280,7 +280,7 @@ class AddressController
             $tax = $_POST['tax'];
             $state = $this->test_input($_POST['scode']);
             $countryid = $this->test_input($_POST['ccode']);
-            
+
             $tax_stripe = $this->stripe->taxRates->create([
                 'display_name' => 'tax',
                 'country' => $countryid,
@@ -292,7 +292,7 @@ class AddressController
             if ($tax_stripe->active) {
                 session_start();
                 if ($tax != "") {
-                    $success = $this->model->add_taxdb($cid, $sid, $tax.$tax_stripe->id);
+                    $success = $this->model->add_taxdb($cid, $sid, $tax . $tax_stripe->id);
                     if ($success == 1) {
 
                         $_SESSION['addtax_token'] = true;
@@ -312,7 +312,13 @@ class AddressController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $id = $_POST['id'];
-
+            $archive = $this->model->archive_tax($id);
+            foreach ($archive as $stripe_id) {
+                $this->stripe->taxRates->update(
+                    $stripe_id['tax_stripe'],
+                    ['active' => false]
+                );
+            }
             session_start();
             if ($id != "") {
                 $success = $this->model->delete_tax($id);

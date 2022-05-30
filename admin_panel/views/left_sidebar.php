@@ -32,25 +32,25 @@
                             </li>
                           
                             <li class="nav-item ">
-                                <a class="nav-link active" href="?controller=Admin&function=service_tax"><i class="fa fa-solid fa-pen-square"></i>Service tax</a>
+                                <a class="nav-link active" href="?controller=Admin&function=service_tax"><i class="fa fa-solid fa-percent"></i>Service tax</a>
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link active" href="?controller=Admin&function=user_list"><i class="fa fa-fw fa-user-circle"></i>Users </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link active" href="?controller=Admin&function=slider"><i class="fa fa-fw fa-user-circle"></i>Slider </a>
+                                <a class="nav-link active" href="?controller=Admin&function=slider"><i class="fa fa-fw fa-sliders-h"></i>Slider </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link active" href="?controller=Admin&function=add_coupan"><i class="fa fa-fw fa-user-circle"></i>Coupan</a>
+                                <a class="nav-link active" href="?controller=Admin&function=add_coupan"><i class="fa fa-fw fa-gift"></i>Coupan</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link active" href="?controller=Admin&function=add_testimonial"><i class="fa fa-fw fa-user-circle"></i>Testimonial</a>
+                                <a class="nav-link active" href="?controller=Admin&function=add_testimonial"><i class="fa fa-fw fa-image"></i>Testimonial</a>
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link active" href="?controller=Admin&function=add_about"><i class="fa fa-fw fa-user-circle"></i>About</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link active" href="?controller=Admin&function=add_contact"><i class="fa fa-fw fa-user-circle"></i>Contact</a>
+                                <a class="nav-link active" href="?controller=Admin&function=add_contact"><i class="fa fa-fw fa-id-card"></i>Contact</a>
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link active" href="?controller=Admin&function=product_review"><i class="fa fa-fw fa-user-circle"></i>Product Review</a>

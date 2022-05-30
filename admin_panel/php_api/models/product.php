@@ -271,7 +271,7 @@ class Product
   public function add_review($userid, $review, $rate, $productid)
   {
     // Create query
-    $query = "INSERT INTO product_review (User_ID,Product_Rate,Product_Review,Product_ID,Created_At) VALUES (?,?,?,?,NOW())";
+    $query = "INSERT INTO product_review (User_ID,Product_Rate,Product_Review,Product_ID,IsApprove,Created_At) VALUES (?,?,?,?,1,NOW())";
     //Prepare statement
     $stmt = $this->conn->prepare($query);
     // Bind ID

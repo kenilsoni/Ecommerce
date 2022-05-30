@@ -84,6 +84,7 @@ $(document).ready(function () {
                         <td>${obj['clr'][i][0].Product_Color} </td>
                         <td>${obj['size'][i][0].Product_Size} </td>
                         <td>${obj['name'][i][0].Product_Price} </td>
+                        <td>${obj['name'][i][0].Product_Price*obj['qty'][i]} </td>
                     </tr>
                      `)).draw();
                     }

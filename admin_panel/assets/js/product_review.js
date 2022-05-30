@@ -22,7 +22,7 @@ $(document).ready(function () {
                         <td>${obj[i].Product_Name} </td>
                         <td>${obj[i].Product_Rate} </td>
                         <td>${obj[i].Product_Review} </td>
-                        <td>${obj[i].IsApprove==0 ? '<button type="button" class="btn btn-rounded btn-primary verify_rv">Verify</button>':'<button type="button" class="btn btn-rounded btn-success ">Verified</button>'} </td>
+                        <td>${obj[i].IsApprove==0 ? '<button type="button" class="btn btn-rounded btn-primary verify_rv">Click To Display</button>':'<button type="button" class="btn btn-rounded btn-success hide_rv">Click To Hide</button>'} </td>
                         <td><button type="button" class="btn btn-rounded btn-danger delete_rv">Delete</button></td>
                     </tr>
                      `)).draw();
@@ -50,10 +50,25 @@ $(document).ready(function () {
     })
     $(document).on("click", ".verify_rv", function () {
         var rv_id = $(this).closest('tr').find(".review_id").val();
-        if (confirm("Are you really want to approve data")) {
+        if (confirm("Are you really want to change data")) {
             $.ajax({
                 type: "POST",
                 url: "?controller=Admin&function=verify_rv",
+                data: { id: rv_id},
+                datatype: "json",
+                success: function () {
+                    window.location.href = "?controller=Admin&function=product_review";
+                }
+            })
+        }
+
+    })
+    $(document).on("click", ".hide_rv", function () {
+        var rv_id = $(this).closest('tr').find(".review_id").val();
+        if (confirm("Are you really want to change data")) {
+            $.ajax({
+                type: "POST",
+                url: "?controller=Admin&function=hide_rv",
                 data: { id: rv_id},
                 datatype: "json",
                 success: function () {

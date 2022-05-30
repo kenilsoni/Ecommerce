@@ -32,11 +32,11 @@
             <div class="alert alert-dismissible alert-warning" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <i><img src="assets/images/warning.svg" alt="success"></i> <span> U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men </span> was added to your shopping cart
-            </div>
-            <div class="alert alert-dismissible alert-danger" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <i><img src="assets/images/error.svg" alt="success"></i> <span> U.S. Polo Assn. Full Sleeve Plain T-Shirts for Men </span> was added to your shopping cart
             </div> -->
+            <div class="alert alert-dismissible alert-danger" role="alert" *ngIf="outofstock">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <i><img src="assets/images/error.svg" alt="success"></i> <span> {{product_name}} </span> Is Out Of Stock
+            </div>
             <div class="table-responsive">
                 <table class="table shopping-table">
                     <thead>
@@ -173,7 +173,7 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="2">
-                                        <a href="profile.html" title="Checkout with Multiple Addresses">
+                                        <a routerLink="/cart" title="Checkout with Multiple Addresses">
                                             Checkout with Multiple Addresses
                                         </a>
                                     </td>

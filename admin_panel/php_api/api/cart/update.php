@@ -24,18 +24,31 @@ if (isset($data->User_ID)) {
   $cart->Product_ID = $data->Product_ID;
   $cart->Unit_Price = $data->Unit_Price;
   $cart->Total_Amount = $data->Total_Amount;
-  $result = $cart->update_item();
-}
-// Get row count
-$num = $result->rowCount();
-// Check if any categories
-if ($num > 0) {
-  echo json_encode(
-    array('message' => true)
-  );
-} else {
+  $qty = $cart->check_quantity($cart->Product_ID);
+  $qty_count = $qty->rowCount();
+  if ($qty_count > 0) {
+    while ($row = $qty->fetch(PDO::FETCH_ASSOC)) {
+      $quantity_db = $row['Product_Quantity'];
+    }
+    if ($quantity_db < $cart->Quantity) {
+      echo json_encode(
+        array('message' => "limit_reach")
+      );
+    } else {
+      $result = $cart->update_item();
+      // Get row count
+      $num = $result->rowCount();
+      // Check if any categories
+      if ($num > 0) {
+        echo json_encode(
+          array('message' => 'available')
+        );
+      } else {
 
-  echo json_encode(
-    array('message' => false)
-  );
+        echo json_encode(
+          array('message' => false)
+        );
+      }
+    }
+  }
 }

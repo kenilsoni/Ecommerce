@@ -1,34 +1,52 @@
 
-<div class="grid-content container">
-    <h2>Wishlist Products</h2>
-    <div class="grid row" *ngIf="productdata.length> 0;else nodata">
-        <div class="col-sm-3 col-xs-6" *ngFor="let product of productdata">
-            <figure class="effect-goliath">
-                <div class="thumb-outer ">
-                   
-                    <a routerLink="/product/{{product.ID}}"
-                        title="{{product.Product_Name}}" class="thumb-image">
-                        <img style="width:262px;height:328px"
-                            src="{{image_url}}/{{product.Image_path}}"
-                            alt="thumb"></a>
-                    <a (click)="addtocart(product)" title="Add to Cart"
-                        class="cart-button">Add to Cart</a>
-                </div>
-                <figcaption>
-                    <a routerLink="/product/{{product.ID}}"
-                        title={{product.Product_Name}} class="heading">{{product.Product_Name}}</a>
-                    <span>{{convertWithCurrencyRate(product.Product_Price, selectedCurrency) 
-                        | currency:selectedCurrency}}</span>
-                    <a (click)="remove_item(product.ID)" title="Remove Item"  class="btn-secondary"
-                    >Remove Item</a>
-                </figcaption>
-            </figure>
-        </div>
-
+<div class="title-block-outer">
+    <img src="/assets/images/inner-banner.jpg" alt="Banner-image"
+        class="img-responsive">
+    <div class="container title-block-container">
+        <h2>Wishlist</h2>
     </div>
-    <ng-template #nodata>
-        <div class="record">
-            <div class="col-12 msg">No Product Available!!!</div>
+</div>
+<div class="breadcrumb-panel">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a routerLink='/home' title="Home">Home</a></li>
+            <li><a routerLink='/wishlist' title="Wishlist">Wishlist</a></li>
+        </ol>
+    </div>
+</div>
+<div class="container">
+    <div class="grid-content container2">
+        <h2>Wishlist Products</h2>
+        <div class="grid row" *ngIf="productdata.length> 0;else nodata">
+            <div class="col-sm-3 col-xs-6" *ngFor="let product of productdata">
+                <figure class="effect-goliath">
+                    <div class="thumb-outer">
+
+                        <a routerLink="/product/{{product.ID}}"
+                            title="{{product.Product_Name}}"
+                            class="thumb-image">
+                            <img style="width:262px;height:328px"
+                                src="{{image_url}}/{{product.Image_path}}"
+                                alt="thumb"></a>
+                                <a *ngIf="product.Product_Quantity>0;else outstock" (click)="addtocart(product)" title="Add to Cart" class="cart-button">Add to Cart</a>
+                                <ng-template #outstock><a title="Out Of Stock" class="cart-button">Out Of Stock</a></ng-template>
+                    </div>
+                    <figcaption>
+                        <a routerLink="/product/{{product.ID}}"
+                            title={{product.Product_Name}} class="heading">{{product.Product_Name}}</a>
+                        <span>{{convertWithCurrencyRate(product.Product_Price,
+                            selectedCurrency)
+                            | currency:selectedCurrency}}</span>
+                        <a (click)="remove_item(product.ID)" title="Remove Item"
+                            class="btn-secondary">Remove Item</a>
+                    </figcaption>
+                </figure>
+            </div>
         </div>
-    </ng-template>
+        <ng-template #nodata>
+            <div class="record">
+                <div class="col-12 msg">No Product Available!!!</div>
+            </div>
+        </ng-template>
+    </div>
 </div>

@@ -45,3 +45,11 @@
     margin-top: -12px;
     margin-right: -8px;
   }
+  .sku{
+    margin-bottom: 10px;
+  }
+  .outstock{
+    margin-top: 10px;
+    color: #ea4748;
+    font-size: 20px;
+  }

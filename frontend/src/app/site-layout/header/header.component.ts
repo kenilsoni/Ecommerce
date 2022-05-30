@@ -127,11 +127,14 @@ export class HeaderComponent implements OnInit {
     })
   }
   removeItem(cart_id: number) {
-    this.cartService.removeCartItem(cart_id).subscribe();
-    this.toastr.success({ detail: 'Success!', summary: 'Product remove successfully!' });
-    this.getcart_data()
-    this.getcart_data()
-    this.grandTotal = this.get_total()
+    this.cartService.removeCartItem(cart_id).subscribe(data => {
+      if (data['message']) {
+        this.toastr.success({ detail: 'Success!', summary: 'Product remove successfully!' });
+        this.getcart_data()
+        this.grandTotal = this.get_total()
+      }
+    });
+
   }
   login() {
     if (this.loginval.valid) {
@@ -175,6 +178,10 @@ export class HeaderComponent implements OnInit {
         })
       }
     })
+  }
+  hide_addtocart(e: any, active: any) {
+    active.classList.remove('active')
+    e.style.display = "none"
   }
   get_size(id: number) {
     this.cartService.getsizeby_id(id).subscribe(data => {
@@ -266,7 +273,13 @@ export class HeaderComponent implements OnInit {
           if (element.ID == e.target.id) {
             element.Quantity = quantity
             element.Total_Amount = quantity * element.Unit_Price
-            this.cartService.update_product(element).subscribe()
+            this.cartService.update_product(element).subscribe(data => {
+              if (data['message'] == "limit_reach") {
+                e.target.value = e.target.value - 1
+                this.getcart_data()
+                this.toastr.error({ detail: 'Error!', summary: 'No more product available!' });
+              }
+            })
           }
         });
       }
@@ -450,10 +463,15 @@ export class HeaderComponent implements OnInit {
       return null;
     };
   }
-  INR_convert() {
+
+  INR_convert(inr: any, usd: any) {
+    inr.classList.add('active_class')
+    usd.classList.remove('active_class')
     this.product.set_currency.next('INR')
   }
-  USD_convert() {
+  USD_convert(inr: any, usd: any) {
+    usd.classList.add('active_class')
+    inr.classList.remove('active_class')
     this.product.set_currency.next('USD')
   }
   selectedCurrency: any

@@ -101,8 +101,8 @@ class Cart
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(1, $this->Cart_ID);
     // Execute query
-    $stmt->execute();
-    return $stmt;
+    $success=$stmt->execute();
+    return $success;
   }
   public function remove_all_item()
   {
@@ -112,8 +112,8 @@ class Cart
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(1, $this->User_ID);
     // Execute query
-    $stmt->execute();
-    return $stmt;
+    $success=$stmt->execute();
+    return $success;
   }
   public function check_item()
   {
@@ -155,6 +155,29 @@ class Cart
     // Execute query
     $stmt->execute();
 
+    return $stmt;
+  }
+  public function check_quantity($id)
+  {
+    // Create query
+    $query = "SELECT Product_Quantity FROM product WHERE ID=?";
+    // Prepare statement
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(1, $id);
+    // Execute query
+    $stmt->execute();
+    return $stmt;
+  }
+  public function decrease_quantity($qty,$id)
+  {
+    // Create query
+    $query = "UPDATE product SET Product_Quantity=? WHERE ID=?";
+    // Prepare statement
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(1, $qty);
+    $stmt->bindParam(2, $id);
+    // Execute query
+    $stmt->execute();
     return $stmt;
   }
 }

@@ -22,8 +22,7 @@ if (isset($_GET['id'])) {
   $result = $cart->remove_all_item();
 }
 // Get row count
-$num = $result->rowCount();
-if ($num > 0) {
+if ($result > 0) {
   echo json_encode(
     array('message' => true)
   );

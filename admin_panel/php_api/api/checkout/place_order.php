@@ -30,6 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 array_push($Cart_arr['color'], $Color_ID);
                 array_push($Cart_arr['size'], $Size_ID);
                 array_push($Cart_arr['quantity'], $Quantity);
+                $result2 = $cart->check_quantity($Product_ID);
+                while ($row2 = $result2->fetch(PDO::FETCH_ASSOC)) {
+                    $cart->decrease_quantity((int)$row2['Product_Quantity'] - (int)$Quantity, $Product_ID);
+                }
             }
             $oid = rand(10000, 99999);
             $add_data = $cart->place_order(implode(",", $Cart_arr['product']), implode(",", $Cart_arr['color']), implode(",", $Cart_arr['size']), implode(",", $Cart_arr['quantity']), $oid, $_GET['payment_id'], $_GET['total']);

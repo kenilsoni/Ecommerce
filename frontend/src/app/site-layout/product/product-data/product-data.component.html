@@ -74,10 +74,13 @@
                             <option value="2">2</option>
                             <option value="3">3</option>
                         </select>
-                        <button type="button" (click)="addtocart(data)"
+                        <button type="button" (click)="addtocart(data)" *ngIf="data.Product_Quantity>0;else outofstock"
                             title="Add to Cart" class="button btn-cart"><span><span>Add
                                     to Cart</span></span>
                         </button>
+                        <ng-template #outofstock>
+                            <div class="outstock">Out Of Stock</div>
+                        </ng-template>
                     </div>
                     <div class="email-addto-box clearfix">
                         <ul class="add-to-links">
@@ -174,7 +177,7 @@
                                 <div class="avg_star">
                                 <ul class="star-links rating-list"
                                     *ngFor="let star of stars" style="display:
-                                    inline-block">
+                                    inline-block;pointer-events: none">
                                     <li (click)="countStar(star)"
                                         [ngClass]="{'selected': (star <=
                                         average_rate_round )}">
@@ -233,7 +236,7 @@
                                     <ul class="star-links rating-list"
                                         *ngFor="let star of stars"
                                         style="display:
-                                        inline-block">
+                                        inline-block;pointer-events: none;">
                                         <li (click)="countStar(star)"
                                             [ngClass]="{'selected': (star <=
                                             data.rate)}">
@@ -248,7 +251,7 @@
                                 <div class="col-12 msg">No Review Found!!!</div>
                             </div>
                         </ng-template>
-                        <div *ngIf="review_details.length >=2 && review_count;">
+                        <div *ngIf="review_details.length >=5 && review_count;">
                             <span class="button-outer text-center">
                                 <a  style="cursor: pointer;"
                                     class="btn-tertiary"

@@ -72,7 +72,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       this.getcolor();
       this.getsize();
       this.getcount();
-      this.getuser_id()
+      this.getuser_id();
     })
   }
   selectedCurrency: any
@@ -184,8 +184,12 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       e.Product_Quantity = 1
       e.user_id = this.user_id
       this.cartService.addtoCart(e).subscribe(data => {
-        if (data['message']) {
+        if (data['message'] == "available") {
           this.toastr.success({ detail: 'Success!', summary: 'Product added successfully!' });
+        } else if (data['message'] == "limit_reach") {
+          this.toastr.error({ detail: 'Error!', summary: 'No more product available!' });
+        }else{
+          this.toastr.error({ detail: 'Error!', summary: 'Something went wrong!' });
         }
       });
     }

@@ -534,6 +534,21 @@ class AdminController
             $_SESSION['verify_rv'] = false;
         }
     }
+    public function hide_rv()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id_rv = $_POST['id'];
+            session_start();
+            $success = $this->model->hide_rv($id_rv);
+            if ($success) {
+                $_SESSION['hide_rv'] = true;
+            } else {
+                $_SESSION['hide_rv'] = false;
+            }
+        } else {
+            $_SESSION['hide_rv'] = false;
+        }
+    }
     //news letter
     public function get_newsletter()
     {

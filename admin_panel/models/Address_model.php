@@ -147,6 +147,14 @@ class AddressModel
         $success = $stmt->execute([$id]);
         return $success;
     }
+    public function archive_tax($id)
+    {
+        $sql = "SELECT tax_stripe FROM service_tax WHERE ID=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$id]);
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
     public function update_tax($data)
     {
         $sql = "UPDATE service_tax SET Country_ID=:country_id,State_ID=:state_id,tax_percent=:tax,Modified_At=NOW() WHERE ID=:tax_id";

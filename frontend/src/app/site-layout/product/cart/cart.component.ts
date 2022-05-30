@@ -32,7 +32,7 @@ export class CartComponent implements OnInit {
   @ViewChildren("size_text") size_text!: QueryList<ElementRef>
   handler: any = null;
 
-  constructor(private toastr: NgToastService,private cartService: CartService, private userservice: UserService, private productservice: ProductService) { }
+  constructor(private toastr: NgToastService, private cartService: CartService, private userservice: UserService, private productservice: ProductService) { }
 
   ngOnInit(): void {
     this.getuser_id()
@@ -64,10 +64,9 @@ export class CartComponent implements OnInit {
         this.products = data['data'];
         this.final_amount = this.get_total()
         this.grandTotal = this.get_total()
-        this.products.forEach((element:any)=>{
-          element.currency=this.selectedCurrency
+        this.products.forEach((element: any) => {
+          element.currency = this.selectedCurrency
         })
-        console.log(this.products)
       } else {
         this.products = []
         this.grandTotal = 0
@@ -81,25 +80,32 @@ export class CartComponent implements OnInit {
     })
   }
   removeItem(cart_id: any) {
-    this.cartService.removeCartItem(cart_id).subscribe();
-    this.toastr.success({detail:'Success!', summary:'Product remove successfully!'});
-    this.getcart_data()
-    this.service_tax = 0
-    this.state.nativeElement.value = ''
-    this.country.nativeElement.value = ''
-    this.getcart_data()
-    this.grandTotal = this.get_total()
+    this.cartService.removeCartItem(cart_id).subscribe(data => {
+      if (data['message']) {
+        this.toastr.success({ detail: 'Success!', summary: 'Product remove successfully!' });
+        this.getcart_data()
+        this.service_tax = 0
+        this.state.nativeElement.value = ''
+        this.country.nativeElement.value = ''
+        this.getcart_data()
+        this.grandTotal = this.get_total()
+      }
+    });
+
   }
   emptycart() {
-    this.cartService.removeAllCart(this.user_id).subscribe();
-    this.toastr.success({detail:'Success!', summary:'Product remove successfully!'});
-    this.getcart_data()
-    this.grandTotal = 0
-    this.final_amount = 0
-    this.service_tax = 0
-    this.state.nativeElement.value = ''
-    this.country.nativeElement.value = ''
-    this.getcart_data()
+    this.cartService.removeAllCart(this.user_id).subscribe(data => {
+      if (data['message']) {
+        this.toastr.success({ detail: 'Success!', summary: 'Product remove successfully!' });
+        this.getcart_data()
+        this.grandTotal = 0
+        this.final_amount = 0
+        this.service_tax = 0
+        this.state.nativeElement.value = ''
+        this.country.nativeElement.value = ''
+        this.getcart_data()
+      }
+    });
   }
   edit_product(product_id: number, cart_id: number) {
     this.get_color(product_id)
@@ -129,11 +135,11 @@ export class CartComponent implements OnInit {
     this.hide_dropdown()
     this.display_text()
     this.getcart_data()
-    this.get_shippingadd()  
+    this.get_shippingadd()
     this.service_tax = 0
     this.state.nativeElement.value = ''
     this.country.nativeElement.value = ''
-    this.toastr.success({detail:'Success!', summary:'Cart update successfully!'});
+    this.toastr.success({ detail: 'Success!', summary: 'Cart update successfully!' });
 
   }
   find_tax(e: any) {
@@ -160,7 +166,6 @@ export class CartComponent implements OnInit {
     this.size_change.forEach((element) => {
       if (e.target.id == element.nativeElement.id) {
         let size_id = element.nativeElement.value
-        // let assign_size = myArray[0]
         this.products.forEach((element: any) => {
           if (element.ID == e.target.id) {
             element.Size_ID = size_id
@@ -178,7 +183,13 @@ export class CartComponent implements OnInit {
           if (element.ID == e.target.id) {
             element.Quantity = quantity
             element.Total_Amount = quantity * element.Unit_Price
-            this.cartService.update_product(element).subscribe()
+            this.cartService.update_product(element).subscribe(data => {
+              if (data['message'] == "limit_reach") {
+                e.target.value = e.target.value - 1
+                this.getcart_data()
+                this.toastr.error({ detail: 'Error!', summary: 'No more product available!' });
+              }
+            })
           }
         });
       }
@@ -275,10 +286,21 @@ export class CartComponent implements OnInit {
       }
     })
   }
+  outofstock: boolean = false
+  product_name!: string
   pay() {
     var stripe = (<any>window).Stripe(environment.PUBLISHER_KEY)
     this.productservice.checkout_product(this.products).subscribe((data: any) => {
-      stripe.redirectToCheckout({ sessionId: data })
+      if (data['message'] == 'limit_reach') {
+        this.outofstock = true
+        setTimeout(() => {
+          this.outofstock = false
+        }, 6000);
+        this.product_name = data['name']
+        this.toastr.error({ detail: 'Sorry!', summary: 'Product Is Not Available!' });
+      } else {
+        stripe.redirectToCheckout({ sessionId: data })
+      }
     });
   }
   loadStripe() {
@@ -298,17 +320,17 @@ export class CartComponent implements OnInit {
   }
   selectedCurrency: any
   get_currency() {
-    this.productservice.set_currency.subscribe(data=>{
-      if(data.length>0){
+    this.productservice.set_currency.subscribe(data => {
+      if (data.length > 0) {
         this.selectedCurrency = data
         this.getcart_data()
-        this.get_shippingadd()    
-      }else{
+        this.get_shippingadd()
+      } else {
         this.selectedCurrency = 'INR'
       }
     })
   }
   convertWithCurrencyRate(value: number, currency: string) {
-   return this.productservice.convertWithCurrencyRate(value,currency)
+    return this.productservice.convertWithCurrencyRate(value, currency)
   }
 }

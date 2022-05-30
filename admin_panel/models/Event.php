@@ -203,6 +203,12 @@ class EventModel
         $success=$stmt->execute([$id]);
         return $success;
     }
+    public function hide_rv($id){
+        $sql = "UPDATE product_review SET IsApprove=0 WHERE ID=?";
+        $stmt = $this->conn->prepare($sql);
+        $success=$stmt->execute([$id]);
+        return $success;
+    }
     //newsletter start
     public function get_newsletter(){
         $sql = "SELECT * FROM all_newsletter";

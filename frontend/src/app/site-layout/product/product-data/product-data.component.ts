@@ -72,11 +72,16 @@ export class ProductDataComponent implements OnInit {
       e.user_id = this.user_id
       if (this.size.nativeElement.value !== '') {
         this.cartService.addtoCart(e).subscribe(data => {
-          if (data['message']) {
+          if (data['message'] == "available") {
             this.addtocart_alert = true
             setTimeout(() => {
               this.addtocart_alert = false
             }, 4000);
+            this.toastr.success({ detail: 'Success!', summary: 'Product added successfully!' });
+          } else if (data['message'] == "limit_reach") {
+            this.toastr.error({ detail: 'Error!', summary: 'No more product available!' });
+          }else{
+            this.toastr.error({ detail: 'Error!', summary: 'Something went wrong!' });
           }
         });
       } else {
@@ -131,31 +136,31 @@ export class ProductDataComponent implements OnInit {
     }
   }
   review_details: any = []
-  review_load: number = 2
+  review_load: number = 5
   initial!: number
   end!: number
   review_count: boolean = true
-  average_rate:any
-  average_rate_round:any
+  average_rate: any
+  average_rate_round: any
   get_review() {
     this.product.get_reviewid(this.product_id, this.review_load).subscribe((data: any) => {
       if (data['message']) {
         this.review_details = data['message']
-        this.average_rate=data['average'][0].avg
-        this.average_rate_round=Math.round(data['average'][0].avg)
+        this.average_rate = data['average'][0].avg
+        this.average_rate_round = Math.round(data['average'][0].avg)
       } else {
         this.review_details = []
       }
       if (this.initial) {
         this.end = this.review_details.length
-        if (this.end - this.initial < 2) {
+        if (this.end - this.initial < 5) {
           this.review_count = false
         }
       }
     })
   }
   load_review(e: number) {
-    this.review_load = e + 2;
+    this.review_load = e + 5;
     this.initial = this.review_details.length
     this.get_review()
   }
@@ -170,7 +175,7 @@ export class ProductDataComponent implements OnInit {
               this.get_review()
               this.reviewval.reset()
               this.reviewval.controls['review'].setErrors(null)
-              this.selectedValue=0
+              this.selectedValue = 0
               this.toastr.success({ detail: 'Success!', summary: 'Product review added successfully!' });
             } else {
               this.toastr.error({ detail: 'Error!', summary: 'Something went wrong!' });
