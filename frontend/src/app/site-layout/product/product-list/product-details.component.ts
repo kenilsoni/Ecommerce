@@ -7,6 +7,9 @@ import { environment } from 'src/environments/environment';
 import { CartService } from 'src/app/service/cart.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
+import { product } from 'src/app/interface/product';
+import { color } from 'src/app/interface/color';
+import { size } from 'src/app/interface/size';
 
 @Component({
   selector: 'app-product-details',
@@ -14,38 +17,30 @@ import { NgToastService } from 'ng-angular-popup';
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent implements OnInit, AfterViewInit {
-  [x: string]: any;
-  sorted_data: any;
+  
   user_id!: any
   image_url: string = environment.IMAGE_URL
-  constructor(private toastr: NgToastService, private product: ProductService, public route: ActivatedRoute, private cartService: CartService, private formbuilder: FormBuilder, private router: Router) { }
-  ngAfterViewInit(): void {
-    this.get_currency()
-  }
   cat_id!: number
   subcat_id!: number
-  productdata: any = []
+  productdata: Array<product> = []
   cat_name!: string
   cat_data!: any
   subcat_name!: string
-  color!: any
-  size!: any
-  price!: any
-  product_id!: any
+  color: Array<color> = []
+  size: Array<size> = []
   color_radio: any
   checkval!: FormGroup
-  subcat_arr: any = []
-  size_arr: any = []
-  check_val: any
+  subcat_arr: Array<product> = []
+  size_arr: Array<product> = []
   ischeck!: boolean
   load_product = environment.load_product
-  order_arr: any = []
-  clr_arr: any = []
+  order_arr: Array<product> = []
+  clr_arr: Array<product> = []
   slider_arr: any = []
   initial!: number
   end!: number
   product_count: boolean = true
-
+  selectedCurrency!: string
   @ViewChildren("subcat_checkbox")
   subcat_checkbox!: QueryList<ElementRef>;
   @ViewChildren("order")
@@ -61,6 +56,9 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     floor: 0,
     ceil: 0,
   };
+
+  constructor(private toastr: NgToastService, private product: ProductService, public route: ActivatedRoute, private cartService: CartService, private formbuilder: FormBuilder, private router: Router) { }
+ 
   ngOnInit(): void {
     this.route.params.subscribe(data => {
       this.cat_id = data['cid'];
@@ -75,7 +73,11 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       this.getuser_id();
     })
   }
-  selectedCurrency: any
+  ngAfterViewInit(): void {
+    this.get_currency()
+  }
+
+
   get_currency() {
     this.product.set_currency.subscribe(data => {
       if (data.length > 0) {

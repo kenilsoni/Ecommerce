@@ -74,7 +74,8 @@
                             <option value="2">2</option>
                             <option value="3">3</option>
                         </select>
-                        <button type="button" (click)="addtocart(data)" *ngIf="data.Product_Quantity>0;else outofstock"
+                        <button type="button" (click)="addtocart(data)"
+                            *ngIf="data.Product_Quantity>0;else outofstock"
                             title="Add to Cart" class="button btn-cart"><span><span>Add
                                     to Cart</span></span>
                         </button>
@@ -171,20 +172,22 @@
                         <div class="write-review">
                             <a (click)="review()" title="Write a review"
                                 class="review-tag">Write a review</a>
-                            <div class="" *ngIf="average_rate"><div style="text-align:right ;">{{average_rate
-                                | number:
-                                '1.0-1'}}&nbsp; Out Of 5</div>
+                            <div class="" *ngIf="average_rate"><div
+                                    style="text-align:right ;">{{average_rate
+                                    | number:
+                                    '1.0-1'}}&nbsp; Out Of 5</div>
                                 <div class="avg_star">
-                                <ul class="star-links rating-list"
-                                    *ngFor="let star of stars" style="display:
-                                    inline-block;pointer-events: none">
-                                    <li (click)="countStar(star)"
-                                        [ngClass]="{'selected': (star <=
-                                        average_rate_round )}">
-                                        <i class="fa fa-star"></i>
-                                    </li>
-                                </ul>
-                            </div>
+                                    <ul class="star-links rating-list"
+                                        *ngFor="let star of stars"
+                                        style="display:
+                                        inline-block;pointer-events: none">
+                                        <li (click)="countStar(star)"
+                                            [ngClass]="{'selected': (star <=
+                                            average_rate_round )}">
+                                            <i class="fa fa-star"></i>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
 
@@ -192,16 +195,17 @@
                             #ngForm="ngForm"
                             (ngSubmit)="add_review()"
                             #review_window>
-                            <ul class="star-links rating-list"
-                                *ngFor="let star of stars" style="display:
-                                inline-block">
-                                <li (click)="countStar(star)"
-                                    [ngClass]="{'selected': (star <=
-                                    selectedValue)}">
-                                    <i class="fa fa-star"></i>
-                                </li>
-                            </ul>
-
+                            <div class="avg_star">
+                                <ul class="star-links rating-list"
+                                    *ngFor="let star of stars" style="display:
+                                    inline-block">
+                                    <li (click)="countStar(star)"
+                                        [ngClass]="{'selected': (star <=
+                                        selectedValue)}">
+                                        <i class="fa fa-star"></i>
+                                    </li>
+                                </ul>
+                            </div>
                             <div *ngIf="reviewval.controls['star']?.invalid"
                                 class="text-danger">
                                 Star is required
@@ -223,10 +227,9 @@
 
                                 </div>
                             </div>
-                            <button 
+                            <button
                                 style="cursor: pointer;" title="Submit"
                                 type="submit" class="btn-secondary">Submit</button>
-                          
                         </form>
                         <div *ngIf="review_details.length>0;else nodata">
                             <div class="review-detail" *ngFor="let data of
@@ -253,7 +256,7 @@
                         </ng-template>
                         <div *ngIf="review_details.length >=5 && review_count;">
                             <span class="button-outer text-center">
-                                <a  style="cursor: pointer;"
+                                <a style="cursor: pointer;"
                                     class="btn-tertiary"
                                     (click)="load_review(review_load)"
                                     title="More Products">View More</a>

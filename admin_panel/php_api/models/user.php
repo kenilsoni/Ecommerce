@@ -259,7 +259,8 @@ class User
         $email->setFrom("comicbykenil@gmail.com", "Ecommerce");
         $email->setSubject("Forgot password otp!!!");
         $email->addTo($email_user);
-        $email->addContent("text/html", "<h2>Your OTP IS</h2> &nbsp;<strong>$random</strong>");
+        $email->addContent("text/html", "<h1>Need to change your password?</h1><br>
+        <h3>Use your secret code!</h2> &nbsp;<strong>$random</strong>");
         $sendgrid = new \SendGrid($sendgrid_key);
         $success = $sendgrid->send($email);
         if ($success) {

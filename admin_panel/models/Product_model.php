@@ -92,6 +92,14 @@ class ProductModel
         $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $success;
     }
+    public function check_trend()
+    {
+        $sql = "SELECT * FROM product WHERE IsTrending=1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $success = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $success;
+    }
     public function getimage($id)
     {
         $sql = "SELECT ID,Product_ID,Image_Path FROM product_image WHERE Product_ID=$id LIMIT 1";

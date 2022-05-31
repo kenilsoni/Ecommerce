@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 @Injectable({
@@ -10,8 +10,8 @@ export class UserService {
   //add loader
   public isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   user_detail: any
-  refresh_token_time:any;
-  constructor(private httpclient: HttpClient,private router:Router) { }
+  refresh_token_time: any;
+  constructor(private httpclient: HttpClient, private router: Router) { }
   save_user(data: any) {
     return this.httpclient.post<any>(`${environment.API_URL}/user/create.php`, data)
   }
@@ -58,25 +58,25 @@ export class UserService {
       return false
     }
   }
-  check_refresh_token(){
+  check_refresh_token() {
     let token = this.get_user();
-    if(token!==null){
+    if (token !== null) {
       let exp_time = token.expiry;
-      let curr_time = Math.ceil(Date.now()/1000)
+      let curr_time = Math.ceil(Date.now() / 1000)
       let time = exp_time - curr_time;
-      this.refresh_token_time = setTimeout(()=>{
+      this.refresh_token_time = setTimeout(() => {
         this.refresh_token().subscribe();
         this.stop_refreshToken();
-      }, (time)*1000);
+      }, (time) * 1000);
     }
   }
-  stop_refreshToken(){
+  stop_refreshToken() {
     clearTimeout(this.refresh_token_time);
   }
   refresh_token() {
     let refreshtoken = this.get_refreshtoken();
-    let header = {'Content-Type': 'application/json'};
-    return this.httpclient.post<any>(`${environment.API_URL}/user/refresh_token.php`, {'refreshToken': refreshtoken},{ headers : header}).
+    let header = { 'Content-Type': 'application/json' };
+    return this.httpclient.post<any>(`${environment.API_URL}/user/refresh_token.php`, { 'refreshToken': refreshtoken }, { headers: header }).
       pipe(map((res: any) => {
         this.set_accesstoken(res["result"]);
         this.set_tokenexpiry(res["expiry"]);
@@ -92,8 +92,8 @@ export class UserService {
       return null;
     }
   }
-  set_tokenexpiry(time:any){
-    let data =this.get_user()
+  set_tokenexpiry(time: any) {
+    let data = this.get_user()
     if (data != null) {
       data.expiry = time;
       localStorage.setItem("loggedInUser", JSON.stringify(data));
@@ -106,47 +106,44 @@ export class UserService {
       localStorage.setItem("loggedInUser", JSON.stringify(data));
     }
   }
-  get_userdetails(id:number){
-    return this.httpclient.get<any>(`${environment.API_URL}/user/getuser.php?ID=`+id)
+  get_userdetails(id: number) {
+    return this.httpclient.get<any>(`${environment.API_URL}/user/getuser.php?ID=` + id)
   }
-  get_state(id:number){
-    return this.httpclient.get<any>(`${environment.API_URL}/state/read.php?id=`+id)
+  get_state(id: number) {
+    return this.httpclient.get<any>(`${environment.API_URL}/state/read.php?id=` + id)
   }
-  get_country(){
+  get_country() {
     return this.httpclient.get<any>(`${environment.API_URL}/country/read.php`)
   }
-  get_city(id:number){
-    return this.httpclient.get<any>(`${environment.API_URL}/city/read.php?id=`+id)
+  get_city(id: number) {
+    return this.httpclient.get<any>(`${environment.API_URL}/city/read.php?id=` + id)
   }
-  update_password(data:any){
-    return this.httpclient.post<any>(`${environment.API_URL}/user/change_password.php`,data)
+  update_password(data: any) {
+    return this.httpclient.post<any>(`${environment.API_URL}/user/change_password.php`, data)
   }
   //contact data
-  add_contact(data:any){
-    return this.httpclient.post<any>(`${environment.API_URL}/contact/add.php`,data)
+  add_contact(data: any) {
+    return this.httpclient.post<any>(`${environment.API_URL}/contact/add.php`, data)
   }
-  generate_otp(email:any){
-    return this.httpclient.get<any>(`${environment.API_URL}/user/email_auth.php?email=`+email)
+  generate_otp(email: any) {
+    return this.httpclient.get<any>(`${environment.API_URL}/user/email_auth.php?email=` + email)
   }
-  check_otp(email:any,otp:number){
-    return this.httpclient.get<any>(`${environment.API_URL}/user/email_auth.php?email=`+email+'&check_otp='+otp)
+  check_otp(email: any, otp: number) {
+    return this.httpclient.get<any>(`${environment.API_URL}/user/email_auth.php?email=` + email + '&check_otp=' + otp)
   }
   //for forgot password
-  update_fgpassword(email:any,password:any){
-    return this.httpclient.get<any>(`${environment.API_URL}/user/update_forgot.php?email=`+email+'&password='+password)
+  update_fgpassword(email: any, password: any) {
+    return this.httpclient.get<any>(`${environment.API_URL}/user/update_forgot.php?email=` + email + '&password=' + password)
   }
   //for newsletter
-  checkEmail_nl(email:any){
-    return this.httpclient.get<any>(`${environment.API_URL}/newsletter/check.php?email=`+email)
+  checkEmail_nl(email: any) {
+    return this.httpclient.get<any>(`${environment.API_URL}/newsletter/check.php?email=` + email)
   }
-  addEmail_nl(email:any){
-    return this.httpclient.get<any>(`${environment.API_URL}/newsletter/add.php?email=`+email)
+  addEmail_nl(email: any) {
+    return this.httpclient.get<any>(`${environment.API_URL}/newsletter/add.php?email=` + email)
   }
   //get about
-  get_about(){
+  get_about() {
     return this.httpclient.get<any>(`${environment.API_URL}/user/about.php`)
   }
-
-
-
 }

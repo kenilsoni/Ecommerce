@@ -19,7 +19,6 @@
         <div class="row">
             <div class="col-sm-3">
                 <div class="left-panel">
-
                     <h3>Filter By</h3>
                     <div class="filter-option">
                         <div class="title" data-toggle="collapse"
@@ -33,27 +32,29 @@
                                 <li class="custom-check">
                                     <label>
                                         <input type="hidden">
-                                        <input type="checkbox" #status (change)="allproduct_id()"
+                                        <input type="checkbox" #status
+                                            (change)="allproduct_id()"
                                             class="icheck" value="2">
                                         Complete<span></span>
                                     </label>
                                 </li>
-
                                 <li class="custom-check">
                                     <label>
                                         <input type="hidden">
-                                        <input type="checkbox" #status (change)="allproduct_id()"
+                                        <input type="checkbox" #status
+                                            (change)="allproduct_id()"
                                             class="icheck" value="1">
                                         Pending<span></span>
                                     </label>
                                 </li>
-                                <li><button title="Reset" class="btn reset" (click)="reset_status()">Reset</button></li>
+                                <li><button title="Reset" class="btn reset"
+                                        (click)="reset_status()">Reset</button></li>
                             </ul>
                         </div>
                     </div>
                     <div class="filter-option">
                         <div class="title" data-toggle="collapse"
-                            href="#collapse1" 
+                            href="#collapse1"
                             aria-expanded="false">
                             Time
                         </div>
@@ -62,16 +63,19 @@
                             <ul>
                                 <li class="custom-check">
                                     <label>
-                                        
-                                        <input type="radio" name="val" #time value="lweek" (change)="allproduct_id()"
+                                        <input type="radio" name="val" #time
+                                            value="lweek"
+                                            (change)="allproduct_id()"
                                             class="icheck">
                                         Last Week<span></span>
                                     </label>
                                 </li>
                                 <li class="custom-check">
                                     <label>
-                                        
-                                        <input type="radio" name="val" #time value="lmonth" (change)="allproduct_id()"
+
+                                        <input type="radio" name="val" #time
+                                            value="lmonth"
+                                            (change)="allproduct_id()"
                                             class="icheck">
                                         Last Month<span></span>
                                     </label>
@@ -79,12 +83,15 @@
                                 <li class="custom-check">
                                     <label>
                                         <input type="hidden">
-                                        <input type="radio" name="val" #time value="lyear" (change)="allproduct_id()"
+                                        <input type="radio" name="val" #time
+                                            value="lyear"
+                                            (change)="allproduct_id()"
                                             class="icheck">
                                         Last Year<span></span>
                                     </label>
                                 </li>
-                                <li><button title="Reset" class="btn reset" (click)="reset_time()">Reset</button></li>
+                                <li><button title="Reset" class="btn reset"
+                                        (click)="reset_time()">Reset</button></li>
                             </ul>
                         </div>
                     </div>
@@ -96,63 +103,55 @@
                         <input type="text" #search (keyup)="allproduct_id()"
                             class="form-control"
                             placeholder="Search">
-
                     </div>
                 </div>
-                <div class="card " *ngIf="order_details.length>0;else nodata">
+                <div class="card"*ngIf="order_details.length>0;else nodata">
                     <div *ngFor="let data of order_details">
-                    
+
                         <div class="card-title"><div>Order ID <br> <span>{{data.detail[0].Order_ID}}</span></div>
                             <div>DateTime <br> <span>{{data.detail[0].Created_At}}</span></div>
-                            <div>Status <br> <span>{{data.detail[0].Status == 1 ?'Pending':'Complete'}}</span></div>
-
+                            <div>Status <br> <span>{{data.detail[0].Status == 1
+                                    ?'Pending':'Complete'}}</span></div>
                         </div>
                         <div class="card-body">
-   
-                        <div *ngFor="let dtl of data.clr;let i=index">
-                            <div class="add_css">
-                                <div class="product-image">
-                                    <img src="{{image_url}}/{{data.name[i][0].Image_Path}}">
+                            <div *ngFor="let dtl of data.clr;let i=index">
+                                <div class="add_css">
+                                    <div class="product-image">
+                                        <img
+                                            src="{{image_url}}/{{data.name[i][0].Image_Path}}">
+                                    </div>
+                                    <div class="product-detail">
+
+                                        <div>Name:-&nbsp;<span>{{data.name[i][0].Product_Name}}</span></div>
+                                        <div>Size:-&nbsp;<span>{{data.size[i][0].Product_Size}}</span></div>
+                                        <div>Color:-&nbsp;<span>{{dtl[0].Product_Color}}</span></div>
+                                        <div>Quantity:-&nbsp;<span>{{data.qty[0]}}</span></div>
+                                        <div>Unit Price:-&nbsp;<span>{{data.name[i][0].Product_Price}}</span></div>
+                                    </div>
                                 </div>
-                                <div class="product-detail">
-                                
-                                    <div>Name:-&nbsp;<span>{{data.name[i][0].Product_Name}}</span></div>
-                                    <div>Size:-&nbsp;<span>{{data.size[i][0].Product_Size}}</span></div>
-                                    <div>Color:-&nbsp;<span>{{dtl[0].Product_Color}}</span></div>
-                                    <div>Quantity:-&nbsp;<span>{{data.qty[0]}}</span></div>
-                                    <div>Unit Price:-&nbsp;<span>{{data.name[i][0].Product_Price}}</span></div>
-                                </div>
+
                             </div>
-                            
-                        </div>
-
-
                             <hr>
                             <div style="text-align:right">Total(Include
                                 Tax):-&nbsp;<span>{{data.detail[0].Total}}</span></div>
-
                         </div>
-           
                     </div>
-
-
                 </div>
                 <ng-template #nodata>
                     <div class="grid row record">
                         <div class="col-12 msg">Record Not Found!!!</div>
                     </div>
                 </ng-template>
-             
-               <div class="col-sm-12 col-xs-12" *ngIf="order_details.length >=4 && product_count;">
+                <div class="col-sm-12 col-xs-12" *ngIf="order_details.length >=4
+                    && product_count;">
                     <span class="button-outer text-center">
-                        <a
+                        <a style="cursor: pointer;"
                             class="btn-tertiary"
                             (click)="loadmore_product(load_order)"
                             title="More Products">More Products</a>
                     </span>
                 </div>
             </div>
-
         </div>
     </div>
 </section>

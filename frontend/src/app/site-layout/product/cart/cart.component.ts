@@ -1,5 +1,8 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
+import { color } from 'src/app/interface/color';
+import { product } from 'src/app/interface/product';
+import { size } from 'src/app/interface/size';
 import { CartService } from 'src/app/service/cart.service';
 import { ProductService } from 'src/app/service/product.service';
 import { UserService } from 'src/app/service/user.service';
@@ -11,17 +14,21 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  products: any = [];
+  products:Array<product> = [];
   grandTotal: number = 0;
   image_url: string = environment.IMAGE_URL
-  country_data: any = []
-  state_details: any = []
-  tax: any
+  country_data:Array<{Country_ID:number,Country:string}> = [];
+  state_details:Array<{tax:number,State:string}> = []
   final_amount: number = 0
   service_tax: number = 0
-  color_details: any = []
-  size_details: any = []
+  color_details:Array<color>  = []
+  size_details:Array<size> = []
   user_id!: number
+  outofstock: boolean = false
+  product_name!: string
+  handler: any = null
+  token_checkout!: any
+  selectedCurrency: any
 
   @ViewChild("state") state!: ElementRef
   @ViewChild("country") country!: ElementRef
@@ -30,7 +37,6 @@ export class CartComponent implements OnInit {
   @ViewChildren("size") size_change!: QueryList<ElementRef>
   @ViewChildren("color_text") color_text!: QueryList<ElementRef>
   @ViewChildren("size_text") size_text!: QueryList<ElementRef>
-  handler: any = null;
 
   constructor(private toastr: NgToastService, private cartService: CartService, private userservice: UserService, private productservice: ProductService) { }
 
@@ -38,7 +44,6 @@ export class CartComponent implements OnInit {
     this.getuser_id()
     this.getcart_data()
     this.get_taxdetails()
-    // this.loadStripe();
     this.get_currency()
     this.get_shippingadd()
   }
@@ -276,7 +281,6 @@ export class CartComponent implements OnInit {
       }
     })
   }
-  token_checkout!: any
   get_shippingadd() {
     this.productservice.get_shipadd(this.user_id).subscribe((data: any) => {
       for (let val of data['data']) {
@@ -286,8 +290,6 @@ export class CartComponent implements OnInit {
       }
     })
   }
-  outofstock: boolean = false
-  product_name!: string
   pay() {
     var stripe = (<any>window).Stripe(environment.PUBLISHER_KEY)
     this.productservice.checkout_product(this.products).subscribe((data: any) => {
@@ -318,7 +320,7 @@ export class CartComponent implements OnInit {
       window.document.body.appendChild(s);
     }
   }
-  selectedCurrency: any
+
   get_currency() {
     this.productservice.set_currency.subscribe(data => {
       if (data.length > 0) {

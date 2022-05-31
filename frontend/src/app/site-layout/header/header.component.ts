@@ -5,15 +5,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/service/user.service';
 import { environment } from 'src/environments/environment';
 import { NgToastService } from 'ng-angular-popup';
-import { ActivatedRoute, Router } from '@angular/router';
-
-
+import { Router } from '@angular/router';
+import { product } from 'src/app/interface/product';
+import { size } from 'src/app/interface/size';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
   @ViewChildren("quantity") quantity!: QueryList<ElementRef>
   @ViewChildren("quantity_text") quantity_text!: QueryList<ElementRef>
   @ViewChildren("size") size_change!: QueryList<ElementRef>
@@ -22,19 +23,19 @@ export class HeaderComponent implements OnInit {
   @ViewChild("otp") otp!: ElementRef
   @ViewChild("forgot") forgot!: ElementRef
   @ViewChild("fgpassword") changepassword!: ElementRef
-  categorylist: any;
-  subcategorylist: any;
-  products: any = []
-  grandTotal: any
+  categorylist: any=[];
+  subcategorylist: any=[];
+  products: Array<product> = []
+  grandTotal!: number
   loginval!: FormGroup
   change_password!: FormGroup
   forgot_password!: FormGroup
   change_password_forgot!: FormGroup
   check_otp!: FormGroup
   islogin!: boolean
-  user_name!: any
+  user_name!: string
   login_error!: boolean
-  size_details: any = []
+  size_details:Array<size> = []
   image_url: string = environment.IMAGE_URL
   final_amount: number = 0;
   //change password purpose
@@ -43,6 +44,12 @@ export class HeaderComponent implements OnInit {
   hide_cpass: boolean = true;
   @ViewChild("myDropdown") dropdown!: ElementRef
   @ViewChild("currency") currency!: ElementRef
+  dp_manage: boolean = false
+  dp_currency: boolean = false
+  expirationCounter!: string;
+  resend_otp!: any
+  selectedCurrency!: string
+
   constructor(private toastr: NgToastService, private product: ProductService, private cartService: CartService, private formbuilder: FormBuilder, public userservice: UserService, private route: Router) { }
 
   ngOnInit(): void {
@@ -78,7 +85,6 @@ export class HeaderComponent implements OnInit {
       validators: this.mustMatch('new_password', 'cpassword')
     })
   }
-
   is_loogedin() {
     if (this.userservice.get_user()) {
       let name = this.userservice.get_user()
@@ -134,7 +140,6 @@ export class HeaderComponent implements OnInit {
         this.grandTotal = this.get_total()
       }
     });
-
   }
   login() {
     if (this.loginval.valid) {
@@ -285,8 +290,6 @@ export class HeaderComponent implements OnInit {
       }
     })
   }
-  dp_manage: boolean = false
-  dp_currency: boolean = false
   @HostListener('document:click')
   clickOutside() {
     if (this.islogin) {
@@ -359,8 +362,7 @@ export class HeaderComponent implements OnInit {
   eye_icon_cpass() {
     this.hide_cpass = !this.hide_cpass;
   }
-  expirationCounter!: string;
-  resend_otp!: any
+
   startTimer(secsToStart: number, email: any): void {
     var start: number = secsToStart;
     var h: number;
@@ -474,7 +476,6 @@ export class HeaderComponent implements OnInit {
     inr.classList.remove('active_class')
     this.product.set_currency.next('USD')
   }
-  selectedCurrency: any
   get_currency() {
     this.product.set_currency.subscribe(data => {
       if (data.length > 0) {

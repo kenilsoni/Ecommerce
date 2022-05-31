@@ -10,41 +10,46 @@ import { environment } from 'src/environments/environment';
 })
 export class OrderDetailsComponent implements OnInit {
   user_id!: number
-  load_order:number=4
+  load_order: number = 4
   order_details: any = []
   name_details: any = []
-  time_arr:any=[]
-  status_arr:any=[]
-  search_arr!:string
+  time_arr: any = []
+  status_arr: any = []
+  search_arr!: string
   @ViewChildren("status")
-  status!: QueryList<ElementRef>; 
+  status!: QueryList<ElementRef>;
   @ViewChildren("search")
-  search!: QueryList<ElementRef>; 
-   @ViewChildren("time")
-   time!: QueryList<ElementRef>;
+  search!: QueryList<ElementRef>;
+  @ViewChildren("time")
+  time!: QueryList<ElementRef>;
+  product_count: boolean = true
+  initial!: number
+  end!:number
+
   constructor(private productservice: ProductService, private userservice: UserService) { }
   image_url: string = environment.IMAGE_URL
+
   ngOnInit(): void {
     this.get_userid()
     this.get_detail()
   }
   get_detail() {
-    this.productservice.get_order_history(this.load_order,this.user_id).subscribe((data: any) => {
-      this.order_details=data
+    this.productservice.get_order_history(this.load_order, this.user_id).subscribe((data: any) => {
+      this.order_details = data
     })
   }
   get_userid() {
     let name = this.userservice.get_user()
     this.user_id = name['id']
   }
-  reset_time(){
+  reset_time() {
     this.time.forEach((element) => {
       element.nativeElement.checked = false;
     });
     this.time_arr = []
     this.allproduct_id()
   }
-  reset_status(){
+  reset_status() {
     this.status.forEach((element) => {
       element.nativeElement.checked = false;
     });
@@ -65,10 +70,10 @@ export class OrderDetailsComponent implements OnInit {
       }
     });
     this.search.forEach((element) => {
-     this.search_arr=element.nativeElement.value;
+      this.search_arr = element.nativeElement.value;
     });
-    this.productservice.filter_order_history(this.load_order,this.user_id,this.status_arr, this.time_arr, this.search_arr).subscribe(data => {
-      this.order_details=data
+    this.productservice.filter_order_history(this.load_order, this.user_id, this.status_arr, this.time_arr, this.search_arr).subscribe(data => {
+      this.order_details = data
       if (this.initial) {
         this.end = this.order_details.length
         if (this.end - this.initial < 4) {
@@ -77,9 +82,6 @@ export class OrderDetailsComponent implements OnInit {
       }
     })
   }
-  product_count:boolean=true
-  initial:any
-  end:any
   loadmore_product(e: number) {
     this.load_order = e + 4;
     this.initial = this.order_details.length

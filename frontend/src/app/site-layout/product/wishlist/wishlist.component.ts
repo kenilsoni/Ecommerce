@@ -5,17 +5,19 @@ import { ProductService } from 'src/app/service/product.service';
 import { UserService } from 'src/app/service/user.service';
 import { environment } from 'src/environments/environment';
 import { NgToastService } from 'ng-angular-popup';
+import { product } from 'src/app/interface/product';
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',
   styleUrls: ['./wishlist.component.css']
 })
 export class WishlistComponent implements OnInit {
-
-  constructor(private toastr: NgToastService,private product:ProductService,private user:UserService,private cartService:CartService,private router:Router) { }
-  productdata:any=[]
+  productdata:Array<product>=[]
   user_id!:number
   image_url: string = environment.IMAGE_URL
+  selectedCurrency:any
+
+  constructor(private toastr: NgToastService,private product:ProductService,private user:UserService,private cartService:CartService,private router:Router) { }
 
   ngOnInit(): void {
     this. get_userid()
@@ -59,7 +61,6 @@ export class WishlistComponent implements OnInit {
       }
     })
   }
-  selectedCurrency:any
   get_currency(){
     this.product.set_currency.subscribe(data=>{
       if(data.length>0){

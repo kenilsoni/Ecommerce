@@ -2,11 +2,14 @@ import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren }
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/service/product.service';
 import { Options, LabelType } from "@angular-slider/ngx-slider";
-import { SliderComponent } from '@angular-slider/ngx-slider/slider.component';
+// import { SliderComponent } from '@angular-slider/ngx-slider/slider.component';
 import { environment } from 'src/environments/environment';
 import { CartService } from 'src/app/service/cart.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
+import { product } from 'src/app/interface/product';
+import { color } from 'src/app/interface/color';
+import { size } from 'src/app/interface/size';
 
 @Component({
   selector: 'app-search',
@@ -14,30 +17,30 @@ import { NgToastService } from 'ng-angular-popup';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  [x: string]: any;
-  sorted_data: any;
+
   user_id!:any
   image_url: string = environment.IMAGE_URL
+
   constructor(private toastr: NgToastService,private product: ProductService, public route: ActivatedRoute, private cartService: CartService, private formbuilder: FormBuilder,private router: Router) { }
   ngAfterViewInit(): void {
     this.get_currency()
   }
+
   product_name!: string
-  productdata: any = []
-  cat_data!: any
-  color!: any
-  size!: any
-  price!: any
-  product_id!: any
+  productdata: Array<product> = []
+  cat_data: Array<product> = []
+  color: Array<color> = []
+  size: Array<size> = []
+  price: Array<product> = []
   color_radio: any
   checkval!: FormGroup
-  subcat_arr: any = []
-  size_arr: any = []
+  subcat_arr: Array<product> = []
+  size_arr: Array<product> = []
   check_val: any
   ischeck!: boolean
   load_product = environment.load_product
-  order_arr: any = []
-  clr_arr: any = []
+  order_arr: Array<product> = []
+  clr_arr: Array<product> = []
   slider_arr: any = []
   initial!: number
   end!: number
@@ -51,7 +54,7 @@ export class SearchComponent implements OnInit {
   size_checkbox!: QueryList<ElementRef>;
   @ViewChildren("getcolorval")
   getcolorval!: QueryList<ElementRef>;
-
+  selectedCurrency:any
   minValue: number = 0;
   maxValue: number = 0;
   options: Options = {
@@ -70,7 +73,6 @@ export class SearchComponent implements OnInit {
 
     })
   }
-  selectedCurrency:any
   get_currency(){
     this.product.set_currency.subscribe(data=>{
       if(data.length>0){

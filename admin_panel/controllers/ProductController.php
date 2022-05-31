@@ -196,6 +196,15 @@ class ProductController
             echo json_encode($data_main);
         }
     }
+    public function check_trend()
+    {
+        $success = $this->model->check_trend();
+        if (count($success) > 8) {
+            echo json_encode(false);
+        }else{
+            echo json_encode(true);
+        }
+    }
     public function getproductby_id()
     {
         $id = $_POST['id'];

@@ -185,7 +185,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Tax Percent(%)</label><span class="star">*</span>
-                                        <input id="inputText3" type="text" class="form-control add-tax" name="tax" placeholder="Tax">
+                                        <input id="inputText3" type="text" class="form-control add-tax" name="tax" placeholder="Tax"  onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" placeholder="Quantity"  min="1" max="99999">
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-block tax_add">Add Tax</button>
                                 </form>
@@ -216,14 +216,6 @@
                                             <option value="" selected>Select</option>
                                         </select>
                                     </div>
-                                    <!-- <div class="form-group">
-                                        <label for="inputText21" class="col-form-label">State Code</label><span class="star">*</span>
-                                        <input id="inputText21" type="text" class="form-control add-tax" name="scode" placeholder="State Code">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputText3" class="col-form-label">Tax Percent(%)</label><span class="star">*</span>
-                                        <input id="inputText3" type="text" class="form-control add-tax" name="tax" placeholder="Tax">
-                                    </div> -->
                                     <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Tax Percent(%)</label><span class="star">*</span>
                                         <input id="inputText3" type="text" class="form-control add-tax" class="tax" name="tax" placeholder="Tax">

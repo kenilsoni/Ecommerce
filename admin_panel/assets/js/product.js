@@ -27,21 +27,21 @@ $(document).ready(function () {
     }
 
     $(".upload-img").hide();
-    
+
     // $("<div class='select_box'><select class='form-select' id='product'><option value='AllProduct'>All Product</option><option value='Trending'>Trending</option></select></div>").insertBefore("#product_table");
     var mytable = $('#product_table').DataTable({
-        "order": [[ 6, "desc" ]]
+        "order": [[6, "desc"]]
     });
-    $('#product').on('change', function() {
-        if ($("#product").val()==="AllProduct") {
+    $('#product').on('change', function () {
+        if ($("#product").val() === "AllProduct") {
             mytable.search("").draw();
-         
+
         } else {
             mytable.search("YES").draw();
         }
-        
-      })
- 
+
+    })
+
     function onload() {
         $.ajax({
             type: "GET",
@@ -49,10 +49,8 @@ $(document).ready(function () {
             datatype: "json",
             success: function (data) {
                 obj = JSON.parse(data);
-                console.log(obj);
                 if (typeof obj === "object") {
                     var len = obj.length;
-                    console.log(obj)
                     var mytable = $('#product_table').DataTable();
                     mytable.clear().draw();
                     for (var i = 0; i < len; i++) {
@@ -67,13 +65,26 @@ $(document).ready(function () {
                         </td>
                         <td>${obj[i][0].Product_Quantity} </td>
                         <td>${obj[i][0].Product_Price} </td>
-                        <td>${obj[i][0].IsTrending ==1 ?'YES':'NO'} </td>
+                        <td>${obj[i][0].IsTrending == 1 ? 'YES' : 'NO'} </td>
                         <td>${obj[i][0].Created_At} </td>
                         <td>${obj[i][0].Modified_At} </td>
                         <td><button type="button" class="btn btn-rounded btn-primary edit_product">Edit</button>&nbsp;<button type="button" class="btn btn-rounded btn-danger delete_product">Delete</button> </td>
                     </tr>
                      `)).draw();
                     }
+                }
+            }
+        })
+        $.ajax({
+            type: "GET",
+            url: "?controller=Product&function=check_trend",
+            datatype: "json",
+            success: function (data) {
+
+                if (data == "false") {
+                    $("#istrend").hide();
+                } else {
+                    $("#istrend").show();
                 }
             }
         })
@@ -122,7 +133,6 @@ $(document).ready(function () {
                 datatype: "json",
                 success: function (data) {
                     obj = JSON.parse(data);
-                    console.log(obj);
                     if (typeof obj === "object") {
                         var len = obj.length;
                         $(".product_subcategory").empty();
@@ -185,23 +195,12 @@ $(document).ready(function () {
             datatype: "json",
             success: function (data) {
                 obj = JSON.parse(data);
-                // console.log(obj[0].Image_Path)
                 if (typeof obj === "object") {
                     var len = obj.length;
-                    // if(obj[0].Image_Path !== 'NULL'){
-                        $(".available_image").html('');
-                        for (var i = 0; i < len; i++) {
-                            // if(obj[i].Image_Path !== NULL){
-
-                          
-                            $(".available_image").append(`<div><input type="hidden" value="${obj[i].ID}" class="image_id"><img src="./assets/uploads/${obj[i].Image_Path}" /><br><button type="button" class="remove_image btn btn-danger">Remove</button></div>`);
-                        }
-                    // }
-                    // }
-                    // else{
-                    //     $(".available_image").html('<img src="./assets/uploads/no_product.jpg" />');
-                    // }
-                   
+                    $(".available_image").html('');
+                    for (var i = 0; i < len; i++) {
+                        $(".available_image").append(`<div><input type="hidden" value="${obj[i].ID}" class="image_id"><img src="./assets/uploads/${obj[i].Image_Path}" /><br><button type="button" class="remove_image btn btn-danger">Remove</button></div>`);
+                    }
                 }
             }
         })
@@ -214,14 +213,14 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: "?controller=Product&function=delete_image",
-                data: { id: id,pid:product_id },
+                data: { id: id, pid: product_id },
                 datatype: "json",
                 success: function (data) {
                     if (data == 1) {
                         alert("image deleted successfully");
                         getimage(product_id);
                     }
-                    else if(data==3){
+                    else if (data == 3) {
                         alert("Atleast one image is required")
                         getimage(product_id);
                     }
@@ -265,7 +264,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: "?controller=Product&function=delete_product",
-                data: { id: product_id},
+                data: { id: product_id },
                 datatype: "json",
                 success: function () {
                     window.location.href = "?controller=Product&function=all_product";

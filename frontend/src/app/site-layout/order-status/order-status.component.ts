@@ -11,12 +11,14 @@ import { NgToastService } from 'ng-angular-popup';
 export class OrderStatusComponent implements OnInit {
 
   constructor(private toastr: NgToastService,private route:ActivatedRoute,private productservice:ProductService,private cartservice:CartService) { }
-  checkout_id:any
+  
+  checkout_id!:string
   order!:boolean
-  order_id:any
+  order_id!:number
   order_fail!:boolean
   order_detail:any=[]
   user_id!:number
+
   ngOnInit(): void {  
   this.get_csid()
   }

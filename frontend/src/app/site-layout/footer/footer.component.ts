@@ -11,11 +11,13 @@ import { UserService } from 'src/app/service/user.service';
 export class FooterComponent implements OnInit {
 
   constructor(private toastr: NgToastService,private formbuilder: FormBuilder,private userservice: UserService) { }
+ 
   isShow!: boolean
   year!: number
   isSubscribe: boolean = false
   email_exist: boolean = false
   checkinput!:FormGroup
+  
   ngOnInit(): void {
     this.getuser_id()
     this.year = this.currentYearLong()

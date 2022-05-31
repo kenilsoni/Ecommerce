@@ -85,28 +85,25 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="inputText4" class="col-form-label">Price (Per Unit)</label><span class="star">*</span>
-                                        <input id="inputText4" type="number" name="product_price" class="form-control product_price" placeholder="Price" min="0" max="99999" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" required>
+                                        <input id="inputText4" type="number" name="product_price" class="form-control product_price" placeholder="Price" min="1" max="99999" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputText6" class="col-form-label">Quantity</label><span class="star">*</span>
-                                        <input id="inputText6" type="number" name="product_quantity" class="form-control product_quantity" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" placeholder="Quantity"  min="0" max="99999" required>
+                                        <input id="inputText6" type="number" name="product_quantity" class="form-control product_quantity" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" placeholder="Quantity"  min="1" max="99999" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="Category">Category</label><span class="star">*</span><br>
                                         <select class="form-control product_category" name="product_category" id="Category" required>
                                             <option value="" selected>Select</option>
-
-
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="Sub_Category">Sub Category</label><span class="star">*</span><br>
                                         <select class="form-control product_subcategory" name="product_subcategory" id="Sub_Category" required>
                                             <option value="" selected>Select</option>
-
                                         </select>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" id="istrend">
                                         <label class="col-form-label">IsTrending</label>
                                         <div>
                                             <div class="switch-button switch-button-success">

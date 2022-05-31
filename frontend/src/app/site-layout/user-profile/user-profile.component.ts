@@ -30,10 +30,12 @@ export class UserProfileComponent implements OnInit{
   @ViewChild("country_check") country_check!: ElementRef;
   @ViewChild("street_check") street_check!: ElementRef;
   @ViewChild("sameas") sameas!: ElementRef;
+
   constructor(private toastr: NgToastService,private formbuilder: FormBuilder,private userservice:UserService) { 
     this.get_user()
     this.get_country()
   }
+
   ngOnInit(): void {
     this.profileval = this.formbuilder.group({
       id: [''],

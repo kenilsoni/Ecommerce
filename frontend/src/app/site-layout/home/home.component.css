@@ -10,3 +10,8 @@
     overflow: hidden;
     /* width: 800px; */
 }
+.name_testimonial{
+    padding-bottom: 0;
+    font-weight: 600;
+    color: #ea4748;
+}

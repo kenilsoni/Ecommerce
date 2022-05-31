@@ -83,7 +83,7 @@
                             </td>
                             <td>
                                 <span class="orange-text">{{convertWithCurrencyRate(item.Unit_Price, selectedCurrency) 
-                                    | currency:selectedCurrency:true}}</span>
+                                    | currency:selectedCurrency}}</span>
                             </td>
                             <td>
                                 <!-- {{item.Product_Quantity}} -->
@@ -138,10 +138,6 @@
                                     
                                 </select>
                             </div>
-                            <!-- <div class="form-group">
-                                <label class="form-label">Zip/Postal Code</label>
-                                <input type="text" class="form-control" placeholder="Zip/Postal Code">
-                            </div> -->
                         </form>
                     </div>
                 </div>
@@ -152,17 +148,17 @@
                                 <tr>
                                     <td>Subtotal</td> 
                                     <td>{{convertWithCurrencyRate(grandTotal, selectedCurrency) 
-                                        | currency:selectedCurrency:true}}</td>
+                                        | currency:selectedCurrency}}</td>
                                 </tr>
                                 <tr>
                                     <td>Service Tax</td>
                                     <td>{{convertWithCurrencyRate(service_tax, selectedCurrency) 
-                                        | currency:selectedCurrency:true}}</td>
+                                        | currency:selectedCurrency}}</td>
                                 </tr>
                                 <tr>
                                     <td class="summary-total"><strong>Total</strong></td>
                                     <td class="summary-price"><strong>{{convertWithCurrencyRate(final_amount, selectedCurrency) 
-                                        | currency:selectedCurrency:true}}</strong></td>
+                                        | currency:selectedCurrency}}</strong></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">

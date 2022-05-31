@@ -7,8 +7,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class CartService {
-  user_detail:any
-  constructor(private httpclient:HttpClient) {  
+  user_detail: any
+  constructor(private httpclient: HttpClient) {
   }
   get_id() {
     if (localStorage.getItem('loggedInUser') !== null) {
@@ -18,31 +18,31 @@ export class CartService {
       return false
     }
   }
-  getProducts(id:number){
-    return this.httpclient.get<any>(`${environment.API_URL}/cart/cart.php?user_id=`+id)
+  getProducts(id: number) {
+    return this.httpclient.get<any>(`${environment.API_URL}/cart/cart.php?user_id=` + id)
   }
-  addtoCart(product : any){
+  addtoCart(product: any) {
     return this.httpclient.post<any>(`${environment.API_URL}/cart/add.php`, product)
   }
-  update_product(product : any){
+  update_product(product: any) {
     return this.httpclient.post<any>(`${environment.API_URL}/cart/update.php`, product)
   }
-  removeCartItem(id: number){
-    return this.httpclient.get<any>(`${environment.API_URL}/cart/remove.php?id=`+id)
+  removeCartItem(id: number) {
+    return this.httpclient.get<any>(`${environment.API_URL}/cart/remove.php?id=` + id)
   }
-  removeAllCart(user_id:number){
-    return this.httpclient.get<any>(`${environment.API_URL}/cart/remove.php?user_id=`+user_id)
+  removeAllCart(user_id: number) {
+    return this.httpclient.get<any>(`${environment.API_URL}/cart/remove.php?user_id=` + user_id)
   }
-  get_country(){
+  get_country() {
     return this.httpclient.get<any>(`${environment.API_URL}/tax/tax.php`)
   }
-  get_state(id:number){
-    return this.httpclient.get<any>(`${environment.API_URL}/tax/tax.php?id=`+id)
+  get_state(id: number) {
+    return this.httpclient.get<any>(`${environment.API_URL}/tax/tax.php?id=` + id)
   }
-  getcolorby_id(id:number){
-    return this.httpclient.get<any>(`${environment.API_URL}/color/read.php?product_id=`+id)
+  getcolorby_id(id: number) {
+    return this.httpclient.get<any>(`${environment.API_URL}/color/read.php?product_id=` + id)
   }
-  getsizeby_id(id:number){
-    return this.httpclient.get<any>(`${environment.API_URL}/size/read.php?product_id=`+id)
+  getsizeby_id(id: number) {
+    return this.httpclient.get<any>(`${environment.API_URL}/size/read.php?product_id=` + id)
   }
 }

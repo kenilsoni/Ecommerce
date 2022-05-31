@@ -9,8 +9,10 @@ import { ProductService } from 'src/app/service/product.service';
 export class CoupanComponent implements OnInit {
 
   constructor(private productservice:ProductService) { }
-  available:any=[]
-  expire:any=[]
+
+  available:Array<{discount:string,expiry:string,ID:number}>=[]
+  expire:Array<{discount:string,expiry:string,ID:number}>=[]
+
   ngOnInit(): void {
     this.get_coupan()
   }
@@ -18,7 +20,6 @@ export class CoupanComponent implements OnInit {
     this.productservice.get_coupan().subscribe((data:any)=>{
       if(data){
         this.available=data['available']
-     
         this.expire=data['expiry']
       }else{
         this.available=[]

@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } fro
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { product } from 'src/app/interface/product';
+import { size } from 'src/app/interface/size';
 import { CartService } from 'src/app/service/cart.service';
 import { ProductService } from 'src/app/service/product.service';
 import { environment } from 'src/environments/environment';
@@ -15,19 +17,30 @@ export class ProductDataComponent implements OnInit {
   registerval!: FormGroup;
   Image_path: string = environment.IMAGE_URL
   imgCollection: Array<object> = [];
+
   constructor(private toastr: NgToastService, private product: ProductService, public route: ActivatedRoute, private cartService: CartService, private formbuilder: FormBuilder) { }
+ 
   product_id!: number
-  product_details: any = []
+  product_details: Array<product> = []
   formgroup!: FormGroup
   reviewval!: FormGroup
   addtocart_alert: boolean = false
   user_id!: number
   islogin!: boolean
-  size_details: any = []
+  size_details: Array<size> = []
   @ViewChild("quantity")
   quantity!: ElementRef;
   @ViewChild("size") size!: ElementRef
   @ViewChild("review_window") review_window!: ElementRef
+  review_details: Array<{fullname:string,date:Date,rate:number,review:string}> = []
+  review_load: number = 5
+  initial!: number
+  end!: number
+  review_count: boolean = true
+  average_rate:any
+  average_rate_round!: number
+  selectedCurrency!:string
+  
   ngOnInit(): void {
     this.route.params.subscribe(data => {
       this.product_id = data['id'];
@@ -106,7 +119,7 @@ export class ProductDataComponent implements OnInit {
       this.toastr.error({ detail: 'Login First!', summary: 'Please Login First!' });
     }
   }
-  selectedCurrency: any
+
   get_currency() {
     this.product.set_currency.subscribe(data => {
       if (data.length > 0) {
@@ -120,7 +133,6 @@ export class ProductDataComponent implements OnInit {
   convertWithCurrencyRate(value: number, currency: string) {
     return this.product.convertWithCurrencyRate(value, currency)
   }
-
   //review
   stars: number[] = [1, 2, 3, 4, 5];
   selectedValue!: number;
@@ -135,13 +147,6 @@ export class ProductDataComponent implements OnInit {
       this.review_window.nativeElement.style.display = 'block'
     }
   }
-  review_details: any = []
-  review_load: number = 5
-  initial!: number
-  end!: number
-  review_count: boolean = true
-  average_rate: any
-  average_rate_round: any
   get_review() {
     this.product.get_reviewid(this.product_id, this.review_load).subscribe((data: any) => {
       if (data['message']) {

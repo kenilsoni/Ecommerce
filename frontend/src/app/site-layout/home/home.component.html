@@ -68,11 +68,6 @@
                                 </figcaption>
                             </figure>
                         </div>
-                        <!-- <div class="col-sm-12 col-xs-12">
-                            <span class="button-outer text-center">
-                              <a href="product.html" title="More Products" class="btn-tertiary">More Products</a>
-                          </span>
-                      </div> -->
                     </div>
                     <ng-template #nodata>
                         <div class="grid row">
@@ -93,9 +88,8 @@
                     <div class="text01">
                         <span>womens</span> fashion
                     </div>
-                    <a routerLink="/product/WOMEN/10" title="Get Exclusive Collection For
-                        Women" class="btn-secondary">Get Exclusive Collection
-                        For Women</a>
+                    <button (click)="get_women_collection()" title="Get Exclusive Collection For Women" class="btn-secondary">Get Exclusive Collection
+                        For Women</button>
                 </div>
             </div>
         </div>
@@ -118,7 +112,7 @@
                                                 alt="Testimonial">
                                         </div>
                                         <div class="media-body">
-                                            <h5>{{data.Name}}</h5>
+                                            <div class="name_testimonial">{{data.Name}}</div>
                                             <p>{{data.Designation}}</p>
                                         </div>
                                     </div>

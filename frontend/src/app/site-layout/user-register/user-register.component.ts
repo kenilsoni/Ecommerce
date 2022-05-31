@@ -13,6 +13,7 @@ export class UserRegisterComponent implements OnInit {
   register!:boolean
   username_exist!:boolean
   email_exist!:boolean
+  
   constructor(private toastr: NgToastService,private formbuilder: FormBuilder,private userservice:UserService,private route:Router) { }
 
   ngOnInit(): void {
@@ -68,7 +69,6 @@ export class UserRegisterComponent implements OnInit {
         this.username_exist=false
       }
     })
-
   }
   check_email(e:any){
     this.userservice.check_email(e.target.value).subscribe(res=>{
